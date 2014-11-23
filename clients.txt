@@ -1,0 +1,6 @@
+1;Toto;Machin;19 rue adolphe devaux
+2;Popo;Truc;7 rue de la bas
+3;Fifi;Bidule;14 rue moulin
+4;Dada;Dirladada;1 rue de la paix
+5;Riri;Char;ferme
+6;Moi;Gru;Minion's Drive

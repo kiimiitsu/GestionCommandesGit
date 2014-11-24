@@ -12,7 +12,7 @@ public class PanelImage extends JPanel{
 	private Image image;
 	
 	public PanelImage(String image){
-		this.image = Toolkit.getDefaultToolkit().getImage(image);
+		this.image = Toolkit.getDefaultToolkit().getImage("images/"+image);
 	}
 	
 	@Override

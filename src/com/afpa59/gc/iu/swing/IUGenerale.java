@@ -33,7 +33,7 @@ public class IUGenerale extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(w, h);
 		this.setLocationRelativeTo(null);
-		this.setMinimumSize(new Dimension(400, 200));
+		this.setMinimumSize(new Dimension(600, 400));
 		this.setLayout(new BorderLayout());
 		getContentPane().add(getTitlePanel(), BorderLayout.NORTH);
 		getContentPane().add(getPanelMenu(), BorderLayout.CENTER);

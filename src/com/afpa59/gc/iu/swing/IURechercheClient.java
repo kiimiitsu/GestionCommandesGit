@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -77,6 +78,7 @@ public class IURechercheClient extends JFrame{
 		
 		
 		GridBagConstraints gbc = new GridBagConstraints();
+		//gbc.ipady = 10;
 		
 		labelId = new JLabel("Rechercher par id: ");
 		labelOu = new JLabel(" ou ");
@@ -90,35 +92,35 @@ public class IURechercheClient extends JFrame{
 		butRecherche = new JButton("Rechercher");
 		addListeners();
 		
-		gbc.insets = new Insets(20, 20, 20, 20);
+		gbc.insets = new Insets(10, 20, 10, 20);
 		gbc.ipadx=10;
 		gbc.ipady=10;
-		gbc.gridy=0;
+		gbc.gridy=2;
 		gbc.gridwidth=3;
 		global.add(labelErreurs, gbc);
 		
 		gbc.gridwidth=1;
 		
-		gbc.gridy=1;
+		gbc.gridy=0;
 		gbc.gridx=0;
 		global.add(labelId, gbc);
 		
-		gbc.gridy = 1;
+		gbc.gridy = 0;
 		gbc.gridx = 1;
 		gbc.anchor= GridBagConstraints.CENTER;
 		global.add(labelOu, gbc);
 		
-		gbc.gridy=1;
+		gbc.gridy=0;
 		gbc.gridx=2;
 		global.add(labelNom, gbc);
 
 		gbc.ipadx=10;
-		gbc.ipady=5;
-		gbc.gridy=2;
+		gbc.ipady=10;
+		gbc.gridy=1;
 		gbc.gridx=0;
 		global.add(txtId, gbc);
 		
-		gbc.gridy=2;
+		gbc.gridy=1;
 		gbc.gridx=2;
 		global.add(txtNom, gbc);
 		
@@ -127,8 +129,6 @@ public class IURechercheClient extends JFrame{
 		gbc.gridy=3;
 		gbc.gridx=1;
 		global.add(butRecherche, gbc);
-		
-		
 		
 		return global;
 	}
@@ -161,13 +161,22 @@ public class IURechercheClient extends JFrame{
 			if(getId.matches("^\\d+$")){ //si l'id est bien un entier
 				id = Integer.parseInt(getId);
 				Client client = (Client)ServiceClient.getInstance().rechercherParId(id);
-				new IUAffichageClient("Affichage d'un client", 400, 400, this.mode, client);
+				
+				if(mode==Mode.SUPPRESSION){
+					if(JOptionPane.showConfirmDialog(this, "Etes-vous sur?")==JOptionPane.YES_OPTION){
+						ServiceClient.getInstance().supprimer(id);
+					}
+				}else{
+					new IUAffichageClient("Affichage d'un client", 400, 400, this.mode, client);
+				}
+				this.dispose();
 			}else{
 				setLabelErreur("L'id doit être un entier!");
 			}
 			
 		}else{
 			List<Entite> clients = ServiceClient.getInstance().rechercherParNom(getNom);
+			this.dispose();
 			new IUAffichageListeClient("Résultat de la recherche", 500, 500, this.mode,clients);
 		}
 			

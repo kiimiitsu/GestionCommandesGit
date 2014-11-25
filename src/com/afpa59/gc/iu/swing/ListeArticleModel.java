@@ -1,32 +1,24 @@
 package com.afpa59.gc.iu.swing;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.table.AbstractTableModel;
-
-import com.afpa59.gc.donnees.Client;
+import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Entite;
 
-public class ListeClientModel extends ListeEntiteModel{
+public class ListeArticleModel extends ListeEntiteModel {
 
-	
 	/*-------------------------- CONSTRUCTEUR --------------------------*/
 	/**
 	 * constructeur
 	 * @param entites
 	 */
-	public ListeClientModel(List<Entite> entites) {
+	public ListeArticleModel(List<Entite> entites) {
 		super(entites);
-		getEntetes().add("Nom");
-		getEntetes().add("Prénom");
-		getEntetes().add("Adresse");
-		
+		getEntetes().add("Libelle");
+		getEntetes().add("Prix");		
 	}
 	
 	/*-------------------------- METHODES ---------------------------------*/
-
-
 	/**
 	 * retourne la valeur à la ligne row et dans la colonne col
 	 */
@@ -36,15 +28,11 @@ public class ListeClientModel extends ListeEntiteModel{
 	        case 0:
 	            return getEntites().get(row).getId();
 	        case 1:
-	            return ((Client) getEntites().get(row)).getNom();
+	            return ((Article) getEntites().get(row)).getLibelle();
 	        case 2:
-	            return ((Client) getEntites().get(row)).getPrenom();
-	        case 3:
-	            return ((Client) getEntites().get(row)).getAdresse();
-	        
+	            return ((Article) getEntites().get(row)).getPrix();
 	        default:
 	            return null; //Ne devrait jamais arriver
 	    }
 	}
-
 }

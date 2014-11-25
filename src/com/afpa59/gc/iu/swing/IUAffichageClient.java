@@ -96,10 +96,10 @@ public class IUAffichageClient extends JFrame{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.ipady = 10;
 		
-		labelId = new JLabel("id : ");
-		labelNom = new JLabel("nom : ");
-		labelPrenom = new JLabel("prénom : ");
-		labelAdresse = new JLabel("adresse : ");
+		labelId = new JLabel("Id : ");
+		labelNom = new JLabel("Nom : ");
+		labelPrenom = new JLabel("Prénom : ");
+		labelAdresse = new JLabel("Adresse : ");
 		
 		switch(mode){
 		
@@ -249,7 +249,5 @@ public class IUAffichageClient extends JFrame{
 				
 			}
 		});
-		
-		
 	}
 }

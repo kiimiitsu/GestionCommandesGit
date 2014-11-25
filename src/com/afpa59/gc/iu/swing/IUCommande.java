@@ -32,7 +32,7 @@ public class IUCommande extends IUEntiteBase{
 	
 	@Override
 	public void creer() {
-		new IUAffichageArticle("Créer un article", 800, 600);
+		//new IUAffichageArticle("Créer un article", 800, 600);
 		
 	}
 

@@ -15,25 +15,25 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import com.afpa59.gc.donnees.Client;
+import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceClient;
+import com.afpa59.gc.services.fichier.ServiceArticle;
 
-public class IUAffichageListeClient extends JFrame{
-
+public class IUAffichageListeArticle extends JFrame {
+	
 	private List<Entite> entites;
 	private Mode mode;
 	
 	private JTable table;
 	private JButton bouton;
 	
-	private ListeClientModel model;
+	private ListeArticleModel model;
 	
-	public IUAffichageListeClient(String titre, int w, int h, Mode mode, List<Entite> clients){
+	public IUAffichageListeArticle(String titre, int w, int h, Mode mode, List<Entite> articles){
 		super(titre);
 		
-		this.entites = clients;
+		this.entites = articles;
 		this.mode = mode;
 		
 		this.setSize(w, h);
@@ -49,7 +49,7 @@ public class IUAffichageListeClient extends JFrame{
 	
 	
 	public JScrollPane getMainPanel(){
-		model = new ListeClientModel(entites);
+		model = new ListeArticleModel(entites);
 		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -92,8 +92,8 @@ public class IUAffichageListeClient extends JFrame{
 		if(index!=-1){
 			int id =  (int) table.getModel().getValueAt(index, 0);
 			try {
-				Client client = (Client) ServiceClient.getInstance().rechercherParId(id);
-				new IUAffichageClient("Affichage client", 500, 500, this.mode, client);
+				Article article = (Article) ServiceArticle.getInstance().rechercherParId(id);
+				new IUAffichageArticle("Affichage article", 500, 500, this.mode, article);
 				dispose();
 			} catch (ObjetInexistantException e) {
 				System.out.println(e.getMessage());
@@ -106,9 +106,9 @@ public class IUAffichageListeClient extends JFrame{
 		if(index!=-1){
 			int id =  (int) table.getModel().getValueAt(index, 0);
 			try {
-				ServiceClient.getInstance().rechercherParId(id);
+				ServiceArticle.getInstance().rechercherParId(id);
 				if(JOptionPane.showConfirmDialog(this, "Etes-vous sur?")==JOptionPane.YES_OPTION){
-					ServiceClient.getInstance().supprimer(id);
+					ServiceArticle.getInstance().supprimer(id);
 				}
 				model.supprimerEntite(index);
 				
@@ -143,4 +143,5 @@ public class IUAffichageListeClient extends JFrame{
 			}
 		});
 	}
+
 }

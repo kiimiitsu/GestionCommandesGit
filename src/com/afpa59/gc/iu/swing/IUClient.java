@@ -12,7 +12,6 @@ import com.afpa59.gc.services.fichier.ServiceClient;
 @SuppressWarnings("serial")
 public class IUClient extends IUEntiteBase{
 
-	private ServiceClient service;
 	/*------------------------------------- CONSTRUCTEUR -------------------------------------*/
 	/**
 	 * constructeur avec paramètres
@@ -36,6 +35,7 @@ public class IUClient extends IUEntiteBase{
 		titlePanel.add(titre);
 		return titlePanel;
 	}
+	
 	@Override
 	public void creer() {
 		new IUAffichageClient("Création d'un client", 500, 300, Mode.CREATION, null);

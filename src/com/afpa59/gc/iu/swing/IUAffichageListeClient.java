@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,6 +27,8 @@ public class IUAffichageListeClient extends JFrame{
 	
 	private JTable table;
 	private JButton bouton;
+	
+	private ListeClientModel model;
 	
 	public IUAffichageListeClient(String titre, int w, int h, Mode mode, List<Entite> clients){
 		super(titre);
@@ -46,20 +49,10 @@ public class IUAffichageListeClient extends JFrame{
 	
 	
 	public JScrollPane getMainPanel(){
-		String[] entetes = {"id", "Nom", "Prénom", "Adresse"};
-		Object[][] datas = new Object[entites.size()][entetes.length];
-		for(int i = 0; i<entites.size(); i++){
-			Client client = (Client)entites.get(i);
-			datas[i][0]= client.getId();
-			datas[i][1] = client.getNom();
-			datas[i][2] = client.getPrenom();
-			datas[i][3] = client.getAdresse();
-		}
-		
-		table = new JTable(datas, entetes);
+		model = new ListeClientModel(entites);
+		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(new EmptyBorder(10,10,10,10));
@@ -81,17 +74,11 @@ public class IUAffichageListeClient extends JFrame{
 				bouton = new JButton("Supprimer");
 				break;
 			default: 
-				bouton = null;
+				bouton = new JButton("Fermer");
 				break;
 		}
 		
-		bouton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				rowSelected();
-			}
-		});
+		addListeners();
 		
 		if(bouton!=null){
 			panButton.add(bouton);
@@ -100,14 +87,60 @@ public class IUAffichageListeClient extends JFrame{
 	}
 	
 	public void rowSelected(){
+		
 		int index = table.getSelectedRow();
-		int id =  (int) table.getModel().getValueAt(index, 0);
-		try {
-			Client client = (Client) ServiceClient.getInstance().rechercherParId(id);
-			new IUAffichageClient("Affichage client", 500, 500, this.mode, client);
-		} catch (ObjetInexistantException e) {
-			System.out.println(e.getMessage());
+		if(index!=-1){
+			int id =  (int) table.getModel().getValueAt(index, 0);
+			try {
+				Client client = (Client) ServiceClient.getInstance().rechercherParId(id);
+				new IUAffichageClient("Affichage client", 500, 500, this.mode, client);
+				dispose();
+			} catch (ObjetInexistantException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 	
+	public void actionSupprimer(){
+		int index = table.getSelectedRow();
+		if(index!=-1){
+			int id =  (int) table.getModel().getValueAt(index, 0);
+			try {
+				ServiceClient.getInstance().rechercherParId(id);
+				if(JOptionPane.showConfirmDialog(this, "Etes-vous sur?")==JOptionPane.YES_OPTION){
+					ServiceClient.getInstance().supprimer(id);
+				}
+				model.supprimerEntite(index);
+				
+			} catch (ObjetInexistantException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+	public void addListeners(){
+		bouton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				switch (mode) {
+				case VISUALISATION:
+					rowSelected();
+					break;
+				case MODIFICATION:
+					rowSelected();
+						break;
+				case SUPPRESSION:
+					actionSupprimer();
+					break;
+				case OTHER:
+					dispose();
+					break;
+
+				default:
+					break;
+				}
+			}
+		});
+	}
 }

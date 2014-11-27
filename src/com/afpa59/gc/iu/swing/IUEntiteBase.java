@@ -58,7 +58,7 @@ public abstract class IUEntiteBase extends JFrame implements IUEntite{
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
-		JPanel panDessin = new PanelImage("bebe.jpg");
+		JPanel panDessin = new PanelImage("bebe1.jpg");
 		gbc.gridx=0;
 		gbc.gridheight=5;
 		gbc.weightx=0.4;
@@ -131,6 +131,7 @@ public abstract class IUEntiteBase extends JFrame implements IUEntite{
 				break;
 			case 3:
 				modifier();
+				break;
 			case 4: 
 				supprimer();
 				break;

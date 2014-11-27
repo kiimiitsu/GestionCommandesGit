@@ -1,18 +1,9 @@
 package com.afpa59.gc.iu.swing;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,6 +11,7 @@ import com.afpa59.gc.services.fichier.ServiceArticle;
 
 @SuppressWarnings("serial")
 public class IUArticle extends IUEntiteBase{
+	
 	
 	public IUArticle(String titre, int w, int h) {
 		super(titre, w, h);
@@ -40,28 +32,27 @@ public class IUArticle extends IUEntiteBase{
 	
 	@Override
 	public void creer() {
-		// TODO Auto-generated method stub
-		
+		new IUAffichageArticle("Création d'un article", 500, 300, Mode.CREATION, null);
 	}
-
+	
 	@Override
 	public void visualiser() {
-		
-		
+		new IURechercheArticle("Visualiser un article", 500, 500, Mode.VISUALISATION);
 	}
+	
 	@Override
 	public void lister(){
-		
+		new IUAffichageListeArticle("Liste des articles", 800, 600, Mode.OTHER, ServiceArticle.getInstance().getEntites());
 	}
+	
 	@Override
 	public void modifier() {
-		// TODO Auto-generated method stub
-		
+		new IURechercheArticle("Modifier un article", 500, 500, Mode.MODIFICATION);
 	}
-
+	
 	@Override
 	public void supprimer() {
-		// TODO Auto-generated method stub
+		new IURechercheArticle("Supprimer un article", 500, 500, Mode.SUPPRESSION);
 		
 	}
 

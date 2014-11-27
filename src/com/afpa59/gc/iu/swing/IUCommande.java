@@ -7,12 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.afpa59.gc.services.fichier.ServiceArticle;
 import com.afpa59.gc.services.fichier.ServiceCommande;
 
 @SuppressWarnings("serial")
 public class IUCommande extends IUEntiteBase{
-	
-	private ServiceCommande service;
 	
 	public IUCommande(String titre, int w, int h){
 		super(titre,w,h);
@@ -32,29 +31,27 @@ public class IUCommande extends IUEntiteBase{
 	
 	@Override
 	public void creer() {
-		new IUAffichageArticle("Créer un article", 800, 600);
-		
+		new IUAffichageCommande("Création d'une commande", 500, 300, Mode.CREATION, null);
 	}
-
+	
 	@Override
 	public void visualiser() {
-		// TODO Auto-generated method stub
-		
+		new IURechercheCommande("Visualiser une commande", 500, 500, Mode.VISUALISATION);
 	}
-
+	
 	@Override
 	public void lister(){
-		
+		new IUAffichageListeCommande("Liste des commandes", 800, 600, Mode.OTHER, ServiceCommande.getInstance().getEntites());
 	}
+	
 	@Override
 	public void modifier() {
-		// TODO Auto-generated method stub
-		
+		new IURechercheCommande("Modifier une commande", 500, 500, Mode.MODIFICATION);
 	}
-
+	
 	@Override
 	public void supprimer() {
-		// TODO Auto-generated method stub
+		new IURechercheCommande("Supprimer une commande", 500, 500, Mode.SUPPRESSION);
 		
 	}
 

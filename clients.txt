@@ -4,3 +4,8 @@
 4;Dada;Dirladada;1 rue de la paix
 5;Riri;Char;ferme
 6;Moi;Gru;Minion's Drive
+7;CHEA;Caroline;7 rue de la pochette
+8;Toto;Un autre;10 rue de l'espalnade
+9;Durand;Charles;7 rue des lilas
+10;Durand;Jean;47 rue des rosiers
+11;Toto;Encore;4 rue de l'univers

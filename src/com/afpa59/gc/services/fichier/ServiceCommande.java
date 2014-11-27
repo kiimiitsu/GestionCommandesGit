@@ -162,4 +162,18 @@ public class ServiceCommande extends ServiceEntiteBase{
 		
 		return commande;
 	}
+	
+	/**
+	 * fonction de recherche par client
+	 * @param nom
+	 * @return
+	 * @throws ObjetInexistantException
+	 */
+	public List<Entite> rechercherParClient(String nom) throws ObjetInexistantException{
+		return chercherEntite(new Critere(){
+			public boolean critere(Entite e){
+				return ((Commande)e).getClient().getNom().equalsIgnoreCase(nom);
+			}
+		});
+	}
 }

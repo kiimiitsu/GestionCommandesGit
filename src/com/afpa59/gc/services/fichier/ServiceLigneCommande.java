@@ -155,5 +155,14 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 			ligne.setQte(Integer.parseInt(st.nextToken()));
 		}
 		return ligne;
-	}	
+	}
+	
+	public float sousTotal(int id) throws ObjetInexistantException{
+		float tot = 0;
+		LigneCommande ligne = (LigneCommande) this.rechercherParId(id);
+		Article article = (Article) ServiceArticle.getInstance().rechercherParId(ligne.getArticle().getId());
+		tot = (article.getPrix()*ligne.getQte());
+		
+		return tot;
+	}
 }

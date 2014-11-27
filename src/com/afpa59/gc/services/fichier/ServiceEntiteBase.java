@@ -176,6 +176,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 			
 			BufferedReader br;
 			try {
+				
 				br = new BufferedReader(new FileReader(getFile()));
 				String s;
 				while((s=br.readLine())!=null){

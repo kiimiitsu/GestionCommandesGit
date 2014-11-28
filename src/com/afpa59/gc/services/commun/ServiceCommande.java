@@ -1,7 +1,8 @@
 package com.afpa59.gc.services.commun;
 
-import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -9,7 +10,6 @@ import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
-import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 
 public class ServiceCommande extends ServiceEntiteBase{
 	
@@ -20,7 +20,6 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 * contructeur par défaut
 	 */
 	private ServiceCommande(){
-		setFile(new File("commandes.txt"));
 		serviceCommande = this;
 		charger();
 	}
@@ -36,6 +35,12 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 	
 	/*********************************** METHODES ******************************************/
+	
+	@Override
+	public void setTableName() {
+		this.setTableName("commande");
+	}
+	
 	/**
 	 * @return l'instance de ServiceClient
 	 */
@@ -57,18 +62,17 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 * affiche toutes les commandes
 	 */
 	@Override
-	public void visualiser() {
-		for(Entite e : getEntites()){
-			Commande commande = (Commande)e;
-			try {
-				System.out.println("Commande n° "+commande.getId()
-						+" | Client : "+commande.getClient().getNom()
-						+" "+commande.getClient().getPrenom()
-						+" | Montant : "+total(commande.getId()));
-			} catch (ObjetInexistantException e1) {
-				System.out.println(e1.getMessage());
-			}
+	public void visualiser(Entite entite) {
+		Commande commande = (Commande)entite;
+		try {
+			System.out.println("Commande n° "+commande.getId()
+					+" | Client : "+commande.getClient().getNom()
+					+" "+commande.getClient().getPrenom()
+					+" | Montant : "+total(commande.getId()));
+		} catch (ObjetInexistantException e1) {
+			System.out.println(e1.getMessage());
 		}
+		
 	}
 
 	/**
@@ -141,17 +145,49 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 * retourne l'entité correspondante au StringTokenizer
 	 */
 	@Override
-	public Entite lireEntite(StringTokenizer st) {
+	public Entite lireEntite(Object source) {
 		Commande commande = new Commande();
-		commande.setId(Integer.parseInt(st.nextToken()));
+		int id = 0;
+		Client client = null;
+		
+		
+		switch (getServiceType()) {
+			case FICHIER:
+				StringTokenizer st = (StringTokenizer) source;
+				id = Integer.parseInt(st.nextToken());
+	
+				try {
+					client = (Client) getServiceClient().rechercherParId(Integer.parseInt(st.nextToken()));
+					
+				} catch (ObjetInexistantException e) {
+					System.out.println(e.getMessage());
+				}
+				
+				break;
+				
+			case JDBC:
+				ResultSet rs = (ResultSet) source;
+				try {
+					id = rs.getInt("id");
+					int idClient = rs.getInt("client_id");
+					client = (Client) getServiceClient().rechercherParId(idClient);
 
-		try {
-			Entite entite = getServiceClient().rechercherParId(Integer.parseInt(st.nextToken()));
-			commande.setClient((Client)entite);
-		} catch (ObjetInexistantException e) {
-			System.out.println(e.getMessage());
+				} catch (SQLException |ObjetInexistantException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+	
+			case JPA:
+		
+				break;
+	
+			default:
+				break;
 		}
-
+		commande.setId(id);
+		commande.setClient(client);
+		
+		
 		//On récupère les lignes de commandes dans le fichier
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		sLC.charger();
@@ -177,4 +213,5 @@ public class ServiceCommande extends ServiceEntiteBase{
 			}
 		});
 	}
+	
 }

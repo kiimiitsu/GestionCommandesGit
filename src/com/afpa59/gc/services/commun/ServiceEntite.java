@@ -1,6 +1,7 @@
 package com.afpa59.gc.services.commun;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -11,11 +12,17 @@ public interface ServiceEntite {
 	//CRUD des entités
 	public void creer(Entite entite) throws IOException; 
 	public void visualiser();
+	public void visualiser(Entite entite);
 	public void visualiser(int id) throws ObjetInexistantException;
 	public void modifier(int id, Entite entite) throws ObjetInexistantException;
 	public void supprimer(int id) throws ObjetInexistantException;
 	
 	public List<Entite> getEntites();
+	
+	public String getTableName();
+	public void setTableName();
+	
+	public Entite lireEntite(Object source);
 	
 	//Autres actions sur les entités
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException ;
@@ -24,12 +31,13 @@ public interface ServiceEntite {
 	//Actions de sauvegarde et chargement des entités en fichier
 	public void sauvegardeEntites(boolean bSUite) throws IOException;
 	public String getEnregistrement(Entite entite);
-	public Entite lireEntite(StringTokenizer st);
+	
 	public void charger();
-	public void setFile(File file);
+	
 	public boolean isFirstRecord();
 	public void setFirstRecord(boolean firstRecord);
 	public void setEntites(List<Entite> entites);
 	public void setCompteur(int compteur);
 	public int getCompteur();
+	
 }

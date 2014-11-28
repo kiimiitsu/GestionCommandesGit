@@ -42,6 +42,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	public ServiceEntiteFichier(ServiceEntite serviceDemandeur){
 		this();
 		this.serviceDemandeur = serviceDemandeur;
+		configFile();
 	}
 	
 	
@@ -223,8 +224,13 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		return firstRecord;
 	}
 
+	public void configFile(){
+		serviceDemandeur.setTableName();
+		String fileName = serviceDemandeur.getTableName()+".txt";
+		this.setFile(new File(fileName));
+	}
 	
-	/*---------------------------------------- NON INSTANCIE --------------------------------------------------*/
+	/*---------------------------------------- NON IMPLEMENTE --------------------------------------------------*/
 	
 
 	@Override
@@ -233,6 +239,12 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		
 	}
 
+	@Override
+	public void visualiser(Entite entite) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void visualiser(int id) throws ObjetInexistantException {
 		// TODO Auto-generated method stub
@@ -246,9 +258,21 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	}
 
 	@Override
-	public Entite lireEntite(StringTokenizer st) {
+	public Entite lireEntite(Object source) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	@Override
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTableName() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

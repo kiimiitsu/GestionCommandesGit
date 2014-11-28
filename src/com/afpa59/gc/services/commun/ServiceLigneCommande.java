@@ -2,12 +2,15 @@ package com.afpa59.gc.services.commun;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Article;
+import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
@@ -24,7 +27,8 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * constructeur par défaut
 	 */
 	public ServiceLigneCommande() {
-		setFile(new File("lignesCommandes.txt"));
+		
+		
 	}
 	
 	/**
@@ -52,6 +56,12 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		
 	}
 	/*************************** METHODES *****************************/
+	
+	@Override
+	public void setTableName() {
+		this.setTableName("ligneCommande");
+	}
+	
 	/**
 	 * @return l'instance de ServiceCommande
 	 */
@@ -81,18 +91,17 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * affiche toutes les lignes commandes
 	 */
 	@Override
-	public void visualiser() {
-		ListIterator<Entite> iterator = getEntites().listIterator();
-		while(iterator.hasNext()){
-			LigneCommande lc = (LigneCommande)iterator.next();
-			
-			System.out.println("Commande n° "+lc.getCommande().getId()
-					+": Id = "+lc.getId()
-					+" article : "+lc.getArticle().getId()
-					+". "+lc.getArticle().getLibelle()
-					+" quantite : "+lc.getQte()
-			);
-		}
+	public void visualiser(Entite entite) {
+		
+		LigneCommande lc = (LigneCommande)entite;
+		
+		System.out.println("Commande n° "+lc.getCommande().getId()
+				+": Id = "+lc.getId()
+				+" article : "+lc.getArticle().getId()
+				+". "+lc.getArticle().getLibelle()
+				+" quantite : "+lc.getQte()
+		);
+		
 	}
 
 	/**
@@ -136,24 +145,59 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * @param stringtokenizer
 	 */
 	@Override
-	public Entite lireEntite(StringTokenizer st) {
-		LigneCommande ligne = null;
-		int idCommande = Integer.parseInt(st.nextToken());
+	public Entite lireEntite(Object source) {
+		LigneCommande ligne = new LigneCommande();
+		
+		int id = 0;
+		int idCommande = 0;
+		Article article = null;
+		int quantite = 0;
+		
+		switch (getServiceType()) {
+		case FICHIER:
+			StringTokenizer st = (StringTokenizer) source;
+			idCommande = Integer.parseInt(st.nextToken());
 
-		if(idCommande == commande.getId()){
-			ligne = new LigneCommande();
-			ligne.setCommande(commande);
-			ligne.setId(Integer.parseInt(st.nextToken()));
-			 
+			if(idCommande == commande.getId()){
+	
+				id = Integer.parseInt(st.nextToken());
+				 
+				try {
+					article = (Article) getServiceArticle().rechercherParId(Integer.parseInt(st.nextToken()));
+				} catch (ObjetInexistantException e) {
+					System.out.println(e.getMessage());
+				}
+				
+				quantite = Integer.parseInt(st.nextToken());
+			}
+			break;
+			
+		case JDBC:
+			ResultSet rs = (ResultSet) source;
 			try {
-				Article article = (Article) getServiceArticle().rechercherParId(Integer.parseInt(st.nextToken()));
-				ligne.setArticle(article);
-			} catch (ObjetInexistantException e) {
+				id = rs.getInt("id");
+				idCommande = rs.getInt("commande_id");
+				
+				
+				
+				
+			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
-			
-			ligne.setQte(Integer.parseInt(st.nextToken()));
-		}
+			break;
+
+		case JPA:
+	
+			break;
+
+		default:
+			break;
+	}
+		ligne.setCommande(commande);
+		ligne.setId(id);
+		ligne.setArticle(article);
+		ligne.setQte(quantite);
+		
 		return ligne;
 	}
 	
@@ -165,4 +209,6 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		
 		return tot;
 	}
+
+	
 }

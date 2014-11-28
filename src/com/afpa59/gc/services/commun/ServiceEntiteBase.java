@@ -1,26 +1,21 @@
 package com.afpa59.gc.services.commun;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
-import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.outils.BDD;
 import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
+import com.afpa59.gc.services.jdbc.ServiceEntiteJDBC;
 
 public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	private ServiceEntite service;
-	private static BDD serviceType = BDD.FICHIER;
+	private String tableName;
 	
+	private BDD serviceType = BDD.JDBC;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	public ServiceEntiteBase(){
@@ -32,31 +27,59 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		return service;
 	}
 
+	public String getTableName() {
+		return tableName;
+	}
+
+	public BDD getServiceType() {
+		return serviceType;
+	}
 	/*------------------------------ SETTER ------------------------------------------*/
 	public void setService(ServiceEntite service) {
 		this.service = service;
 	}
 
+	public void setTableName(String table) {
+		this.tableName = table;
+	}
+	
+	public void setServiceType(BDD serviceType) {
+		this.serviceType = serviceType;
+	}
 
 	/*------------------------------- METHODES ----------------------------------------*/
 
-	public static ServiceEntite getInstance(ServiceEntite serviceDemandeur){
+	public ServiceEntite getInstance(ServiceEntite serviceDemandeur){
 		switch (serviceType) {
 		case FICHIER:
 			return new ServiceEntiteFichier(serviceDemandeur);
-
+		case JDBC:
+			return new ServiceEntiteJDBC(serviceDemandeur);
 		default:
 			return null;
 		}
-			
 	}
 	
-	/*---------- METHODES DEFINIES DANS LA FILLE ------------*/
-	public abstract void visualiser();
+	/*-------------------------- METHODES COMMUNES -----------------*/
+	public void visualiser(){
+		for(Entite e : getEntites()){
+			visualiser(e);
+		}
+	}
 
+	/*---------- METHODES DEFINIES DANS LA FILLE ------------*/
+
+	
 	public abstract void visualiser(int id) throws ObjetInexistantException; 
 
+	public abstract String getEnregistrement(Entite entite);
+	
+	public abstract Entite lireEntite(Object source);
+	
+	
+	
 	/*----------- METHODES FAISANT APPEL AU SERVICE CONCERNE----------------------*/
+	
 	@Override
 	public void creer(Entite entite) throws IOException{
 		service.creer(entite);
@@ -81,26 +104,21 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	public Entite rechercherParId(int id) throws ObjetInexistantException {
 		return service.rechercherParId(id);
 	}
-	/*------------------------------- METHODES PROPRES AU FICHIER----------------------------------------*/
 	
-	public void setFile(File file){
-		service.setFile(file);
-	}
+	@Override	
 	public List<Entite> getEntites() {
 		return service.getEntites();
 	}
 
 	@Override
-	public void sauvegardeEntites(boolean bSUite) throws IOException {
+	public void sauvegardeEntites(boolean bSUite) throws IOException { // ? propre au fichier
 		service.sauvegardeEntites(bSUite);
 	}
 
+	/*------------------------------- METHODES PROPRES AU FICHIER (A SUPPRIMER ET LAISSER DANS LE FICHIER ----------------------------------------*/
 
-	@Override
-	public Entite lireEntite(StringTokenizer st) {
-		return service.lireEntite(st);
-	}
 
+	
 
 	@Override
 	public void charger() {
@@ -125,9 +143,5 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		return service.getCompteur();
 	}
 	
-	@Override
-	public String getEnregistrement(Entite entite){
-		return service.getEnregistrement(entite);
-	}
 
 }

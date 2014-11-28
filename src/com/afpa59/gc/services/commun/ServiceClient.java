@@ -2,10 +2,13 @@ package com.afpa59.gc.services.commun;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
 
+import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
@@ -21,7 +24,6 @@ public class ServiceClient extends ServiceEntiteBase{
 	 * contructeur par défaut
 	 */
 	private ServiceClient(){
-		setFile(new File("clients.txt"));
 		serviceClient = this;
 		charger();
 	}
@@ -38,6 +40,12 @@ public class ServiceClient extends ServiceEntiteBase{
 	}
 	
 	/*********************************** METHODES ******************************************/
+	
+	@Override
+	public void setTableName() {
+		this.setTableName("client");	
+	}
+	
 	/**
 	 * @param entite
 	 * @throws IOException 
@@ -77,17 +85,13 @@ public class ServiceClient extends ServiceEntiteBase{
 	 * affiche tous les clients
 	 */
 	@Override
-	public void visualiser(){
-		ListIterator<Entite> iterator = getEntites().listIterator();
-		while(iterator.hasNext()){
-			int i = iterator.nextIndex();
-			Client client = (Client) iterator.next();
-			System.out.println((i+1)+": Id = "+client.getId()
-					+" Nom = "+client.getNom()
-					+" Prénom = "+client.getPrenom()
-					+" Adresse = "+client.getAdresse()
-			);
-		}
+	public void visualiser(Entite entite){
+		Client client = (Client) entite;
+		System.out.println(": Id = "+client.getId()
+				+" Nom = "+client.getNom()
+				+" Prénom = "+client.getPrenom()
+				+" Adresse = "+client.getAdresse()
+		);
 	}
 	
 	/**
@@ -131,15 +135,47 @@ public class ServiceClient extends ServiceEntiteBase{
 	 * retourne l'entité correspondante au StringTokenizer
 	 */
 	@Override
-	public Entite lireEntite(StringTokenizer st) {
+	public Entite lireEntite(Object source) {
 		Client client = new Client();
+		int id = 0;
+		String nom = null;
+		String prenom = null;
+		String adresse = null;
 		
-		client.setId(Integer.parseInt(st.nextToken()));
-		client.setNom(st.nextToken());
-		client.setPrenom(st.nextToken());
-		client.setAdresse(st.nextToken());
+		switch (getServiceType()) {
+			case FICHIER:
+				StringTokenizer st = (StringTokenizer) source;
+				id = Integer.parseInt(st.nextToken());
+				nom = st.nextToken();
+				prenom = st.nextToken();
+				adresse = st.nextToken();
+				break;
+				
+			case JDBC:
+				ResultSet rs = (ResultSet) source;
+				try {
+					id = rs.getInt("id");
+					nom = rs.getString("nom");
+					prenom = rs.getString("prenom");
+					adresse = rs.getString("adresse");
+										
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+	
+			case JPA:
 		
+				break;
+	
+			default:
+				break;
+		}
+		client = new Client(id, nom, prenom, adresse);
 		return client;
 	}
+
+
+	
 
 }

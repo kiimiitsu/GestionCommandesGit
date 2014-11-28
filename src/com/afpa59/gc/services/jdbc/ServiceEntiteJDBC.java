@@ -1,11 +1,11 @@
 package com.afpa59.gc.services.jdbc;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -16,19 +16,34 @@ import com.afpa59.gc.services.commun.Critere;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
 
-public abstract class ServiceEntiteJDBC implements ServiceEntite{
+public class ServiceEntiteJDBC implements ServiceEntite{
 	
 	private List<Entite> entites;
+	private Connection connexion;
+	private String table;
 	
-	/******************************* CONSTRUCTEUR ***************************************/
+	private ServiceEntite serviceDemandeur;
+	
+	/*----------------------------------- CONSTRUCTEUR -----------------------------------*/
 	/**
 	 * constructeur par defaut
 	 */
 	public ServiceEntiteJDBC() {
 		this.entites = new ArrayList<Entite>();
+		this.connexion = MyDataBase.getConnection();
 	}
 	
-	/********************************** GETTER ************************************/
+	/**
+	 * constructeur
+	 * @param serviceDemandeur
+	 */
+	public ServiceEntiteJDBC(ServiceEntite serviceDemandeur){
+		this();
+		this.serviceDemandeur = serviceDemandeur;
+		configTable();
+	}
+	
+	/*----------------------------------- GETTER -----------------------------------*/
 	/**
 	 * @return les entites du service
 	 */
@@ -36,7 +51,11 @@ public abstract class ServiceEntiteJDBC implements ServiceEntite{
 		return entites;
 	}
 	
-	/************************************ SETTER ************************************/
+	public String getTable() {
+		return table;
+	}
+	
+	/*----------------------------------- SETTER -----------------------------------*/
 	/** 
 	 * @param entites
 	 */
@@ -44,7 +63,15 @@ public abstract class ServiceEntiteJDBC implements ServiceEntite{
 		this.entites = entites;
 	}
 
-	/************************************ METHODES *****************************/
+	public void setTable(String table) {
+		this.table = table;
+	}
+	/*----------------------------------- METHODES -----------------------------------*/
+	
+	public void configTable(){
+		this.setTable(table);
+	}
+	
 	/**
 	 * ajoute une entité à la liste
 	 * @param entite
@@ -110,7 +137,6 @@ public abstract class ServiceEntiteJDBC implements ServiceEntite{
 												});
 		Entite entite = resultats.get(0);
 		return entite; //id unique, retourne l'unique élément de la recherche.
-		
 	}
 	
 	
@@ -122,6 +148,91 @@ public abstract class ServiceEntiteJDBC implements ServiceEntite{
 	
 	@Override
 	public void charger(){
+		Statement stmt;
+		try {
+			stmt = this.connexion.createStatement();
+			String sql = "SELECT * FROM "+table;
+			System.out.println(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()){
+				Entite entite = serviceDemandeur.lireEntite(rs);
+				System.out.println(rs.getInt("id"));
+				if(entite!=null){
+					this.getEntites().add(entite);
+				}
+			}
 		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+
+	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
+	@Override
+	public void visualiser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visualiser(Entite entite) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visualiser(int id) throws ObjetInexistantException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTableName() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getEnregistrement(Entite entite) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Entite lireEntite(Object source) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isFirstRecord() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setFirstRecord(boolean firstRecord) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCompteur(int compteur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getCompteur() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -1,8 +1,8 @@
 package com.afpa59.gc.services.commun;
-import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Article;
@@ -18,7 +18,6 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 * constructeur par defaut
 	 */
 	private ServiceArticle() {
-		setFile(new File("articles.txt"));
 		serviceArticle = this;
 		charger();
 	}
@@ -34,6 +33,10 @@ public class ServiceArticle extends ServiceEntiteBase{
 	}
 	
 	/************************************* METHODES *************************************/
+	public void setTableName(){
+		setTableName("article");
+	}
+	
 	/**
 	 * @param entite
 	 * @throws IOException 
@@ -67,19 +70,15 @@ public class ServiceArticle extends ServiceEntiteBase{
 		super.modifier(id, article);
 		
 	}
-	
+
 	/**
-	 * affiche tous les articles
+	 * Retourne la visualisation d'un article
+	 * @param entite
 	 */
 	@Override
-	public void visualiser(){
-		
-		ListIterator<Entite> iterator = this.getEntites().listIterator();
-		while(iterator.hasNext()){
-			int i = iterator.nextIndex();
-			Article article = (Article) iterator.next();
-			System.out.println((i+1)+": id = "+article.getId()+" nom = "+article.getLibelle()+" prix = "+article.getPrix());
-		}
+	public void visualiser(Entite entite){
+		Article article = (Article) entite;
+		System.out.println("Id = "+article.getId()+" nom = "+article.getLibelle()+" prix = "+article.getPrix());
 	}
 	
 	/**
@@ -99,22 +98,52 @@ public class ServiceArticle extends ServiceEntiteBase{
 	/**
 	 * retourne la chaine correspondant à l'entité
 	 */
+	@Override
 	public String getEnregistrement(Entite entite){
 		Article article = (Article)entite;
 		return article.getId()+";"+article.getLibelle()+";"+article.getPrix();
 	}
 	
 	/**
-	 * retourne l'entité correspondante au StringTokenizer
+	 * retourne l'entité correspondante à la source
 	 */
 	@Override
-	public Entite lireEntite(StringTokenizer st){
+	public Entite lireEntite(Object source){
 		Article article = new Article();
 		
-		article.setId(Integer.parseInt(st.nextToken()));
-		article.setLibelle(st.nextToken());
-		article.setPrix(Float.parseFloat(st.nextToken()));
+		int id = 0;
+		String libelle = null;
+		float prix = 0;
 		
+		switch (getServiceType()) {
+			case FICHIER:
+				StringTokenizer st = (StringTokenizer) source;
+				id = Integer.parseInt(st.nextToken());
+				libelle = st.nextToken();
+				prix = Float.parseFloat(st.nextToken());
+				break;
+				
+			case JDBC:
+				ResultSet rs = (ResultSet) source;
+				try {
+					id = rs.getInt("id");
+					libelle = rs.getString("libelle");
+					prix = rs.getFloat("prix");
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+	
+			case JPA:
+		
+				break;
+	
+			default:
+				
+				break;
+		}
+		article = new Article(id, libelle, prix);
 		return article;
 	}
+
 }

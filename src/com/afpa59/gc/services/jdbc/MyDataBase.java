@@ -22,4 +22,8 @@ public class MyDataBase {
 		}
 		return connexion;
 	}
+	
+	public static void closeConnection() throws SQLException{
+		connexion.close();
+	}
 }

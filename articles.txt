@@ -1,7 +1,0 @@
-1;vache;500.0
-2;mouton;200.0
-3;poule;10.0
-4;lapin;20.0
-5;cheval;1000.0
-6;ane;800.0
-7;oie;9.0

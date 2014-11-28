@@ -1,4 +1,4 @@
-package com.afpa59.gc.services.jdbc;
+package com.afpa59.gc.services.commun;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +8,7 @@ import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.Critere;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
+import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 
 
 public class ServiceClient extends ServiceEntiteBase{

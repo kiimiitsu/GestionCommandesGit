@@ -7,8 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.afpa59.gc.services.fichier.ServiceArticle;
-import com.afpa59.gc.services.fichier.ServiceCommande;
+import com.afpa59.gc.services.commun.ServiceArticle;
+import com.afpa59.gc.services.commun.ServiceCommande;
 
 @SuppressWarnings("serial")
 public class IUCommande extends IUEntiteBase{

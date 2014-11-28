@@ -3,8 +3,8 @@ package com.afpa59.gc.iu.console;
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceEntite;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceEntite;
 
 public abstract class IUEntiteBase implements IUEntite {
 	

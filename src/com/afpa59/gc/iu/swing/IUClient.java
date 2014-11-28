@@ -7,7 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.afpa59.gc.services.fichier.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceClient;
 
 @SuppressWarnings("serial")
 public class IUClient extends IUEntiteBase{

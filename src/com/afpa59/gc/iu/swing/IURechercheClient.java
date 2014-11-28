@@ -21,8 +21,8 @@ import javax.swing.JTextField;
 
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceClient;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceClient;
 
 public class IURechercheClient extends JFrame{
 	

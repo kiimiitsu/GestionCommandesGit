@@ -1,4 +1,4 @@
-package com.afpa59.gc.services.fichier;
+package com.afpa59.gc.services.commun;
 
 import com.afpa59.gc.donnees.Entite;
 

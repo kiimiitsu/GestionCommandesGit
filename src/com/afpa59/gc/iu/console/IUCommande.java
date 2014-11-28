@@ -5,8 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.afpa59.gc.donnees.*;
-import com.afpa59.gc.services.fichier.*;
+import com.afpa59.gc.donnees.Client;
+import com.afpa59.gc.donnees.Commande;
+import com.afpa59.gc.donnees.Entite;
+import com.afpa59.gc.donnees.LigneCommande;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceArticle;
+import com.afpa59.gc.services.commun.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceEntite;
+import com.afpa59.gc.services.commun.ServiceEntiteBase;
+import com.afpa59.gc.services.commun.ServiceLigneCommande;
 
 
 public class IUCommande extends IUEntiteBase{

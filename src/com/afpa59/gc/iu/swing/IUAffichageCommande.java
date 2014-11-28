@@ -21,22 +21,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceClient;
-import com.afpa59.gc.services.fichier.ServiceCommande;
-import com.afpa59.gc.services.fichier.ServiceLigneCommande;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceCommande;
+import com.afpa59.gc.services.commun.ServiceLigneCommande;
 
 @SuppressWarnings("serial")
 public class IUAffichageCommande extends JFrame{

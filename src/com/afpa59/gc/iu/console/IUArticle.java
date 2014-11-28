@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import com.afpa59.gc.donnees.Article;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceEntite;
-import com.afpa59.gc.services.fichier.ServiceEntiteBase;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceEntite;
+import com.afpa59.gc.services.commun.ServiceEntiteBase;
 
 public class IUArticle extends IUEntiteBase{
 	

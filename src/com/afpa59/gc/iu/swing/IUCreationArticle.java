@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.afpa59.gc.donnees.Article;
-import com.afpa59.gc.services.fichier.ServiceArticle;
+import com.afpa59.gc.services.commun.ServiceArticle;
 
 @SuppressWarnings("serial")
 public class IUCreationArticle extends JFrame {

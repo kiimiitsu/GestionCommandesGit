@@ -5,8 +5,8 @@ import java.util.List;
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceCommande;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceCommande;
 
 public class ListeCommandeModel extends ListeEntiteModel {
 

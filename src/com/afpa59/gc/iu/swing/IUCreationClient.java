@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceClient;
 
 @SuppressWarnings("serial")
 public class IUCreationClient extends JFrame{

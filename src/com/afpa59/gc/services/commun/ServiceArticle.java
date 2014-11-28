@@ -1,4 +1,4 @@
-package com.afpa59.gc.services.fichier;
+package com.afpa59.gc.services.commun;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

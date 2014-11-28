@@ -1,11 +1,10 @@
-1;Toto;Machin;19 rue adolphe devaux
-2;Popo;Truc;7 rue de la bas
-3;Fifi;Bidule;14 rue moulin
-4;Dada;Dirladada;1 rue de la paix
-5;Riri;Char;ferme
-6;Moi;Gru;Minion's Drive
-7;CHEA;Caroline;7 rue de la pochette
-8;Toto;Un autre;10 rue de l'espalnade
-9;Durand;Charles;7 rue des lilas
-10;Durand;Jean;47 rue des rosiers
-11;Toto;Encore;4 rue de l'univers
+1;Baba;Toto;19 rue des champs
+2;Gaga;Bobo;58 rue des prés
+3;Tata;Fifi;47 av de la paix
+4;Yoyo;Mama;1 rue des fruits
+5;baba;Lota;8 rue de la butte
+6;Moi;Gru;8 rue des minions
+7;Juju;Lily;7 rue des pochettes
+8;Durand;Pierre;9 rue de la ferme
+9;Durand;ROmain;8 place sainte marthe
+10;chea;caroline;18 rue des pins

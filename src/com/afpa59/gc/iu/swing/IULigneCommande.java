@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.afpa59.gc.services.fichier.ServiceCommande;
+import com.afpa59.gc.services.commun.ServiceCommande;
 
 public class IULigneCommande extends IUEntiteBase {
 

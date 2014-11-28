@@ -12,23 +12,20 @@ import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.Critere;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
+import com.afpa59.gc.services.commun.Critere;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceEntite;
 
-public abstract class ServiceEntiteBase implements ServiceEntite{
+public abstract class ServiceEntiteJDBC implements ServiceEntite{
 	
 	private List<Entite> entites;
-	private int compteur;
-	private File file;
-	private boolean firstRecord = true; // indique si le fichier doit ou non être effacé avant d'être modifié
 	
 	/******************************* CONSTRUCTEUR ***************************************/
 	/**
 	 * constructeur par defaut
 	 */
-	public ServiceEntiteBase() {
+	public ServiceEntiteJDBC() {
 		this.entites = new ArrayList<Entite>();
-		this.compteur = 1;
 	}
 	
 	/********************************** GETTER ************************************/
@@ -37,27 +34,6 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	 */
 	public List<Entite> getEntites() {
 		return entites;
-	}
-
-	/**
-	 * @return le compteur id
-	 */
-	public int getCompteur() {
-		return compteur;
-	}
-
-	/**
-	 * @return file
-	 */
-	public File getFile(){
-		return this.file;
-	}
-	
-	/**
-	 * @return isFirstRecord
-	 */
-	public boolean getIsFirstRecord(){
-		return this.firstRecord;
 	}
 	
 	/************************************ SETTER ************************************/
@@ -68,25 +44,6 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		this.entites = entites;
 	}
 
-	/**
-	 * @param compteur
-	 */
-	public void setCompteur(int compteur) {
-		this.compteur = compteur;
-	}
-	
-	/**
-	 * @param file
-	 */
-	public void setFile(File file){
-		this.file = file;
-	}
-	 /**
-	  * @param firstRecord
-	  */
-	public void setFirstRecord(boolean firstRecord){
-		this.firstRecord = firstRecord;
-	}
 	/************************************ METHODES *****************************/
 	/**
 	 * ajoute une entité à la liste
@@ -96,7 +53,6 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	@Override
 	public void creer(Entite entite) throws IOException {
 		this.getEntites().add(entite);
-		this.compteur++;
 	}
 	
 	/**
@@ -160,46 +116,12 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	@Override
 	public void sauvegardeEntites(boolean bSuite) throws IOException{
-		if(bSuite==false){
-			getFile().delete();
-		}
-		PrintWriter printWriter;
-		printWriter = new PrintWriter(new FileWriter(getFile(), true));
-		for(Entite entite:this.getEntites()){
-			printWriter.println(getEnregistrement(entite));
-		}
-		printWriter.close();
+
 
 	}
 	
 	@Override
 	public void charger(){
-		if(getFile().exists()){
-			
-			BufferedReader br;
-			try {
-				br = new BufferedReader(new FileReader(getFile()));
-				String s;
-				while((s=br.readLine())!=null){
-					StringTokenizer st = new StringTokenizer(s, ";");
-					Entite entite = lireEntite(st);
-					if(entite!=null){
-						this.getEntites().add(entite);
-					}
-				}
-				br.close();
-			} catch (IOException e) {
-				System.out.println(e);
-				br = null;
-			}
-
-			if(!entites.isEmpty()){ //on vérifie qu'on ne rentre pas dans une liste vide
-				this.compteur = this.entites.get(this.entites.size()-1).getId()+1;
-			}
-		}
-	}
-	
-	public boolean isFirstRecord(){
-		return firstRecord;
+		
 	}
 }

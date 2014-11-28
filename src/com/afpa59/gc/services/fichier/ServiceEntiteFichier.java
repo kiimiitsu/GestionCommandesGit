@@ -12,8 +12,14 @@ import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Entite;
+import com.afpa59.gc.services.commun.Critere;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceEntite;
 
-public abstract class ServiceEntiteBase implements ServiceEntite{
+public class ServiceEntiteFichier implements ServiceEntite{
+	
+	
+	private ServiceEntite serviceDemandeur;
 	
 	private List<Entite> entites;
 	private int compteur;
@@ -24,11 +30,25 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	/**
 	 * constructeur par defaut
 	 */
-	public ServiceEntiteBase() {
+	public ServiceEntiteFichier() {
 		this.entites = new ArrayList<Entite>();
 		this.compteur = 1;
 	}
 	
+	/**
+	 * constructeur
+	 * @param serviceDemandeur
+	 */
+	public ServiceEntiteFichier(ServiceEntite serviceDemandeur){
+		this();
+		this.serviceDemandeur = serviceDemandeur;
+	}
+	
+	
+	public static ServiceEntite getInstance(ServiceEntite serviceDemandeur){
+		
+		return serviceDemandeur;
+	}
 	/********************************** GETTER ************************************/
 	/**
 	 * @return les entites du service
@@ -164,11 +184,12 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		PrintWriter printWriter;
 		printWriter = new PrintWriter(new FileWriter(getFile(), true));
 		for(Entite entite:this.getEntites()){
-			printWriter.println(getEnregistrement(entite));
+			printWriter.println(serviceDemandeur.getEnregistrement(entite));
 		}
 		printWriter.close();
 
 	}
+
 	
 	@Override
 	public void charger(){
@@ -181,7 +202,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 				String s;
 				while((s=br.readLine())!=null){
 					StringTokenizer st = new StringTokenizer(s, ";");
-					Entite entite = lireEntite(st);
+					Entite entite = serviceDemandeur.lireEntite(st);
 					if(entite!=null){
 						this.getEntites().add(entite);
 					}
@@ -201,4 +222,33 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	public boolean isFirstRecord(){
 		return firstRecord;
 	}
+
+	
+	/*---------------------------------------- NON INSTANCIE --------------------------------------------------*/
+	
+
+	@Override
+	public void visualiser() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visualiser(int id) throws ObjetInexistantException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getEnregistrement(Entite entite) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Entite lireEntite(StringTokenizer st) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

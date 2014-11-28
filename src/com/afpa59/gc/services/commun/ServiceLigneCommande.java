@@ -1,4 +1,4 @@
-package com.afpa59.gc.services.jdbc;
+package com.afpa59.gc.services.commun;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
+import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 
 
 public class ServiceLigneCommande extends ServiceEntiteBase{
@@ -32,8 +32,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * @param commande
 	 */
 	public ServiceLigneCommande(Commande commande){
-		
-		setFile(new File("lignesCommandes.txt"));
+		this();
 
 		this.commande = commande;
 		
@@ -156,5 +155,14 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 			ligne.setQte(Integer.parseInt(st.nextToken()));
 		}
 		return ligne;
-	}	
+	}
+	
+	public float sousTotal(int id) throws ObjetInexistantException{
+		float tot = 0;
+		LigneCommande ligne = (LigneCommande) this.rechercherParId(id);
+		Article article = (Article) ServiceArticle.getInstance().rechercherParId(ligne.getArticle().getId());
+		tot = (article.getPrix()*ligne.getQte());
+		
+		return tot;
+	}
 }

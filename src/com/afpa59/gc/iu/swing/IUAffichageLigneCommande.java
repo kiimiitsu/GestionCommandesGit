@@ -20,13 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.afpa59.gc.donnees.Article;
-import com.afpa59.gc.donnees.Client;
-import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.LigneCommande;
-import com.afpa59.gc.services.fichier.ObjetInexistantException;
-import com.afpa59.gc.services.fichier.ServiceArticle;
-import com.afpa59.gc.services.fichier.ServiceClient;
-import com.afpa59.gc.services.fichier.ServiceLigneCommande;
+import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceArticle;
+import com.afpa59.gc.services.commun.ServiceLigneCommande;
 
 public class IUAffichageLigneCommande extends JFrame{
 

@@ -1,16 +1,11 @@
 package com.afpa59.gc.appli;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.Scanner;
 
-import javax.swing.JPanel;
-
-import com.afpa59.gc.iu.swing.IUGenerale;
-import com.afpa59.gc.services.fichier.ServiceArticle;
-import com.afpa59.gc.services.fichier.ServiceClient;
-import com.afpa59.gc.services.fichier.ServiceCommande;
+import com.afpa59.gc.iu.console.IUGenerale;
+import com.afpa59.gc.services.commun.ServiceArticle;
+import com.afpa59.gc.services.commun.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceCommande;
 
 public class GestionCommandes {
 	
@@ -22,8 +17,8 @@ public class GestionCommandes {
 		ServiceCommande sCom = ServiceCommande.getInstance();
 		
 		//swing
-		new IUGenerale("Application de gestion des commandes", 1200, 800);
-		/*
+		//new IUGenerale("Application de gestion des commandes", 1200, 800);
+		
 		try {
 			IUGenerale mainMenu = new IUGenerale(sa, sc, sCom, scanner);
 			mainMenu.afficheMenu();
@@ -33,7 +28,7 @@ public class GestionCommandes {
 			sCom.sauvegardeEntites(false);
 		}catch(IOException e){
 			System.out.println(e.getMessage());
-		}*/
+		}
 	}
 	
 	

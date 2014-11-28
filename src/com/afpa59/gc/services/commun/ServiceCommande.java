@@ -1,4 +1,4 @@
-package com.afpa59.gc.services.fichier;
+package com.afpa59.gc.services.commun;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
+import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 
 public class ServiceCommande extends ServiceEntiteBase{
 	

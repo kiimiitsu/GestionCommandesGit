@@ -3,9 +3,9 @@ package com.afpa59.gc.iu.console;
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.afpa59.gc.services.fichier.ServiceArticle;
-import com.afpa59.gc.services.fichier.ServiceClient;
-import com.afpa59.gc.services.fichier.ServiceCommande;
+import com.afpa59.gc.services.commun.ServiceArticle;
+import com.afpa59.gc.services.commun.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceCommande;
 
 public class IUGenerale {
 	

@@ -185,7 +185,16 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		PrintWriter printWriter;
 		printWriter = new PrintWriter(new FileWriter(getFile(), true));
 		for(Entite entite:this.getEntites()){
-			printWriter.println(serviceDemandeur.getEnregistrement(entite));
+			String entiteToString = "";
+			String[] fields = serviceDemandeur.getFields(entite);
+			for(int i = 0; i< fields.length;i++){
+				entiteToString+=fields[i];
+				if(i!=(fields.length-1)){
+					entiteToString+=";";
+				}
+			}
+			
+			printWriter.println(entiteToString);
 		}
 		printWriter.close();
 
@@ -252,7 +261,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	}
 
 	@Override
-	public String getEnregistrement(Entite entite) {
+	public String[] getFields(Entite entite) {
 		// TODO Auto-generated method stub
 		return null;
 	}

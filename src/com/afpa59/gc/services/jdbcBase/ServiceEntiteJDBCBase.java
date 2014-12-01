@@ -1,6 +1,5 @@
-package com.afpa59.gc.services.jdbc;
+package com.afpa59.gc.services.jdbcBase;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,16 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.services.commun.Critere;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
 
-public class ServiceEntiteJDBC implements ServiceEntite{
+public class ServiceEntiteJDBCBase implements ServiceEntite{
 	
 	private List<Entite> entites;
+	private int compteur;
 	private Connection connexion;
 	private String table;
 	
@@ -28,8 +27,9 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	/**
 	 * constructeur par defaut
 	 */
-	public ServiceEntiteJDBC() {
+	public ServiceEntiteJDBCBase() {
 		this.entites = new ArrayList<Entite>();
+		this.compteur = 1;
 		this.connexion = MyDataBase.getConnection();
 	}
 	
@@ -37,7 +37,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	 * constructeur
 	 * @param serviceDemandeur
 	 */
-	public ServiceEntiteJDBC(ServiceEntite serviceDemandeur){
+	public ServiceEntiteJDBCBase(ServiceEntite serviceDemandeur){
 		this();
 		this.serviceDemandeur = serviceDemandeur;
 		configTable();
@@ -51,6 +51,13 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		return entites;
 	}
 	
+	/**
+	 * @return le compteur id
+	 */
+	public int getCompteur() {
+		return compteur;
+	}
+	
 	public String getTable() {
 		return table;
 	}
@@ -62,6 +69,13 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	public void setEntites(List<Entite> entites) {
 		this.entites = entites;
 	}
+	
+	/**
+	 * @param compteur
+	 */
+	public void setCompteur(int compteur) {
+		this.compteur = compteur;
+	}
 
 	public void setTable(String table) {
 		this.table = table;
@@ -69,7 +83,8 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	/*----------------------------------- METHODES -----------------------------------*/
 	
 	public void configTable(){
-		this.setTable(table);
+		serviceDemandeur.setTableName();
+		this.setTable(serviceDemandeur.getTableName());
 	}
 	
 	/**
@@ -80,6 +95,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	@Override
 	public void creer(Entite entite) throws IOException {
 		this.getEntites().add(entite);
+		this.compteur++;
 	}
 	
 	/**
@@ -142,7 +158,26 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	
 	@Override
 	public void sauvegardeEntites(boolean bSuite) throws IOException{
-
+		Statement stmt;
+		try {
+			stmt = this.connexion.createStatement();
+			
+			for(Entite entite:this.getEntites()){
+				String insertSql = "INSERT INTO "+table+" VALUES (";
+				String[] fields = serviceDemandeur.getFields(entite);
+				for(int i = 0; i< fields.length;i++){
+					insertSql+="'"+fields[i]+"'";
+					if(i!=(fields.length-1)){
+						insertSql+=",";
+					}
+				}
+				insertSql += ")";
+				System.out.println(insertSql);
+				stmt.execute(insertSql);
+			}	
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 	
@@ -152,12 +187,10 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		try {
 			stmt = this.connexion.createStatement();
 			String sql = "SELECT * FROM "+table;
-			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while(rs.next()){
 				Entite entite = serviceDemandeur.lireEntite(rs);
-				System.out.println(rs.getInt("id"));
 				if(entite!=null){
 					this.getEntites().add(entite);
 				}
@@ -167,25 +200,37 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 			System.out.println(e.getMessage());
 		}
 		
+		if(!entites.isEmpty()){ //on vérifie qu'on ne rentre pas dans une liste vide
+			this.compteur = this.entites.get(this.entites.size()-1).getId()+1;
+		}
+		
 	}
 
+	public static void deleteTables(){
+		Statement stmt;
+		try {
+			stmt = MyDataBase.getConnection().createStatement();
+			String drop = "TRUNCATE TABLE ligneCommande; TRUNCATE TABLE commande; TRUNCATE TABLE article; TRUNCATE TABLE client;";
+			stmt.execute(drop);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
 	@Override
 	public void visualiser() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void visualiser(Entite entite) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void visualiser(int id) throws ObjetInexistantException {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -197,11 +242,10 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	@Override
 	public void setTableName() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public String getEnregistrement(Entite entite) {
+	public String[] getFields(Entite entite) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -221,18 +265,6 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	@Override
 	public void setFirstRecord(boolean firstRecord) {
 		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
-	public void setCompteur(int compteur) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getCompteur() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

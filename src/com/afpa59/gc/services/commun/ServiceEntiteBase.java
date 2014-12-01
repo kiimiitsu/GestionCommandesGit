@@ -2,20 +2,18 @@ package com.afpa59.gc.services.commun;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.outils.BDD;
 import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
-import com.afpa59.gc.services.jdbc.ServiceEntiteJDBC;
+import com.afpa59.gc.services.jdbcBase.ServiceEntiteJDBCBase;
 
 public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	private ServiceEntite service;
 	private String tableName;
 	
-	private BDD serviceType = BDD.JDBC;
+	private BDD serviceType = BDD.JDBC_BASE;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	public ServiceEntiteBase(){
@@ -51,12 +49,12 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 
 	public ServiceEntite getInstance(ServiceEntite serviceDemandeur){
 		switch (serviceType) {
-		case FICHIER:
-			return new ServiceEntiteFichier(serviceDemandeur);
-		case JDBC:
-			return new ServiceEntiteJDBC(serviceDemandeur);
-		default:
-			return null;
+			case FICHIER:
+				return new ServiceEntiteFichier(serviceDemandeur);
+			case JDBC_BASE:
+				return new ServiceEntiteJDBCBase(serviceDemandeur);
+			default:
+				return null;
 		}
 	}
 	
@@ -72,7 +70,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	public abstract void visualiser(int id) throws ObjetInexistantException; 
 
-	public abstract String getEnregistrement(Entite entite);
+	public abstract String[] getFields(Entite entite);
 	
 	public abstract Entite lireEntite(Object source);
 	
@@ -116,9 +114,6 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	}
 
 	/*------------------------------- METHODES PROPRES AU FICHIER (A SUPPRIMER ET LAISSER DANS LE FICHIER ----------------------------------------*/
-
-
-	
 
 	@Override
 	public void charger() {

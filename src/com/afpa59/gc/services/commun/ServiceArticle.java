@@ -99,9 +99,9 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 * retourne la chaine correspondant à l'entité
 	 */
 	@Override
-	public String getEnregistrement(Entite entite){
+	public String[] getFields(Entite entite){
 		Article article = (Article)entite;
-		return article.getId()+";"+article.getLibelle()+";"+article.getPrix();
+		return new String[]{article.getId()+"", article.getLibelle(), article.getPrix()+""};
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 				prix = Float.parseFloat(st.nextToken());
 				break;
 				
-			case JDBC:
+			case JDBC_BASE:
 				ResultSet rs = (ResultSet) source;
 				try {
 					id = rs.getInt("id");

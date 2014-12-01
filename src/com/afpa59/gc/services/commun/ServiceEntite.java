@@ -23,16 +23,18 @@ public interface ServiceEntite {
 	public void setTableName();
 	
 	public Entite lireEntite(Object source);
+	public void sauvegardeEntites(boolean bSUite) throws IOException;
+	public String[] getFields(Entite entite);
+	public void charger();
 	
 	//Autres actions sur les entités
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException ;
 	public Entite rechercherParId(int id) throws ObjetInexistantException;
 	
 	//Actions de sauvegarde et chargement des entités en fichier
-	public void sauvegardeEntites(boolean bSUite) throws IOException;
-	public String getEnregistrement(Entite entite);
 	
-	public void charger();
+	
+	
 	
 	public boolean isFirstRecord();
 	public void setFirstRecord(boolean firstRecord);

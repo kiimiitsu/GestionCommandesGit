@@ -123,12 +123,12 @@ public class ServiceClient extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne la chaine correspondant à l'entité
+	 * retourne les champs correspondant à l'entité
 	 */
 	@Override
-	public String getEnregistrement(Entite entite){
+	public String[] getFields(Entite entite){
 		Client client = (Client)entite;
-		return client.getId()+";"+client.getNom()+";"+client.getPrenom()+";"+client.getAdresse();
+		return new String[]{client.getId()+"",client.getNom(),client.getPrenom(), client.getAdresse()};
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class ServiceClient extends ServiceEntiteBase{
 				adresse = st.nextToken();
 				break;
 				
-			case JDBC:
+			case JDBC_BASE:
 				ResultSet rs = (ResultSet) source;
 				try {
 					id = rs.getInt("id");

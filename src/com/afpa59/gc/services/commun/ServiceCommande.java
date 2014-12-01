@@ -125,10 +125,10 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne la chaine correspondant à l'entité
+	 * retourne les champs correspondant à l'entité
 	 */
 	@Override
-	public String getEnregistrement(Entite entite) {
+	public String[] getFields(Entite entite) {
 		Commande commande = (Commande)entite;
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		try {
@@ -138,7 +138,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 			System.out.println(e.getMessage());
 		}
 
-		return commande.getId()+";"+commande.getClient().getId();
+		return new String[]{commande.getId()+"",commande.getClient().getId()+""};
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 				
 				break;
 				
-			case JDBC:
+			case JDBC_BASE:
 				ResultSet rs = (ResultSet) source;
 				try {
 					id = rs.getInt("id");

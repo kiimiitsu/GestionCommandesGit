@@ -135,9 +135,9 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * @param entite
 	 */
 	@Override
-	public String getEnregistrement(Entite entite){
+	public String[] getFields(Entite entite){
 		LigneCommande lc = (LigneCommande) entite;
-		return lc.getCommande().getId()+";"+lc.getId()+";"+lc.getArticle().getId()+";"+lc.getQte();
+		return new String[]{lc.getCommande().getId()+"",lc.getId()+"",lc.getArticle().getId()+"",lc.getQte()+""};
 	}
 
 	/**
@@ -169,17 +169,25 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 				}
 				
 				quantite = Integer.parseInt(st.nextToken());
-			}
+			} else return null;
 			break;
 			
-		case JDBC:
+		case JDBC_BASE:
 			ResultSet rs = (ResultSet) source;
 			try {
-				id = rs.getInt("id");
+				
 				idCommande = rs.getInt("commande_id");
 				
-				
-				
+				if(commande.getId()==idCommande){
+					id = rs.getInt("id");
+					try {
+						article = (Article)getServiceArticle().rechercherParId(rs.getInt("article_id"));
+					} catch (ObjetInexistantException e) {
+						System.out.println(e.getMessage());
+					}
+					
+					quantite = rs.getInt("quantite");
+				}else return null;
 				
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());

@@ -15,7 +15,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private ServiceEntite service;
 	private String tableName;
 	
-	private BDD serviceType = BDD.FICHIER;
+	private BDD serviceType = BDD.JDBC_BASE;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	public ServiceEntiteBase(){

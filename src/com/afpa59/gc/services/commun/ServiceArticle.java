@@ -2,8 +2,10 @@ package com.afpa59.gc.services.commun;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Map.Entry;
 
 import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Entite;
@@ -99,9 +101,15 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 * retourne la chaine correspondant à l'entité
 	 */
 	@Override
-	public String[] getFields(Entite entite){
+	public HashMap<String,String> getFields(Entite entite){
 		Article article = (Article)entite;
-		return new String[]{article.getId()+"", article.getLibelle(), article.getPrix()+""};
+		HashMap<String, String> fields = new HashMap<String, String>();
+
+		fields.put("id", article.getId()+"");
+		fields.put("libelle", article.getLibelle());
+		fields.put("prix", article.getPrix()+"");
+
+		return fields;
 	}
 	
 	/**
@@ -122,7 +130,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 				libelle = st.nextToken();
 				prix = Float.parseFloat(st.nextToken());
 				break;
-				
+			case JDBC: //valable pour les 2 cas
 			case JDBC_BASE:
 				ResultSet rs = (ResultSet) source;
 				try {

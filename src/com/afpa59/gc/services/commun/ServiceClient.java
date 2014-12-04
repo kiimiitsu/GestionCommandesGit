@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
@@ -126,9 +127,16 @@ public class ServiceClient extends ServiceEntiteBase{
 	 * retourne les champs correspondant à l'entité
 	 */
 	@Override
-	public String[] getFields(Entite entite){
+	public HashMap<String, String> getFields(Entite entite){
 		Client client = (Client)entite;
-		return new String[]{client.getId()+"",client.getNom(),client.getPrenom(), client.getAdresse()};
+		HashMap<String, String> fields = new HashMap<String, String>();
+
+		fields.put("id", client.getId()+"");
+		fields.put("nom", client.getNom());
+		fields.put("prenom", client.getPrenom());
+		fields.put("adresse", client.getAdresse());
+		
+		return fields;
 	}
 
 	/**
@@ -150,7 +158,7 @@ public class ServiceClient extends ServiceEntiteBase{
 				prenom = st.nextToken();
 				adresse = st.nextToken();
 				break;
-				
+			case JDBC: //valable pour les 2 cas
 			case JDBC_BASE:
 				ResultSet rs = (ResultSet) source;
 				try {

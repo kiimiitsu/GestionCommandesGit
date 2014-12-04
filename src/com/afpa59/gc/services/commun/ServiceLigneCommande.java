@@ -1,20 +1,17 @@
 package com.afpa59.gc.services.commun;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.StringTokenizer;
 
 import com.afpa59.gc.donnees.Article;
-import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
-import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 
 
 public class ServiceLigneCommande extends ServiceEntiteBase{
@@ -27,7 +24,6 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * constructeur par défaut
 	 */
 	public ServiceLigneCommande() {
-		
 		
 	}
 	
@@ -135,9 +131,16 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * @param entite
 	 */
 	@Override
-	public String[] getFields(Entite entite){
+	public HashMap<String, String> getFields(Entite entite){
 		LigneCommande lc = (LigneCommande) entite;
-		return new String[]{lc.getCommande().getId()+"",lc.getId()+"",lc.getArticle().getId()+"",lc.getQte()+""};
+		HashMap<String, String> fields = new HashMap<String, String>();
+
+		fields.put("id", lc.getCommande().getId()+"");
+		fields.put("commande_id", lc.getId()+"");
+		fields.put("article_id", lc.getArticle().getId()+"");
+		fields.put("quantite", lc.getQte()+"");
+		
+		return fields;
 	}
 
 	/**
@@ -171,7 +174,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 				quantite = Integer.parseInt(st.nextToken());
 			} else return null;
 			break;
-			
+		case JDBC: //valable pour les 2 cas
 		case JDBC_BASE:
 			ResultSet rs = (ResultSet) source;
 			try {
@@ -218,5 +221,12 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		return tot;
 	}
 
+	/*public List<Entite> rechercherParCommande() throws ObjetInexistantException{
+		return chercherEntite(new Critere(){
+			public boolean critere(Entite e){
+				return (((LigneCommande) e).getCommande().getId()==commande.getId()) ;
+			}
+		});
+	}*/
 	
 }

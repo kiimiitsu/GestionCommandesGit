@@ -3,6 +3,7 @@ package com.afpa59.gc.services.commun;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -128,7 +129,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 * retourne les champs correspondant à l'entité
 	 */
 	@Override
-	public String[] getFields(Entite entite) {
+	public HashMap<String, String> getFields(Entite entite) {
 		Commande commande = (Commande)entite;
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		try {
@@ -137,8 +138,13 @@ public class ServiceCommande extends ServiceEntiteBase{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		HashMap<String, String> fields = new HashMap<String, String>();
 
-		return new String[]{commande.getId()+"",commande.getClient().getId()+""};
+		fields.put("id", commande.getId()+"");
+		fields.put("libelle", commande.getClient().getId()+"");
+		
+		return fields;
 	}
 
 	/**
@@ -164,7 +170,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 				}
 				
 				break;
-				
+			case JDBC: //valable pour les 2 cas
 			case JDBC_BASE:
 				ResultSet rs = (ResultSet) source;
 				try {
@@ -192,7 +198,6 @@ public class ServiceCommande extends ServiceEntiteBase{
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		sLC.charger();
 		
-		//ajoute les lignes à la commande
 		for(Entite ligne:sLC.getEntites()){
 			commande.getLignesCommande().add((LigneCommande) ligne);
 		}

@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
@@ -186,10 +187,10 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		printWriter = new PrintWriter(new FileWriter(getFile(), true));
 		for(Entite entite:this.getEntites()){
 			String entiteToString = "";
-			String[] fields = serviceDemandeur.getFields(entite);
-			for(int i = 0; i< fields.length;i++){
-				entiteToString+=fields[i];
-				if(i!=(fields.length-1)){
+			HashMap<String, String> fields = serviceDemandeur.getFields(entite);
+			for(int i = 0; i< fields.size();i++){
+				entiteToString+=fields.get(i);
+				if(i!=(fields.size()-1)){
 					entiteToString+=";";
 				}
 			}
@@ -203,6 +204,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	
 	@Override
 	public void charger(){
+		System.out.println(getFile().getAbsolutePath());
 		if(getFile().exists()){
 			
 			BufferedReader br;
@@ -213,7 +215,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 				while((s=br.readLine())!=null){
 					StringTokenizer st = new StringTokenizer(s, ";");
 					Entite entite = serviceDemandeur.lireEntite(st);
-					if(entite!=null){
+ 					if(entite!=null){
 						this.getEntites().add(entite);
 					}
 				}
@@ -236,32 +238,31 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	public void configFile(){
 		serviceDemandeur.setTableName();
 		String fileName = serviceDemandeur.getTableName()+".txt";
-		this.setFile(new File(fileName));
+		
+		this.setFile(new File("C:/commandes.SAV/"+fileName));
+	}
+	
+	@Override
+	public void visualiser() {
+		for(Entite e : getEntites()){
+			serviceDemandeur.visualiser(e);
+		}
 	}
 	
 	/*---------------------------------------- NON IMPLEMENTE --------------------------------------------------*/
 	
-
-	@Override
-	public void visualiser() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void visualiser(Entite entite) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
 	public void visualiser(int id) throws ObjetInexistantException {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public String[] getFields(Entite entite) {
+	public HashMap<String, String> getFields(Entite entite) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -281,7 +282,6 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	@Override
 	public void setTableName() {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

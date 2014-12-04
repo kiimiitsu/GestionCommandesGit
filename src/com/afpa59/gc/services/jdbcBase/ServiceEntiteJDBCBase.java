@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -13,6 +15,7 @@ import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.services.commun.Critere;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
+import com.afpa59.gc.services.jdbc.MyDataBase;
 
 public class ServiceEntiteJDBCBase implements ServiceEntite{
 	
@@ -164,10 +167,10 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 			
 			for(Entite entite:this.getEntites()){
 				String insertSql = "INSERT INTO "+table+" VALUES (";
-				String[] fields = serviceDemandeur.getFields(entite);
-				for(int i = 0; i< fields.length;i++){
-					insertSql+="'"+fields[i]+"'";
-					if(i!=(fields.length-1)){
+				HashMap<String,String> fields = serviceDemandeur.getFields(entite);
+				for(int i = 0; i< fields.size();i++){
+					insertSql+="'"+fields.get(i)+"'";
+					if(i!=(fields.size()-1)){
 						insertSql+=",";
 					}
 				}
@@ -221,6 +224,9 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
 	@Override
 	public void visualiser() {
+		for(Entite e : getEntites()){
+			visualiser(e);
+		}
 	}
 
 	@Override
@@ -230,7 +236,6 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 
 	@Override
 	public void visualiser(int id) throws ObjetInexistantException {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -245,7 +250,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	}
 
 	@Override
-	public String[] getFields(Entite entite) {
+	public LinkedHashMap<String, String> getFields(Entite entite) {
 		// TODO Auto-generated method stub
 		return null;
 	}

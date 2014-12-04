@@ -1,11 +1,13 @@
 package com.afpa59.gc.services.commun;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.outils.BDD;
 import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
+import com.afpa59.gc.services.jdbc.ServiceEntiteJDBC;
 import com.afpa59.gc.services.jdbcBase.ServiceEntiteJDBCBase;
 
 public abstract class ServiceEntiteBase implements ServiceEntite{
@@ -13,7 +15,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private ServiceEntite service;
 	private String tableName;
 	
-	private BDD serviceType = BDD.JDBC_BASE;
+	private BDD serviceType = BDD.FICHIER;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	public ServiceEntiteBase(){
@@ -53,16 +55,16 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 				return new ServiceEntiteFichier(serviceDemandeur);
 			case JDBC_BASE:
 				return new ServiceEntiteJDBCBase(serviceDemandeur);
+			case JDBC:
+				return new ServiceEntiteJDBC(serviceDemandeur);
 			default:
 				return null;
 		}
 	}
 	
 	/*-------------------------- METHODES COMMUNES -----------------*/
-	public void visualiser(){
-		for(Entite e : getEntites()){
-			visualiser(e);
-		}
+	public void visualiser(){ //a voir
+		service.visualiser();
 	}
 
 	/*---------- METHODES DEFINIES DANS LA FILLE ------------*/
@@ -70,7 +72,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	public abstract void visualiser(int id) throws ObjetInexistantException; 
 
-	public abstract String[] getFields(Entite entite);
+	public abstract HashMap<String,String> getFields(Entite entite);
 	
 	public abstract Entite lireEntite(Object source);
 	

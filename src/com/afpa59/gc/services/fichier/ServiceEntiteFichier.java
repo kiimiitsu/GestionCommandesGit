@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
@@ -187,14 +188,18 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		printWriter = new PrintWriter(new FileWriter(getFile(), true));
 		for(Entite entite:this.getEntites()){
 			String entiteToString = "";
-			HashMap<String, String> fields = serviceDemandeur.getFields(entite);
-			for(int i = 0; i< fields.size();i++){
-				entiteToString+=fields.get(i);
+			LinkedHashMap<String, String> fields = serviceDemandeur.getFields(entite);
+			
+			int i = 0;
+			for(String s: fields.values()){
+				entiteToString+=s;
+				
 				if(i!=(fields.size()-1)){
 					entiteToString+=";";
 				}
+				i++;
 			}
-			
+			System.out.println(entiteToString);
 			printWriter.println(entiteToString);
 		}
 		printWriter.close();
@@ -262,7 +267,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	}
 
 	@Override
-	public HashMap<String, String> getFields(Entite entite) {
+	public LinkedHashMap<String, String> getFields(Entite entite) {
 		// TODO Auto-generated method stub
 		return null;
 	}

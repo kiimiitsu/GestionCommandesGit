@@ -34,7 +34,7 @@ CREATE TABLE ligneCommande
 	FOREIGN KEY (article_id) REFERENCES article
 )
 
-INSERT INTO article VALUES (1,'vache',500.0),(2,'mouton',200.0),(3,'poule',10.0),(4,'lapin',20.0),(5,'cheval',1000.0),(6,'ane',800.0),(7,'oie',9.0),(8,'canard',14.0)
+INSERT INTO article VALUES (1,'vache',500.0),(2,'mouton',200.0),(3,'poule',10.0),(4,'lapin',20.0),(5,'cheval',1000.0),(6,'ane',800.0),(7,'oie',9.0),(8,'canard',14.0),(9,'cochon',70.0)
 INSERT INTO client VALUES (1,'Baba','Toto','19 rue des champs'),(2,'Gaga','Bobo','58 rue des prés'),(3,'Tata','Fifi','47 av de la paix'),(5,'baba','Lota','8 rue de la butte'),(6,'Moi','Gru','8 rue des minions'),(7,'Juju','Lily','7 rue des pochettes'),(8,'Durand','Pierre','9 rue de la ferme'),(9,'Durand','ROmain','8 place sainte marthe'),(10,'chea','caroline','18 rue des pins'),(11,'Chea','hugo','19 av adolphe devaux');
 INSERT INTO commande VALUES (1,5),(2,3),(3,7),(4,6),(5,1),(6,3),(7,8),(8,5),(9,7),(10,2),(11,5);
 INSERT INTO ligneCommande VALUES (1,1,1,1),(1,2,6,2),(1,3,1,8),(2,1,1,2),(2,2,5,3),(3,1,1,1),(3,2,8,4),(4,1,4,1),(5,1,4,9),(5,2,7,1),(6,1,8,4);

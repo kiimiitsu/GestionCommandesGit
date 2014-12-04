@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -129,7 +130,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 * retourne les champs correspondant à l'entité
 	 */
 	@Override
-	public HashMap<String, String> getFields(Entite entite) {
+	public LinkedHashMap<String, String> getFields(Entite entite) {
 		Commande commande = (Commande)entite;
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		try {
@@ -139,10 +140,10 @@ public class ServiceCommande extends ServiceEntiteBase{
 			System.out.println(e.getMessage());
 		}
 		
-		HashMap<String, String> fields = new HashMap<String, String>();
+		LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 
 		fields.put("id", commande.getId()+"");
-		fields.put("libelle", commande.getClient().getId()+"");
+		fields.put("client_id", commande.getClient().getId()+"");
 		
 		return fields;
 	}

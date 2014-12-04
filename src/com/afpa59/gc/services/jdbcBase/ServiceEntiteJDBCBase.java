@@ -166,17 +166,22 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 			stmt = this.connexion.createStatement();
 			
 			for(Entite entite:this.getEntites()){
-				String insertSql = "INSERT INTO "+table+" VALUES (";
-				HashMap<String,String> fields = serviceDemandeur.getFields(entite);
-				for(int i = 0; i< fields.size();i++){
-					insertSql+="'"+fields.get(i)+"'";
+				String insertQuery = "INSERT INTO "+table+" VALUES (";
+				LinkedHashMap<String,String> fields = serviceDemandeur.getFields(entite);
+				int i = 0;
+				for(String s: fields.values()){
+					insertQuery+="'"+s+"'";
+					
 					if(i!=(fields.size()-1)){
-						insertSql+=",";
+						insertQuery+=",";
 					}
+					i++;
 				}
-				insertSql += ")";
-				System.out.println(insertSql);
-				stmt.execute(insertSql);
+				
+				
+				insertQuery += ")";
+				System.out.println(insertQuery);
+				stmt.execute(insertQuery);
 			}	
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -225,7 +230,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	@Override
 	public void visualiser() {
 		for(Entite e : getEntites()){
-			visualiser(e);
+			serviceDemandeur.visualiser(e);
 		}
 	}
 

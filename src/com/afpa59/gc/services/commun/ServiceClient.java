@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.StringTokenizer;
@@ -127,9 +128,9 @@ public class ServiceClient extends ServiceEntiteBase{
 	 * retourne les champs correspondant à l'entité
 	 */
 	@Override
-	public HashMap<String, String> getFields(Entite entite){
+	public LinkedHashMap<String, String> getFields(Entite entite){
 		Client client = (Client)entite;
-		HashMap<String, String> fields = new HashMap<String, String>();
+		LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 
 		fields.put("id", client.getId()+"");
 		fields.put("nom", client.getNom());

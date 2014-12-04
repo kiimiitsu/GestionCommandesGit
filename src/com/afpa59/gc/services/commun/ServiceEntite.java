@@ -1,6 +1,6 @@
 package com.afpa59.gc.services.commun;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.afpa59.gc.donnees.Entite;
@@ -22,7 +22,7 @@ public interface ServiceEntite {
 	
 	public Entite lireEntite(Object source);
 	public void sauvegardeEntites(boolean bSUite) throws IOException;
-	public HashMap<String,String> getFields(Entite entite);
+	public LinkedHashMap<String, String> getFields(Entite entite);
 	public void charger();
 	
 	//Autres actions sur les entités

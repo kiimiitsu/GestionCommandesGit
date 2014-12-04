@@ -1,7 +1,7 @@
 package com.afpa59.gc.services.commun;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.afpa59.gc.donnees.Entite;
@@ -72,7 +72,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	public abstract void visualiser(int id) throws ObjetInexistantException; 
 
-	public abstract HashMap<String,String> getFields(Entite entite);
+	public abstract LinkedHashMap<String, String> getFields(Entite entite);
 	
 	public abstract Entite lireEntite(Object source);
 	

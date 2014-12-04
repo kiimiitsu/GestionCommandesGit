@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
@@ -101,9 +102,9 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 * retourne la chaine correspondant à l'entité
 	 */
 	@Override
-	public HashMap<String,String> getFields(Entite entite){
+	public LinkedHashMap<String, String> getFields(Entite entite){
 		Article article = (Article)entite;
-		HashMap<String, String> fields = new HashMap<String, String>();
+		LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 
 		fields.put("id", article.getId()+"");
 		fields.put("libelle", article.getLibelle());

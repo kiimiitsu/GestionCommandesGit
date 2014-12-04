@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map.Entry;
@@ -260,7 +261,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	public void setTableName() {}
 
 	@Override
-	public HashMap<String, String> getFields(Entite entite) {return null;}
+	public LinkedHashMap<String, String> getFields(Entite entite) {return null;}
 
 	@Override
 	public Entite lireEntite(Object source) {return null;}

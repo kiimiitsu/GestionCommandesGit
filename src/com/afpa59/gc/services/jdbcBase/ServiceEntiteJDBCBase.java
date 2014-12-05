@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import com.afpa59.gc.donnees.Entite;
+import com.afpa59.gc.outils.MyDataBase;
 import com.afpa59.gc.services.commun.Critere;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
-import com.afpa59.gc.services.jdbc.MyDataBase;
 
 public class ServiceEntiteJDBCBase implements ServiceEntite{
 	
@@ -226,55 +226,45 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 		}
 	}
 	
-	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
 	@Override
 	public void visualiser() {
 		for(Entite e : getEntites()){
 			serviceDemandeur.visualiser(e);
 		}
 	}
+	
+	@Override
+	protected void finalize() throws Throwable{
+		super.finalize();
+		
+		sauvegardeEntites(false);
+	}
+	
+	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
+	
 
 	@Override
-	public void visualiser(Entite entite) {
-		// TODO Auto-generated method stub
-	}
+	public void visualiser(Entite entite) {}
 
 	@Override
-	public void visualiser(int id) throws ObjetInexistantException {
-	}
+	public void visualiser(int id) throws ObjetInexistantException {}
 
 	@Override
-	public String getTableName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String getTableName() {return null;}
 
 	@Override
-	public void setTableName() {
-		// TODO Auto-generated method stub
-	}
+	public void setTableName() {}
 
 	@Override
-	public LinkedHashMap<String, String> getFields(Entite entite) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public LinkedHashMap<String, String> getFields(Entite entite) {return null;}
 
 	@Override
-	public Entite lireEntite(Object source) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Entite lireEntite(Object source) {return null;}
 
 	@Override
-	public boolean isFirstRecord() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean isFirstRecord() {return false;}
 
 	@Override
-	public void setFirstRecord(boolean firstRecord) {
-		// TODO Auto-generated method stub
-	}
+	public void setFirstRecord(boolean firstRecord) {}
 
 }

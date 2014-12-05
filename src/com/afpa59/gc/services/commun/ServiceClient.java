@@ -27,7 +27,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	 */
 	private ServiceClient(){
 		serviceClient = this;
-		charger();
+		//charger();
 	}
 	
 	/*********************************** METHODES DE CLASSE *******************************/

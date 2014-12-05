@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import org.omg.CORBA.portable.ValueBase;
 
 import com.afpa59.gc.donnees.Entite;
+import com.afpa59.gc.outils.MyDataBase;
 import com.afpa59.gc.services.commun.Critere;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
@@ -60,6 +61,27 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	public void configTable(){
 		serviceDemandeur.setTableName();
 		this.setTable(serviceDemandeur.getTableName());
+	}
+	
+	@Override
+	public List<Entite> getEntites() {
+		List<Entite> entites = new ArrayList<Entite>();
+		Statement stmt;
+		try {
+			stmt = MyDataBase.getConnection().createStatement();
+			String sql = "SELECT * FROM "+table;
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()){
+				Entite entite = serviceDemandeur.lireEntite(rs);
+				if(entite!=null){
+					entites.add(entite);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return entites;
 	}
 	
 	/**
@@ -178,22 +200,13 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException {
 		
 		List<Entite> match = new ArrayList<Entite>();
+		ListIterator<Entite> iterator = this.getEntites().listIterator();
 		
-		Statement stmt;
-		try {
-			stmt = MyDataBase.getConnection().createStatement();
-			String sql = "SELECT * FROM "+table;
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			while(rs.next()){
-				Entite entite = serviceDemandeur.lireEntite(rs);
-				
-				if(c.critere(entite)){
-					match.add(entite);
-				}
+		while (iterator.hasNext()){
+			Entite entite = iterator.next();
+			if(c.critere(entite)){
+				match.add(entite);
 			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 		}
 		if(match.isEmpty()){
 			throw new ObjetInexistantException("L'objet auquel vous tentez d'accéder est inexistant !");
@@ -230,23 +243,16 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	
 	@Override
 	public void visualiser() {
-		Statement stmt;
-		try {
-			stmt = MyDataBase.getConnection().createStatement();
-			String sql = "SELECT * FROM "+table;
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			while(rs.next()){
-				Entite entite = serviceDemandeur.lireEntite(rs);
+		if(this.getEntites().isEmpty()){
+			System.out.println("Il n'y a aucun élément a afficher!");
+		}else{
+			for(Entite entite : this.getEntites()){
 				serviceDemandeur.visualiser(entite);
 			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 		}
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
-	
 
 	@Override
 	public void visualiser(Entite entite) {}
@@ -278,8 +284,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	@Override
 	public int getCompteur() {return 0;}
 
-	@Override
-	public List<Entite> getEntites() {return null;}
+	
 
 	@Override
 	public void setEntites(List<Entite> entites) {}

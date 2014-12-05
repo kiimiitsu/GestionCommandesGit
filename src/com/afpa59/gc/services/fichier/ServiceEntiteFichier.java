@@ -45,6 +45,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		this();
 		this.serviceDemandeur = serviceDemandeur;
 		configFile();
+		charger();
 	}
 	
 	
@@ -252,6 +253,12 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		for(Entite e : getEntites()){
 			serviceDemandeur.visualiser(e);
 		}
+	}
+	
+	@Override
+	protected void finalize() throws Throwable{
+		super.finalize();
+		sauvegardeEntites(false);
 	}
 	
 	/*---------------------------------------- NON IMPLEMENTE --------------------------------------------------*/

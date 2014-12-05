@@ -25,17 +25,13 @@ public class GestionCommandes {
 			mainMenu.afficheMenu();
 			scanner.close();
 			
-			if(sCom.getServiceType()==BDD.JDBC_BASE){
-				ServiceEntiteJDBCBase.deleteTables();
-			}
-			
+			/*
 			sa.sauvegardeEntites(false);
 			sc.sauvegardeEntites(false);
-			sCom.sauvegardeEntites(false);
+			sCom.sauvegardeEntites(false);*/
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}
 	}
-	
 	
 }

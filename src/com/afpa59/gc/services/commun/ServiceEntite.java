@@ -25,6 +25,7 @@ public interface ServiceEntite {
 	public LinkedHashMap<String, String> getFields(Entite entite);
 	public void charger();
 	
+	
 	//Autres actions sur les entités
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException ;
 	public Entite rechercherParId(int id) throws ObjetInexistantException;

@@ -1,4 +1,4 @@
-package com.afpa59.gc.services.jdbc;
+package com.afpa59.gc.outils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

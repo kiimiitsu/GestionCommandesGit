@@ -22,7 +22,6 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 */
 	private ServiceArticle() {
 		serviceArticle = this;
-		charger();
 	}
 	
 	/*********************************** METHODES DE CLASSE *******************************/

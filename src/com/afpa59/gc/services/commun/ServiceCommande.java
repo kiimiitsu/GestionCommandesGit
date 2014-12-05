@@ -23,7 +23,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 */
 	private ServiceCommande(){
 		serviceCommande = this;
-		charger();
+		//charger();
 	}
 	
 	/*********************************** METHODES DE CLASSE *******************************/
@@ -85,16 +85,10 @@ public class ServiceCommande extends ServiceEntiteBase{
 	public void visualiser(int id) throws ObjetInexistantException {
 		Entite aVoir = this.rechercherParId(id);
 
+		visualiser(aVoir);
+		
 		Commande commande = (Commande)aVoir;
 		List<LigneCommande> listeLC = commande.getLignesCommande();
-		System.out.println("Commande n° "+commande.getId()
-				+"\nClient : "
-				+"\nid = "+commande.getClient().getId()
-				+" nom = "+commande.getClient().getNom()
-				+" prenom = "+commande.getClient().getPrenom()
-				+" adresse = "+commande.getClient().getAdresse()
-				+"\nContenu : "
-		);
 		
 		if(listeLC==null){
 			System.out.println("Il n'y a pas de ligne de commande actuellement.");
@@ -120,9 +114,12 @@ public class ServiceCommande extends ServiceEntiteBase{
 		float total = 0;
 		
 		Commande commande = (Commande) this.rechercherParId(id);
-		for(LigneCommande lc: commande.getLignesCommande()){
+		List<LigneCommande> lignes =commande.getLignesCommande();
+
+		for(LigneCommande lc: lignes){
 			total+=(lc.getArticle().getPrix()*lc.getQte());
 		}
+		
 		return total;
 	}
 
@@ -197,10 +194,10 @@ public class ServiceCommande extends ServiceEntiteBase{
 		
 		//On récupère les lignes de commandes dans le fichier
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
-		sLC.charger();
 		
 		for(Entite ligne:sLC.getEntites()){
 			commande.getLignesCommande().add((LigneCommande) ligne);
+			
 		}
 		
 		return commande;

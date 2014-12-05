@@ -33,8 +33,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 * @param commande
 	 */
 	public ServiceLigneCommande(Commande commande){
-		this();
-
+		super(commande);
 		this.commande = commande;
 		
 		// Chargement des entités du service avec les lignes de la commande
@@ -53,6 +52,11 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		
 	}
 	/*************************** METHODES *****************************/
+	
+	@Override 
+	public void setParent(Entite entiteParent){
+		this.commande = (Commande) entiteParent;
+	}
 	
 	@Override
 	public void setTableName() {

@@ -22,8 +22,8 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 * contructeur par défaut
 	 */
 	private ServiceCommande(){
+		super(null);
 		serviceCommande = this;
-		//charger();
 	}
 	
 	/*********************************** METHODES DE CLASSE *******************************/

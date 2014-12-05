@@ -25,16 +25,15 @@ public interface ServiceEntite {
 	public LinkedHashMap<String, String> getFields(Entite entite);
 	public void charger();
 	
+	public void finaliser() throws IOException;
 	
 	//Autres actions sur les entités
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException ;
 	public Entite rechercherParId(int id) throws ObjetInexistantException;
 	
+	
 	//Actions de sauvegarde et chargement des entités en fichier
-	
-	
-	
-	
+		
 	public boolean isFirstRecord();
 	public void setFirstRecord(boolean firstRecord);
 	public void setEntites(List<Entite> entites);

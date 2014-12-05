@@ -16,11 +16,11 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BDD serviceType = BDD.FICHIER;
+	private BDD serviceType = BDD.JDBC_BASE;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	public ServiceEntiteBase(){
-		this.service = getInstance(this);
+		
 	}
 	
 	public ServiceEntiteBase(Entite entiteParent){
@@ -126,7 +126,12 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	public void sauvegardeEntites(boolean bSUite) throws IOException { // ? propre au fichier
 		service.sauvegardeEntites(bSUite);
 	}
-	
+	@Override
+	public void finaliser() throws IOException {
+
+		service.finaliser();
+
+	}
 	/*------------------------------- METHODES PROPRES AU FICHIER (A SUPPRIMER ET LAISSER DANS LE FICHIER ----------------------------------------*/
 
 	@Override
@@ -152,5 +157,4 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		return service.getCompteur();
 	}
 	
-
 }

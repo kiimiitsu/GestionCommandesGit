@@ -256,8 +256,8 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	}
 	
 	@Override
-	protected void finalize() throws Throwable{
-		super.finalize();
+	public void finaliser() throws IOException{
+		System.out.println("fin du programme");
 		sauvegardeEntites(false);
 	}
 	

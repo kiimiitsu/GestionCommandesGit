@@ -252,6 +252,11 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		}
 	}
 	
+	@Override
+	public void finaliser(){
+		
+	}
+	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
 
 	@Override
@@ -283,8 +288,6 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 
 	@Override
 	public int getCompteur() {return 0;}
-
-	
 
 	@Override
 	public void setEntites(List<Entite> entites) {}

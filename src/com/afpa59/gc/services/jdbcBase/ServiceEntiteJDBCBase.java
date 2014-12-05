@@ -234,9 +234,8 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	}
 	
 	@Override
-	protected void finalize() throws Throwable{
-		super.finalize();
-		
+	public void finaliser() throws IOException{
+		deleteTables();
 		sauvegardeEntites(false);
 	}
 	

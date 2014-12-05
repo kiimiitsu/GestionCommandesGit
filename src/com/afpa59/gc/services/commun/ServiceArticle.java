@@ -21,6 +21,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 * constructeur par defaut
 	 */
 	private ServiceArticle() {
+		super(null);
 		serviceArticle = this;
 	}
 	

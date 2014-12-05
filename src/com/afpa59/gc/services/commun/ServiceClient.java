@@ -26,8 +26,8 @@ public class ServiceClient extends ServiceEntiteBase{
 	 * contructeur par défaut
 	 */
 	private ServiceClient(){
+		super(null);
 		serviceClient = this;
-		//charger();
 	}
 	
 	/*********************************** METHODES DE CLASSE *******************************/
@@ -183,8 +183,5 @@ public class ServiceClient extends ServiceEntiteBase{
 		client = new Client(id, nom, prenom, adresse);
 		return client;
 	}
-
-
-	
 
 }

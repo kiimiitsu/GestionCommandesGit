@@ -8,17 +8,17 @@ public class MyDataBase {
 	
 	private static Connection connexion = null;
 	
-	private MyDataBase(){
+	private MyDataBase(String base){
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
-			connexion = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/gestioncommandes");
+			connexion = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/"+base);
 		} catch (ClassNotFoundException | SQLException e) {
 		}
 	}
 	
-	public static Connection getConnection(){
+	public static Connection getConnection(String base){
 		if(connexion==null){
-			new MyDataBase();
+			new MyDataBase(base);
 		}
 		return connexion;
 	}

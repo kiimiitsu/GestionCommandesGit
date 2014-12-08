@@ -16,7 +16,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	
 	private static ServiceArticle serviceArticle = null;
 
-	/**************************************** CONTRUCTEURS *********************************************/
+	/*------------------------------------------ CONTRUCTEURS ------------------------------------------*/
 	/**
 	 * constructeur par defaut
 	 */
@@ -25,7 +25,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 		serviceArticle = this;
 	}
 	
-	/*********************************** METHODES DE CLASSE *******************************/
+	/*------------------------------------------ METHODES DE CLASSE ------------------------------------------*/
 	/**
 	 * @return l'instance de la classe
 	 */
@@ -35,7 +35,10 @@ public class ServiceArticle extends ServiceEntiteBase{
 		return serviceArticle;
 	}
 	
-	/************************************* METHODES *************************************/
+	/*------------------------------------------ METHODES ------------------------------------------*/
+	/**
+	 * définit le nom de la table/du fichier
+	 */
 	public void setTableName(){
 		setTableName("article");
 	}
@@ -57,23 +60,12 @@ public class ServiceArticle extends ServiceEntiteBase{
 	@Override
 	public void visualiser(int id) throws ObjetInexistantException{
 		Article aVoir = (Article)this.rechercherParId(id);
-		
+		//visualiser(aVoir):
 		System.out.println("Id = "+aVoir.getId()
 					+" \nLibelle = "+aVoir.getLibelle()
 					+" \nprix = "+aVoir.getPrix());
 	}
-
-	/**
-	 * @param id
-	 * @paramentite
-	 */
-	@Override
-	public void modifier(int id, Entite entite) throws ObjetInexistantException {
-		Article article = (Article) entite;
-		super.modifier(id, article);
-		
-	}
-
+	
 	/**
 	 * Retourne la visualisation d'un article
 	 * @param entite
@@ -83,7 +75,17 @@ public class ServiceArticle extends ServiceEntiteBase{
 		Article article = (Article) entite;
 		System.out.println("Id = "+article.getId()+" nom = "+article.getLibelle()+" prix = "+article.getPrix());
 	}
-	
+
+	/**
+	 * @param id
+	 * @paramentite
+	 */
+	@Override
+	public void modifier(int id, Entite entite) throws ObjetInexistantException {
+		Article article = new Article((Article) entite);
+		super.modifier(id, article);
+	}
+
 	/**
 	 * rechercher les articles par libelle
 	 * @param libelle
@@ -100,6 +102,8 @@ public class ServiceArticle extends ServiceEntiteBase{
 	
 	/**
 	 * retourne la chaine correspondant à l'entité
+	 * @param entite
+	 * @return fields
 	 */
 	@Override
 	public LinkedHashMap<String, String> getFields(Entite entite){
@@ -115,6 +119,8 @@ public class ServiceArticle extends ServiceEntiteBase{
 	
 	/**
 	 * retourne l'entité correspondante à la source
+	 * @param source
+	 * @return article
 	 */
 	@Override
 	public Entite lireEntite(Object source){

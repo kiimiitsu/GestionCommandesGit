@@ -106,10 +106,13 @@ public class IUCommande extends IUEntiteBase{
 		
 		//création de la commande
 		Commande commande = new Commande();
-		commande.setId(((ServiceEntiteBase) getService()).getCompteur());
 		commande.setClient(client);
+		getService().creer(commande);
+		commande.setId(((ServiceEntiteBase) getService()).getCompteur());
 		
-		//appel au service commande pour remplir la commande
+		
+		
+		//appel au service lignecommande pour remplir la commande
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		new IULigneCommande(sLC, getScanner()).creer();
 		
@@ -118,7 +121,7 @@ public class IUCommande extends IUEntiteBase{
 			lLC.add((LigneCommande)e);
 		}
 		commande.setLignesCommande(lLC);
-		getService().creer(commande);
+		
 	}
 
 	/**
@@ -127,14 +130,21 @@ public class IUCommande extends IUEntiteBase{
 	@Override
 	public void modifier() {
 		System.out.println(" - Modifier une commande -");
+		
 		getService().visualiser();
 		System.out.println("Quel commande souhaitez-vous modifier?");
+		
 		int id = getScanner().nextInt();
+		
 		try { 
 			Commande commande = (Commande) getService().rechercherParId(id);
+			
 			ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
+			
 			new IULigneCommande(sLC, getScanner()).afficheMenu();
+			
 			List<LigneCommande> lLC = new ArrayList<LigneCommande>();
+			
 			for(Entite e:sLC.getEntites()){
 				lLC.add((LigneCommande)e);
 			}

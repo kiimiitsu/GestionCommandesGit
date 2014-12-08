@@ -6,13 +6,11 @@ public class LigneCommande extends Entite{
 	private Article article;
 	private int qte;
 	
-	/********************************** CONSTRUCTEURS *********************************/
+	/*------------------------------------------* CONSTRUCTEURS ------------------------------------------*/
 	/**
 	 * constructeur par defaut
 	 */
-	public LigneCommande(){
-		
-	}
+	public LigneCommande(){}
 	
 	/**
 	 * constructeur  avec paramètres
@@ -36,7 +34,7 @@ public class LigneCommande extends Entite{
 		this.qte = lc.qte;
 	}
 	
-	/********************************* GETTER ***************************************/
+	/*------------------------------------------ GETTER ------------------------------------------*/
 	/**
 	 * @return article
 	 */
@@ -57,7 +55,7 @@ public class LigneCommande extends Entite{
 	public Commande getCommande(){
 		return commande;
 	}
-	/******************************** SETTER *************************************/
+	/*------------------------------------------ SETTER ------------------------------------------*/
 	/**
 	 * @param article
 	 */

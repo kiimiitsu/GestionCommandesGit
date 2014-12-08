@@ -6,13 +6,11 @@ public class Article extends Entite{
 	private String libelle;
 	private float prix;
 	
-	/************************************* CONSTRUCTEURS *********************************/
+	/*------------------------------------------ CONSTRUCTEURS ------------------------------------------*/
 	/**
 	 * contructeur par défaut
 	 */
-	public Article(){
-		
-	}
+	public Article(){}
 	
 	/**
 	 * constructeur
@@ -34,7 +32,8 @@ public class Article extends Entite{
 		this.libelle = article.libelle;
 		this.prix = article.prix;
 	}
-	/*********************************** GETTER ***********************************************/
+	
+	/*------------------------------------------ GETTER ------------------------------------------*/
 	/**
 	 * @return libelle
 	 */
@@ -49,7 +48,7 @@ public class Article extends Entite{
 		return this.prix;
 	}
 	
-	/*********************************** SETTER *********************************************/
+	/*------------------------------------------ SETTER ------------------------------------------*/
 	/**
 	 * @param libelle
 	 */

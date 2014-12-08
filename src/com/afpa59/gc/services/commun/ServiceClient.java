@@ -21,7 +21,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	
 	private static ServiceClient serviceClient=null;
 	
-	/**************************************** CONTRUCTEURS *********************************************/
+	/*------------------------------------------ CONTRUCTEURS ------------------------------------------*/
 	/**
 	 * contructeur par défaut
 	 */
@@ -30,7 +30,7 @@ public class ServiceClient extends ServiceEntiteBase{
 		serviceClient = this;
 	}
 	
-	/*********************************** METHODES DE CLASSE *******************************/
+	/*------------------------------------------ METHODES DE CLASSE ------------------------------------------*/
 	/**
 	 * @return l'instance de la classe
 	 */
@@ -41,8 +41,10 @@ public class ServiceClient extends ServiceEntiteBase{
 		return serviceClient;
 	}
 	
-	/*********************************** METHODES ******************************************/
-	
+	/*------------------------------------------ METHODES ------------------------------------------*/
+	/**
+	 * paramètre le nom de la table / fichier
+	 */
 	@Override
 	public void setTableName() {
 		this.setTableName("client");	
@@ -74,6 +76,20 @@ public class ServiceClient extends ServiceEntiteBase{
 	}
 
 	/**
+	 * affiche le client en paramètre
+	 * @param entite
+	 */
+	@Override
+	public void visualiser(Entite entite){
+		Client client = (Client) entite;
+		System.out.println("Id = "+client.getId()
+				+" Nom = "+client.getNom()
+				+" Prénom = "+client.getPrenom()
+				+" Adresse = "+client.getAdresse()
+		);
+	}
+	
+	/**
 	 * @param id
 	 * @param entite
 	 */
@@ -84,22 +100,9 @@ public class ServiceClient extends ServiceEntiteBase{
 	}
 	
 	/**
-	 * affiche tous les clients
-	 */
-	@Override
-	public void visualiser(Entite entite){
-		Client client = (Client) entite;
-		System.out.println(": Id = "+client.getId()
-				+" Nom = "+client.getNom()
-				+" Prénom = "+client.getPrenom()
-				+" Adresse = "+client.getAdresse()
-		);
-	}
-	
-	/**
 	 * fonction de recherche par nom
 	 * @param nom
-	 * @return
+	 * @return la liste des entites correspondantes
 	 * @throws ObjetInexistantException
 	 */
 	public List<Entite> rechercherParNom(String nom) throws ObjetInexistantException{
@@ -126,6 +129,8 @@ public class ServiceClient extends ServiceEntiteBase{
 
 	/**
 	 * retourne les champs correspondant à l'entité
+	 * @param entite
+	 * @return fields
 	 */
 	@Override
 	public LinkedHashMap<String, String> getFields(Entite entite){
@@ -142,6 +147,8 @@ public class ServiceClient extends ServiceEntiteBase{
 
 	/**
 	 * retourne l'entité correspondante au StringTokenizer
+	 * @param source
+	 * @return client
 	 */
 	@Override
 	public Entite lireEntite(Object source) {

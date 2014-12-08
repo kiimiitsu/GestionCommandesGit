@@ -7,13 +7,11 @@ public class Client extends Entite{
 	private String prenom;
 	private String adresse;
 	
-	/******************************** CONSTRUCTEURS *****************************/
+	/*------------------------------------------ CONSTRUCTEURS ------------------------------------------*/
 	/**
 	 * constructeur par défaut
 	 */
-	public Client(){
-		
-	}
+	public Client(){}
 	
 	/**
 	 * constructeur avec parametres
@@ -40,7 +38,7 @@ public class Client extends Entite{
 		this.adresse = client.adresse;
 	}
 	
-	/********************************* GETTER *********************************/
+	/*------------------------------------------ GETTER ------------------------------------------*/
 	/**
 	 * @return nom
 	 */
@@ -62,7 +60,7 @@ public class Client extends Entite{
 		return adresse;
 	}
 	
-	/************************************ SETTER ********************************/
+	/*------------------------------------------ SETTER ------------------------------------------*/
 	/**
 	 * @param nom
 	 */

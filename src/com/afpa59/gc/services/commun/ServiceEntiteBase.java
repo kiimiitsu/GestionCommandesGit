@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.outils.BDD;
+import com.afpa59.gc.outils.BASETYPE;
 import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 import com.afpa59.gc.services.jdbc.ServiceEntiteJDBC;
 import com.afpa59.gc.services.jdbcBase.ServiceEntiteJDBCBase;
@@ -16,51 +16,87 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BDD serviceType = BDD.JDBC_BASE;
+	private BASETYPE serviceType = BASETYPE.JDBC;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
+	/**
+	 * contrcuteur par défaut
+	 */
 	public ServiceEntiteBase(){
 		
 	}
 	
+	/**
+	 * constructeur avec paramètres
+	 * @param entiteParent
+	 */
 	public ServiceEntiteBase(Entite entiteParent){
 		this.setParent(entiteParent); //a overrider si la fille a un parent
 		this.service = getInstance(this);
 	}
 	/*------------------------------ GETTER -------------------------------------------*/
+	/**
+	 * @return service
+	 */
 	public ServiceEntite getService() {
 		return service;
 	}
 
+	/**
+	 * @return tableName
+	 */
 	public String getTableName() {
 		return tableName;
 	}
 
-	public BDD getServiceType() {
+	/**
+	 * @return serviceType
+	 */
+	public BASETYPE getServiceType() {
 		return serviceType;
 	}
 	
+	/**
+	 * @return entiteParent
+	 */
 	public Entite getParent(){
 		return this.entiteParent;
 	}
 	/*------------------------------ SETTER ------------------------------------------*/
+	/**
+	 * @param service
+	 */
 	public void setService(ServiceEntite service) {
 		this.service = service;
 	}
 
+	/**
+	 * @param table
+	 */
 	public void setTableName(String table) {
 		this.tableName = table;
 	}
 	
-	public void setServiceType(BDD serviceType) {
+	/**
+	 * @param serviceType
+	 */
+	public void setServiceType(BASETYPE serviceType) {
 		this.serviceType = serviceType;
 	}
 	
+	/**
+	 * @param entiteParent
+	 */
 	public void setParent(Entite entiteParent){
 		this.entiteParent = entiteParent;
 	}
 	/*------------------------------- METHODES ----------------------------------------*/
 
+	/**
+	 * retourne une instance de service selon le type de persistance
+	 * @param serviceDemandeur
+	 * @return
+	 */
 	public ServiceEntite getInstance(ServiceEntite serviceDemandeur){
 		switch (serviceType) {
 			case FICHIER:
@@ -75,10 +111,20 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	}
 	
 	/*-------------------------- METHODES COMMUNES -----------------*/
-	public void visualiser(){ //a voir
-		service.visualiser();
+	/**
+	 * retourne la visualisation de toutes les entités
+	 */
+	public final void visualiser(){ 
+		if(this.getEntites().isEmpty()){
+			System.out.println("Il n'y a aucun élément a afficher!");
+		}else{
+			for(Entite entite : this.getEntites()){
+				this.visualiser(entite);
+			}
+		}
 	}
 
+	
 	/*---------- METHODES DEFINIES DANS LA FILLE ------------*/
 
 	
@@ -127,11 +173,10 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		service.sauvegardeEntites(bSUite);
 	}
 	@Override
-	public void finaliser() throws IOException {
-
-		service.finaliser();
-
+	public void finaliser(boolean first) throws IOException {
+		service.finaliser(first);
 	}
+	
 	/*------------------------------- METHODES PROPRES AU FICHIER (A SUPPRIMER ET LAISSER DANS LE FICHIER ----------------------------------------*/
 
 	@Override

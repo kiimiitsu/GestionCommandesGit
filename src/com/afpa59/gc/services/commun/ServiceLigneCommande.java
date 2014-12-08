@@ -20,7 +20,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 
 	private Commande commande = null;
 	
-	/**************************** CONSTRUCTEUR ****************************/
+	/*------------------------------------------ CONSTRUCTEUR ------------------------------------------*/
 	/**
 	 * constructeur par défaut
 	 */
@@ -51,13 +51,20 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		}
 		
 	}
-	/*************************** METHODES *****************************/
 	
+	/*------------------------------------------ METHODES ------------------------------------------*/
+	/**
+	 * redéfinie pour indiquer la commande
+	 * @param entiteParent
+	 */
 	@Override 
 	public void setParent(Entite entiteParent){
 		this.commande = (Commande) entiteParent;
 	}
 	
+	/**
+	 * paramètre le nom de la table / fichier
+	 */
 	@Override
 	public void setTableName() {
 		this.setTableName("ligneCommande");
@@ -102,7 +109,6 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 				+". "+lc.getArticle().getLibelle()
 				+" quantite : "+lc.getQte()
 		);
-		
 	}
 
 	/**
@@ -118,7 +124,6 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 				+". "+((LigneCommande) aVoir).getArticle().getLibelle()
 				+" quantite : "+((LigneCommande) aVoir).getQte()
 		);
-		
 	}
 
 	/**
@@ -217,6 +222,12 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		return ligne;
 	}
 	
+	/**
+	 * retourne le total de la ligne de commande concernée
+	 * @param id
+	 * @return
+	 * @throws ObjetInexistantException
+	 */
 	public float sousTotal(int id) throws ObjetInexistantException{
 		float tot = 0;
 		LigneCommande ligne = (LigneCommande) this.rechercherParId(id);

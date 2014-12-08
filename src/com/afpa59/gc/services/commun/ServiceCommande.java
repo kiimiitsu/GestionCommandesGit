@@ -17,7 +17,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	
 	private static ServiceCommande serviceCommande = null;
 
-	/**************************************** CONTRUCTEURS *********************************************/
+	/*------------------------------------------ CONTRUCTEURS ------------------------------------------*/
 	/**
 	 * contructeur par défaut
 	 */
@@ -26,7 +26,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 		serviceCommande = this;
 	}
 	
-	/*********************************** METHODES DE CLASSE *******************************/
+	/*------------------------------------------ METHODES DE CLASSE ------------------------------------------*/
 	/**
 	 * @return l'instance de la classe
 	 */
@@ -36,18 +36,21 @@ public class ServiceCommande extends ServiceEntiteBase{
 		return serviceCommande;
 	}
 	
-	/*********************************** METHODES ******************************************/
-	
-	@Override
-	public void setTableName() {
-		this.setTableName("commande");
-	}
+	/*------------------------------------------ METHODES ------------------------------------------*/
 	
 	/**
 	 * @return l'instance de ServiceClient
 	 */
 	public ServiceClient getServiceClient(){
 		return ServiceClient.getInstance();
+	}
+	
+	/**
+	 * paramètre le nom de la base / fichier
+	 */
+	@Override
+	public void setTableName() {
+		this.setTableName("commande");
 	}
 	
 	/**
@@ -60,22 +63,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 		super.creer(commande);
 	}
 	
-	/**
-	 * affiche toutes les commandes
-	 */
-	@Override
-	public void visualiser(Entite entite) {
-		Commande commande = (Commande)entite;
-		try {
-			System.out.println("Commande n° "+commande.getId()
-					+" | Client : "+commande.getClient().getNom()
-					+" "+commande.getClient().getPrenom()
-					+" | Montant : "+total(commande.getId()));
-		} catch (ObjetInexistantException e1) {
-			System.out.println(e1.getMessage());
-		}
-		
-	}
+	
 
 	/**
 	 * affiche la commande d'id = id
@@ -105,9 +93,27 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 	
 	/**
+	 * affiche la commande en paramètre
+	 * @param entite
+	 */
+	@Override
+	public void visualiser(Entite entite) {
+		Commande commande = (Commande)entite;
+		try {
+			System.out.println("Commande n° "+commande.getId()
+					+" | Client : "+commande.getClient().getNom()
+					+" "+commande.getClient().getPrenom()
+					+" | Montant : "+total(commande.getId()));
+		} catch (ObjetInexistantException e1) {
+			System.out.println(e1.getMessage());
+		}
+		
+	}
+	
+	/**
 	 * retourne le total de la commande
-	 * @param id
-	 * @return
+	 * @param id 
+	 * @return total
 	 * @throws ObjetInexistantException
 	 */
 	public float total(int id) throws ObjetInexistantException{
@@ -125,6 +131,8 @@ public class ServiceCommande extends ServiceEntiteBase{
 
 	/**
 	 * retourne les champs correspondant à l'entité
+	 * @param entite
+	 * @return fields
 	 */
 	@Override
 	public LinkedHashMap<String, String> getFields(Entite entite) {
@@ -147,6 +155,8 @@ public class ServiceCommande extends ServiceEntiteBase{
 
 	/**
 	 * retourne l'entité correspondante au StringTokenizer
+	 * @param source
+	 * @return commande
 	 */
 	@Override
 	public Entite lireEntite(Object source) {
@@ -192,7 +202,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 		commande.setClient(client);
 		
 		
-		//On récupère les lignes de commandes dans le fichier
+		//On récupère les lignes de commandes
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		
 		for(Entite ligne:sLC.getEntites()){

@@ -25,7 +25,7 @@ public interface ServiceEntite {
 	public LinkedHashMap<String, String> getFields(Entite entite);
 	public void charger();
 	
-	public void finaliser() throws IOException;
+	public void finaliser(boolean first) throws IOException;
 	
 	//Autres actions sur les entités
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException ;

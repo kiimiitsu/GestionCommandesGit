@@ -7,9 +7,8 @@ public class Commande extends Entite{
 
 	private Client client;
 	private List<LigneCommande> lignesCommande;
-	
 
-	/******************************* CONSTRUCTEURS *******************************/
+	/*------------------------------------------ CONSTRUCTEURS ------------------------------------------*/
 	/**
 	 * contructeur par défaut
 	 */
@@ -35,22 +34,23 @@ public class Commande extends Entite{
 		this.client = commande.getClient();
 		this.lignesCommande = commande.getLignesCommande();
 	}
-	/*************************** GETTER ************************************/
+	
+	/*------------------------------------------ GETTER ------------------------------------------*/
 	/**
-	 * @return le client
+	 * @return client
 	 */
 	public Client getClient() {
 		return client;
 	}
 	
 	/**
-	 * @return les lignes de commande
+	 * @return lignes de commande
 	 */
 	public List<LigneCommande> getLignesCommande() {
 		return lignesCommande;
 	}
 	
-	/**************************** SETTER ***********************************/
+	/*------------------------------------------ SETTER ------------------------------------------*/
 	/**
 	 * @param client
 	 */

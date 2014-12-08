@@ -28,7 +28,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	private File file;
 	private boolean firstRecord = true; // indique si le fichier doit ou non être effacé avant d'être modifié
 	
-	/******************************* CONSTRUCTEUR ***************************************/
+	/*------------------------------------------ CONSTRUCTEUR ------------------------------------------*/
 	/**
 	 * constructeur par defaut
 	 */
@@ -53,7 +53,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		
 		return serviceDemandeur;
 	}
-	/********************************** GETTER ************************************/
+	/*------------------------------------------ GETTER ------------------------------------------*/
 	/**
 	 * @return les entites du service
 	 */
@@ -78,11 +78,11 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	/**
 	 * @return isFirstRecord
 	 */
-	public boolean getIsFirstRecord(){
+	public boolean isFirstRecord(){
 		return this.firstRecord;
 	}
 	
-	/************************************ SETTER ************************************/
+	/*------------------------------------------ SETTER ------------------------------------------*/
 	/** 
 	 * @param entites
 	 */
@@ -109,7 +109,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	public void setFirstRecord(boolean firstRecord){
 		this.firstRecord = firstRecord;
 	}
-	/************************************ METHODES *****************************/
+	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
 	 * ajoute une entité à la liste
 	 * @param entite
@@ -236,10 +236,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 			}
 		}
 	}
-	
-	public boolean isFirstRecord(){
-		return firstRecord;
-	}
+
 
 	public void configFile(){
 		serviceDemandeur.setTableName();
@@ -249,14 +246,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	}
 	
 	@Override
-	public void visualiser() {
-		for(Entite e : getEntites()){
-			serviceDemandeur.visualiser(e);
-		}
-	}
-	
-	@Override
-	public void finaliser() throws IOException{
+	public void finaliser(boolean first) throws IOException{
 		System.out.println("fin du programme");
 		sauvegardeEntites(false);
 	}
@@ -294,6 +284,12 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	@Override
 	public void setTableName() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void visualiser() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

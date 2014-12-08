@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import com.afpa59.gc.iu.console.IUGenerale;
-import com.afpa59.gc.outils.BDD;
+import com.afpa59.gc.outils.BASETYPE;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceClient;
 import com.afpa59.gc.services.commun.ServiceCommande;
@@ -24,11 +24,10 @@ public class GestionCommandes {
 			IUGenerale mainMenu = new IUGenerale(sa, sc, sCom, scanner);
 			mainMenu.afficheMenu();
 			scanner.close();
-			
-			/*
-			sa.sauvegardeEntites(false);
-			sc.sauvegardeEntites(false);
-			sCom.sauvegardeEntites(false);*/
+
+			sa.finaliser(true);
+			sc.finaliser(false);
+			sCom.finaliser(false);
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}

@@ -23,6 +23,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	private int compteur;
 	private Connection connexion;
 	private String table;
+	private static String base = "gestionCommandesTableau";
 	
 	private ServiceEntite serviceDemandeur;
 	
@@ -33,7 +34,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	public ServiceEntiteJDBCBase() {
 		this.entites = new ArrayList<Entite>();
 		this.compteur = 1;
-		this.connexion = MyDataBase.getConnection();
+		this.connexion = MyDataBase.getConnection(base);
 	}
 	
 	/**
@@ -44,6 +45,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 		this();
 		this.serviceDemandeur = serviceDemandeur;
 		configTable();
+		charger();
 	}
 	
 	/*----------------------------------- GETTER -----------------------------------*/
@@ -85,6 +87,9 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	}
 	/*----------------------------------- METHODES -----------------------------------*/
 	
+	/**
+	 * paramètre le nom de la table / fichier
+	 */
 	public void configTable(){
 		serviceDemandeur.setTableName();
 		this.setTable(serviceDemandeur.getTableName());
@@ -217,7 +222,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	public static void deleteTables(){
 		Statement stmt;
 		try {
-			stmt = MyDataBase.getConnection().createStatement();
+			stmt = MyDataBase.getConnection(base).createStatement();
 			String drop = "TRUNCATE TABLE ligneCommande; TRUNCATE TABLE commande; TRUNCATE TABLE article; TRUNCATE TABLE client;";
 			stmt.execute(drop);
 
@@ -225,22 +230,16 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	@Override
-	public void visualiser() {
-		for(Entite e : getEntites()){
-			serviceDemandeur.visualiser(e);
+	public void finaliser(boolean first) throws IOException{
+		if (first){
+			deleteTables();
 		}
-	}
-	
-	@Override
-	public void finaliser() throws IOException{
-		deleteTables();
 		sauvegardeEntites(false);
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
-	
 
 	@Override
 	public void visualiser(Entite entite) {}
@@ -265,5 +264,11 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 
 	@Override
 	public void setFirstRecord(boolean firstRecord) {}
+
+	@Override
+	public void visualiser() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

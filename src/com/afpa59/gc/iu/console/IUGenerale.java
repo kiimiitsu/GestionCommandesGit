@@ -64,9 +64,6 @@ public class IUGenerale {
 				break;	
 			case 0:
 				System.out.println("****************** FERMETURE APPLICATION ************************");
-				this.sa.finaliser();
-				this.sc.finaliser();;
-				this.sCom.finaliser();
 				this.scanner.close();
 				break;
 			default:

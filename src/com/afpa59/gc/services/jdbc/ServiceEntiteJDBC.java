@@ -24,6 +24,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	
 	private Connection connexion;
 	private String table;
+	private static String base = "gestionCommandes";
 	
 	private ServiceEntite serviceDemandeur;
 	
@@ -32,7 +33,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	 * constructeur par defaut
 	 */
 	public ServiceEntiteJDBC() {
-		this.connexion = MyDataBase.getConnection();
+		this.connexion = MyDataBase.getConnection(base);
 	}
 	
 	/**
@@ -68,7 +69,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		List<Entite> entites = new ArrayList<Entite>();
 		Statement stmt;
 		try {
-			stmt = MyDataBase.getConnection().createStatement();
+			stmt = connexion.createStatement();
 			String sql = "SELECT * FROM "+table;
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -82,6 +83,24 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 			System.out.println(e.getMessage());
 		}
 		return entites;
+	}
+	
+	@Override
+	public int getCompteur() {
+		Statement stmt;
+		int compteur = 0;
+		try {
+			stmt = connexion.createStatement();
+			String sql = "CALL IDENTITY()";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()){
+				compteur = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return compteur;
 	}
 	
 	/**
@@ -232,7 +251,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	public static void deleteTables(){
 		Statement stmt;
 		try {
-			stmt = MyDataBase.getConnection().createStatement();
+			stmt = MyDataBase.getConnection(base).createStatement();
 			String drop = "TRUNCATE TABLE ligneCommande; TRUNCATE TABLE commande; TRUNCATE TABLE article; TRUNCATE TABLE client;";
 			stmt.execute(drop);
 
@@ -242,18 +261,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	}
 	
 	@Override
-	public void visualiser() {
-		if(this.getEntites().isEmpty()){
-			System.out.println("Il n'y a aucun élément a afficher!");
-		}else{
-			for(Entite entite : this.getEntites()){
-				serviceDemandeur.visualiser(entite);
-			}
-		}
-	}
-	
-	@Override
-	public void finaliser(){
+	public void finaliser(boolean first){
 		
 	}
 	
@@ -286,8 +294,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	@Override
 	public void setCompteur(int compteur) {}
 
-	@Override
-	public int getCompteur() {return 0;}
+	
 
 	@Override
 	public void setEntites(List<Entite> entites) {}
@@ -297,5 +304,11 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	
 	@Override
 	public void charger(){}
+
+	@Override
+	public void visualiser() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

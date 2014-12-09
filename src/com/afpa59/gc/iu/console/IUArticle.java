@@ -48,8 +48,10 @@ public class IUArticle extends IUEntiteBase{
 		String libelle = getScanner().nextLine();
 		System.out.println("Entrez le prix de l'article : ");
 		float prix = getScanner().nextFloat();
-		int id = ((ServiceEntiteBase) getService()).getCompteur();
-		Article article = new Article(id,libelle, prix);
+		
+		Article article = new Article();
+		article.setLibelle(libelle);
+		article.setPrix(prix);
 		getService().creer(article);
 	}
 	

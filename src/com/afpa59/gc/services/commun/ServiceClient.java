@@ -1,19 +1,14 @@
 package com.afpa59.gc.services.commun;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.StringTokenizer;
 
-import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 
 
 public class ServiceClient extends ServiceEntiteBase{
@@ -47,7 +42,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	 */
 	@Override
 	public void setTableName() {
-		this.setTableName("client");	
+		this.setTableName("Client");	
 	}
 	
 	/**

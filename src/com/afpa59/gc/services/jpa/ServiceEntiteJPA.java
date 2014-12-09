@@ -1,29 +1,29 @@
-package com.afpa59.gc.services.jdbcBase;
+package com.afpa59.gc.services.jpa;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map.Entry;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.afpa59.gc.donnees.Entite;
-import com.afpa59.gc.outils.MyDataBase;
 import com.afpa59.gc.services.commun.Critere;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
 
-public class ServiceEntiteJDBCBase implements ServiceEntite{
+public class ServiceEntiteJPA implements ServiceEntite{
 	
-	private List<Entite> entites;
-	private int compteur;
-	private Connection connexion;
 	private String table;
-	private static String base = "gestionCommandesTableau";
+	EntityManagerFactory emf;
 	
 	private ServiceEntite serviceDemandeur;
 	
@@ -31,68 +31,65 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	/**
 	 * constructeur par defaut
 	 */
-	public ServiceEntiteJDBCBase() {
-		this.entites = new ArrayList<Entite>();
-		this.compteur = 1;
-		this.connexion = MyDataBase.getConnection(base);
+	public ServiceEntiteJPA() {
+		emf = Persistence.createEntityManagerFactory("gc");
+		
 	}
 	
 	/**
 	 * constructeur
 	 * @param serviceDemandeur
 	 */
-	public ServiceEntiteJDBCBase(ServiceEntite serviceDemandeur){
+	public ServiceEntiteJPA(ServiceEntite serviceDemandeur){
 		this();
 		this.serviceDemandeur = serviceDemandeur;
 		configTable();
-		charger();
 	}
 	
 	/*----------------------------------- GETTER -----------------------------------*/
-	/**
-	 * @return les entites du service
-	 */
-	public List<Entite> getEntites() {
-		return entites;
-	}
-	
-	/**
-	 * @return le compteur id
-	 */
-	public int getCompteur() {
-		return compteur;
-	}
-	
+		
 	public String getTable() {
 		return table;
 	}
 	
 	/*----------------------------------- SETTER -----------------------------------*/
-	/** 
-	 * @param entites
-	 */
-	public void setEntites(List<Entite> entites) {
-		this.entites = entites;
-	}
-	
-	/**
-	 * @param compteur
-	 */
-	public void setCompteur(int compteur) {
-		this.compteur = compteur;
-	}
 
 	public void setTable(String table) {
 		this.table = table;
 	}
 	/*----------------------------------- METHODES -----------------------------------*/
 	
-	/**
-	 * paramètre le nom de la table / fichier
-	 */
 	public void configTable(){
 		serviceDemandeur.setTableName();
 		this.setTable(serviceDemandeur.getTableName());
+	}
+	
+	@Override
+	public List<Entite> getEntites() {
+		List<Entite> entites = new ArrayList<Entite>();
+		
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		
+		Query maRequete = em.createQuery("select a from "+table+" as a "); //JPQL, Mettre le nom de la classe!
+		
+		List<Entite> results = maRequete.getResultList();
+		
+		Iterator<Entite> it = results.listIterator();
+		while(it.hasNext()){
+			entites.add(it.next());
+		}
+		et.commit();
+		em.close();
+		return entites;
+	}
+	
+	@Override
+	public int getCompteur() {
+		// implement
+		return 0;
 	}
 	
 	/**
@@ -102,9 +99,15 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	 */
 	@Override
 	public void creer(Entite entite) throws IOException {
-		entite.setId(compteur);
-		this.getEntites().add(entite);
-		this.compteur++;
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		
+		em.persist(entite);
+		
+		et.commit();
+		em.close();
 	}
 	
 	/**
@@ -114,9 +117,38 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	 */
 	@Override
 	public void modifier(int id, Entite entite) throws ObjetInexistantException {
-		int index = this.entites.indexOf(this.rechercherParId(id));
-		this.entites.remove(index);
-		this.entites.add(index, entite);
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		
+		//a voir , facon plus "JPA"
+		HashMap<String, String> fields = serviceDemandeur.getFields(entite);
+		fields.remove("id");
+		
+		String updateQuery = "UPDATE "+table+" SET ";
+		
+		int i = 0;
+
+		for(Entry<String, String> entry:fields.entrySet()){
+			
+			updateQuery+=entry.getKey()+"='"+entry.getValue()+"'";
+			if(i!=fields.size()-1){
+				updateQuery+=",";
+			}
+			
+			i++;
+		}
+
+		updateQuery+=" WHERE id="+id;
+		System.out.println(updateQuery);
+		
+		Query maRequete = em.createQuery(updateQuery); //JPQL, Mettre le nom de la classe!
+		
+		maRequete.executeUpdate();
+
+		et.commit();
+		em.close();
 	}
 
 	/**
@@ -125,7 +157,18 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	 */
 	@Override
 	public void supprimer(int id) throws ObjetInexistantException {
-		this.entites.remove(this.rechercherParId(id));
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		
+		Entite entite = serviceDemandeur.rechercherParId(id);
+		
+		Entite remove = em.find(entite.getClass(), id);
+		em.remove(remove);
+		
+		et.commit();
+		em.close();
 	}
 
 	/**
@@ -134,8 +177,9 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	 */
 	@Override
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException {
+		
 		List<Entite> match = new ArrayList<Entite>();
-		ListIterator<Entite> iterator = this.entites.listIterator();
+		ListIterator<Entite> iterator = this.getEntites().listIterator();
 		
 		while (iterator.hasNext()){
 			Entite entite = iterator.next();
@@ -164,80 +208,14 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 		return entite; //id unique, retourne l'unique élément de la recherche.
 	}
 	
-	
-	@Override
-	public void sauvegardeEntites(boolean bSuite) throws IOException{
-		Statement stmt;
-		try {
-			stmt = this.connexion.createStatement();
-			
-			for(Entite entite:this.getEntites()){
-				String insertQuery = "INSERT INTO "+table+" VALUES (";
-				LinkedHashMap<String,String> fields = serviceDemandeur.getFields(entite);
-				int i = 0;
-				for(String s: fields.values()){
-					insertQuery+="'"+s+"'";
-					
-					if(i!=(fields.size()-1)){
-						insertQuery+=",";
-					}
-					i++;
-				}
-				
-				
-				insertQuery += ")";
-				System.out.println(insertQuery);
-				stmt.execute(insertQuery);
-			}	
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-	}
-	
-	@Override
-	public void charger(){
-		Statement stmt;
-		try {
-			stmt = this.connexion.createStatement();
-			String sql = "SELECT * FROM "+table;
-			ResultSet rs = stmt.executeQuery(sql);
-			
-			while(rs.next()){
-				Entite entite = serviceDemandeur.lireEntite(rs);
-				if(entite!=null){
-					this.getEntites().add(entite);
-				}
-			}
-		
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		
-		if(!entites.isEmpty()){ //on vérifie qu'on ne rentre pas dans une liste vide
-			this.compteur = this.entites.get(this.entites.size()-1).getId()+1;
-		}
-		
-	}
-
+/*	
 	public static void deleteTables(){
-		Statement stmt;
-		try {
-			stmt = MyDataBase.getConnection(base).createStatement();
-			String drop = "TRUNCATE TABLE ligneCommande; TRUNCATE TABLE commande; TRUNCATE TABLE article; TRUNCATE TABLE client;";
-			stmt.execute(drop);
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+		
 	}
-
+	*/
 	@Override
-	public void finaliser(boolean first) throws IOException{
-		if (first){
-			deleteTables();
-		}
-		sauvegardeEntites(false);
+	public void finaliser(boolean first){
+		
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/
@@ -265,6 +243,20 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 
 	@Override
 	public void setFirstRecord(boolean firstRecord) {}
+
+	@Override
+	public void setCompteur(int compteur) {}
+
+	
+
+	@Override
+	public void setEntites(List<Entite> entites) {}
+	
+	@Override
+	public void sauvegardeEntites(boolean bSuite) throws IOException{}
+	
+	@Override
+	public void charger(){}
 
 	@Override
 	public void visualiser() {

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -67,7 +66,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 */
 	@Override
 	public void setTableName() {
-		this.setTableName("ligneCommande");
+		this.setTableName("LigneCommande");
 	}
 	
 	/**

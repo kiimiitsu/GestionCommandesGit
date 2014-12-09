@@ -50,8 +50,11 @@ public class IUClient extends IUEntiteBase {
 		String prenom = getScanner().nextLine();
 		System.out.println("Entrez l'adresse : ");
 		String adresse = getScanner().nextLine();
-		int id = ((ServiceEntiteBase) getService()).getCompteur();
-		Client client = new Client(id, nom, prenom, adresse);
+
+		Client client = new Client();
+		client.setNom(nom);
+		client.setPrenom(prenom);
+		client.setAdresse(adresse);
 		getService().creer(client);
 	}
 	

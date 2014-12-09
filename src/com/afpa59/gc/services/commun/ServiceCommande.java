@@ -3,7 +3,6 @@ package com.afpa59.gc.services.commun;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -50,7 +49,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 */
 	@Override
 	public void setTableName() {
-		this.setTableName("commande");
+		this.setTableName("Commande");
 	}
 	
 	/**

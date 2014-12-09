@@ -100,7 +100,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return compteur;
+		return compteur+1;
 	}
 	
 	/**
@@ -247,7 +247,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		Entite entite = resultats.get(0);
 		return entite; //id unique, retourne l'unique élément de la recherche.
 	}
-	
+	/*
 	public static void deleteTables(){
 		Statement stmt;
 		try {
@@ -258,7 +258,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-	}
+	}*/
 	
 	@Override
 	public void finaliser(boolean first){

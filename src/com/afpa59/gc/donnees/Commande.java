@@ -3,9 +3,15 @@ package com.afpa59.gc.donnees;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Commande extends Entite{
 
 	private Client client;
+	
+	@OneToMany (mappedBy="commande")
 	private List<LigneCommande> lignesCommande;
 
 	/*------------------------------------------ CONSTRUCTEURS ------------------------------------------*/

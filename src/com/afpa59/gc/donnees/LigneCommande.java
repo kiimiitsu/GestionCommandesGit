@@ -1,7 +1,11 @@
 package com.afpa59.gc.donnees;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+@Entity
 public class LigneCommande extends Entite{
 
+	@ManyToOne
 	private Commande commande;
 	private Article article;
 	private int qte;

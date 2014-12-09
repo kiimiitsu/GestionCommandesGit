@@ -60,8 +60,10 @@ public class IULigneCommande extends IUEntiteBase{
 				Article article = (Article) getServiceArticle().rechercherParId(code); // lance une exception si l'article n'existe pas
 				System.out.println("Quantité : ");
 				int qte = getScanner().nextInt();
-				int id =  ((ServiceEntiteBase) getService()).getCompteur();
-				LigneCommande lc = new LigneCommande(id, article, qte);
+				
+				LigneCommande lc = new LigneCommande();
+				lc.setArticle(article);
+				lc.setQte(qte);
 				getService().creer(lc);
 			} catch (ObjetInexistantException e) {
 				System.out.println(e.getMessage());

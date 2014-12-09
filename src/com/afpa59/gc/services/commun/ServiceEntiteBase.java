@@ -9,6 +9,7 @@ import com.afpa59.gc.outils.BASETYPE;
 import com.afpa59.gc.services.fichier.ServiceEntiteFichier;
 import com.afpa59.gc.services.jdbc.ServiceEntiteJDBC;
 import com.afpa59.gc.services.jdbcBase.ServiceEntiteJDBCBase;
+import com.afpa59.gc.services.jpa.ServiceEntiteJPA;
 
 public abstract class ServiceEntiteBase implements ServiceEntite{
 	
@@ -16,7 +17,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BASETYPE serviceType = BASETYPE.JDBC;
+	private BASETYPE serviceType = BASETYPE.FICHIER;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	/**
@@ -105,6 +106,8 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 				return new ServiceEntiteJDBCBase(serviceDemandeur);
 			case JDBC:
 				return new ServiceEntiteJDBC(serviceDemandeur);
+			case JPA:
+				return new ServiceEntiteJPA(serviceDemandeur);
 			default:
 				return null;
 		}

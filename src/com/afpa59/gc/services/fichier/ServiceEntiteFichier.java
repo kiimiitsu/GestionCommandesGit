@@ -117,6 +117,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	 */
 	@Override
 	public void creer(Entite entite) throws IOException {
+		entite.setId(compteur);
 		this.getEntites().add(entite);
 		this.compteur++;
 	}
@@ -200,7 +201,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 				}
 				i++;
 			}
-			System.out.println(entiteToString);
+			//System.out.println(entiteToString);
 			printWriter.println(entiteToString);
 		}
 		printWriter.close();
@@ -210,7 +211,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	
 	@Override
 	public void charger(){
-		System.out.println(getFile().getAbsolutePath());
+		//System.out.println(getFile().getAbsolutePath());
 		if(getFile().exists()){
 			
 			BufferedReader br;
@@ -241,6 +242,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	public void configFile(){
 		serviceDemandeur.setTableName();
 		String fileName = serviceDemandeur.getTableName()+".txt";
+		fileName = fileName.toLowerCase();
 		
 		this.setFile(new File("C:/commandes.SAV/"+fileName));
 	}

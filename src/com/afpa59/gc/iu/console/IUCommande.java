@@ -107,21 +107,26 @@ public class IUCommande extends IUEntiteBase{
 		//création de la commande
 		Commande commande = new Commande();
 		commande.setClient(client);
+		
+		
 		getService().creer(commande);
-		commande.setId(((ServiceEntiteBase) getService()).getCompteur());
+		int id = ((ServiceEntiteBase) getService()).getCompteur()-1;
 		
+		try {
+			commande = (Commande) getService().rechercherParId(id);
 		
-		
-		//appel au service lignecommande pour remplir la commande
-		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
-		new IULigneCommande(sLC, getScanner()).creer();
-		
-		List<LigneCommande> lLC = new ArrayList<LigneCommande>();
-		for(Entite e:sLC.getEntites()){
-			lLC.add((LigneCommande)e);
+			//appel au service lignecommande pour remplir la commande
+			ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
+			new IULigneCommande(sLC, getScanner()).creer();
+			
+			List<LigneCommande> lLC = new ArrayList<LigneCommande>();
+			for(Entite e:sLC.getEntites()){
+				lLC.add((LigneCommande)e);
+			}
+			commande.setLignesCommande(lLC);
+		} catch (ObjetInexistantException e1) {
+			System.out.println(e1.getMessage());
 		}
-		commande.setLignesCommande(lLC);
-		
 	}
 
 	/**

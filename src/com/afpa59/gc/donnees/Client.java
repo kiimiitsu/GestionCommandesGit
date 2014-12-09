@@ -1,6 +1,8 @@
 package com.afpa59.gc.donnees;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Client extends Entite{
 
 	private String nom;

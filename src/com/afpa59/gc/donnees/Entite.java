@@ -4,11 +4,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.TableGenerator;
 
 @MappedSuperclass
 public class Entite {
 	
-	@Id @GeneratedValue (strategy=GenerationType.TABLE)
+	@TableGenerator(name="CUST_GENERATOR",
+					table="GENERATOR_TABLE",
+					pkColumnName="PRIMARY_KEY_COLUMN",
+					valueColumnName="VALUE_COLUMN",
+					pkColumnValue="CUST_ID",
+					allocationSize=1)
+	@Id @GeneratedValue(strategy=GenerationType.TABLE, generator="CUST_GENERATOR")
 	private int id;
 	
 	/*------------------------------------------ CONSTRUCTEURS ------------------------------------------*/

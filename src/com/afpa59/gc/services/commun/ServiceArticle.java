@@ -47,7 +47,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	 */
 	@Override
 	public void creer(Entite entite) throws IOException{
-		Article article = new Article((Article) entite);
+		Article article = (Article) entite;
 		super.creer(article);
 	}
 	
@@ -148,8 +148,8 @@ public class ServiceArticle extends ServiceEntiteBase{
 				break;
 	
 			case JPA:
-		
-				break;
+				return (Entite) source;
+				
 	
 			default:
 				

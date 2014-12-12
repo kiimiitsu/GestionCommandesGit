@@ -1,6 +1,9 @@
 package com.afpa59.gc.services.jpa;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import com.afpa59.gc.donnees.Entite;
@@ -75,11 +79,15 @@ public class ServiceEntiteJPA implements ServiceEntite{
 		
 		Query maRequete = em.createQuery("select a from "+table+" as a "); //JPQL, Mettre le nom de la classe!
 		
-		List<Entite> results = maRequete.getResultList();
+		List<Entite> results = new ArrayList<Entite>(); 
+		results.addAll(maRequete.getResultList());
 		
 		Iterator<Entite> it = results.listIterator();
 		while(it.hasNext()){
-			entites.add(it.next());
+			Entite entite = serviceDemandeur.lireEntite(it.next());
+			if(entite!=null){
+				entites.add(entite);
+			}
 		}
 		et.commit();
 		em.close();
@@ -88,7 +96,6 @@ public class ServiceEntiteJPA implements ServiceEntite{
 	
 	@Override
 	public int getCompteur() {
-		// implement
 		return 0;
 	}
 	
@@ -105,7 +112,7 @@ public class ServiceEntiteJPA implements ServiceEntite{
 		et.begin();
 		
 		em.persist(entite);
-		
+		em.flush();
 		et.commit();
 		em.close();
 	}
@@ -122,31 +129,9 @@ public class ServiceEntiteJPA implements ServiceEntite{
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		
-		//a voir , facon plus "JPA"
-		HashMap<String, String> fields = serviceDemandeur.getFields(entite);
-		fields.remove("id");
+		em.merge(entite);
 		
-		String updateQuery = "UPDATE "+table+" SET ";
-		
-		int i = 0;
-
-		for(Entry<String, String> entry:fields.entrySet()){
-			
-			updateQuery+=entry.getKey()+"='"+entry.getValue()+"'";
-			if(i!=fields.size()-1){
-				updateQuery+=",";
-			}
-			
-			i++;
-		}
-
-		updateQuery+=" WHERE id="+id;
-		System.out.println(updateQuery);
-		
-		Query maRequete = em.createQuery(updateQuery); //JPQL, Mettre le nom de la classe!
-		
-		maRequete.executeUpdate();
-
+		em.flush();
 		et.commit();
 		em.close();
 	}
@@ -165,10 +150,17 @@ public class ServiceEntiteJPA implements ServiceEntite{
 		Entite entite = serviceDemandeur.rechercherParId(id);
 		
 		Entite remove = em.find(entite.getClass(), id);
-		em.remove(remove);
-		
-		et.commit();
-		em.close();
+		try{
+			em.remove(remove);
+			em.flush();
+			et.commit();
+		}catch(PersistenceException e){
+			et.rollback();
+			System.out.println("Vous ne pouvez pas supprimer cet objet, il est référencé ailleurs");
+		}
+		finally{
+			em.close();
+		}
 	}
 
 	/**

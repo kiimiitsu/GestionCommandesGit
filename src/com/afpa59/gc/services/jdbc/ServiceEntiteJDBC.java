@@ -100,7 +100,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return compteur+1;
+		return compteur;
 	}
 	
 	/**

@@ -17,7 +17,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BASETYPE serviceType = BASETYPE.FICHIER;
+	private BASETYPE serviceType = BASETYPE.JPA;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	/**
@@ -172,7 +172,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	}
 
 	@Override
-	public void sauvegardeEntites(boolean bSUite) throws IOException { // ? propre au fichier
+	public void sauvegardeEntites(boolean bSUite) throws IOException {
 		service.sauvegardeEntites(bSUite);
 	}
 	@Override

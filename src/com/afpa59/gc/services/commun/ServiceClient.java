@@ -51,7 +51,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	 */
 	@Override
 	public void creer(Entite entite) throws IOException{
-		Client client = new Client((Client) entite);
+		Client client = (Client) entite;
 		super.creer(client);
 	}
 	
@@ -176,8 +176,7 @@ public class ServiceClient extends ServiceEntiteBase{
 				break;
 	
 			case JPA:
-		
-				break;
+					return (Entite) source;
 	
 			default:
 				break;

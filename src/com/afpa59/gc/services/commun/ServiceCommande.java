@@ -58,7 +58,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	 */
 	@Override
 	public void creer(Entite entite) throws IOException{
-		Commande commande = new Commande((Commande) entite);
+		Commande commande = (Commande) entite;
 		super.creer(commande);
 	}
 	
@@ -75,18 +75,14 @@ public class ServiceCommande extends ServiceEntiteBase{
 		visualiser(aVoir);
 		
 		Commande commande = (Commande)aVoir;
+		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
+		
 		List<LigneCommande> listeLC = commande.getLignesCommande();
 		
-		if(listeLC==null){
+		if(sLC.getEntites()==null){
 			System.out.println("Il n'y a pas de ligne de commande actuellement.");
 		}else{
-			for(LigneCommande lc:listeLC){
-				System.out.println("id = "+lc.getId()
-						+ " article = "+lc.getArticle().getId()
-						+ ". "+lc.getArticle().getLibelle()
-						+" qté : "+lc.getQte()
-				);
-			}
+			sLC.visualiser();
 		}
 		
 	}
@@ -191,8 +187,8 @@ public class ServiceCommande extends ServiceEntiteBase{
 				break;
 	
 			case JPA:
-		
-				break;
+				id = ((Commande)source).getId();
+				client = ((Commande)source).getClient();
 	
 			default:
 				break;
@@ -200,13 +196,11 @@ public class ServiceCommande extends ServiceEntiteBase{
 		commande.setId(id);
 		commande.setClient(client);
 		
-		
 		//On récupère les lignes de commandes
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		
 		for(Entite ligne:sLC.getEntites()){
 			commande.getLignesCommande().add((LigneCommande) ligne);
-			
 		}
 		
 		return commande;

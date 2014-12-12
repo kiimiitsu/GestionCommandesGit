@@ -3,6 +3,7 @@ package com.afpa59.gc.donnees;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -11,7 +12,7 @@ public class Commande extends Entite{
 
 	private Client client;
 	
-	@OneToMany (mappedBy="commande")
+	@OneToMany (mappedBy="commande", cascade=CascadeType.REMOVE)
 	private List<LigneCommande> lignesCommande;
 
 	/*------------------------------------------ CONSTRUCTEURS ------------------------------------------*/

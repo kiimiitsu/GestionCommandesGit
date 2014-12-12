@@ -9,6 +9,7 @@ import com.afpa59.gc.donnees.Client;
 import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
+import com.afpa59.gc.outils.BASETYPE;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceClient;
@@ -19,7 +20,6 @@ import com.afpa59.gc.services.commun.ServiceLigneCommande;
 
 public class IUCommande extends IUEntiteBase{
 
-	private ServiceArticle sa;
 	
 	/**************************************** CONTRUCTEURS *********************************************/
 	/**
@@ -110,23 +110,21 @@ public class IUCommande extends IUEntiteBase{
 		
 		
 		getService().creer(commande);
-		int id = ((ServiceEntiteBase) getService()).getCompteur()-1;
 		
-		try {
-			commande = (Commande) getService().rechercherParId(id);
-		
-			//appel au service lignecommande pour remplir la commande
-			ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
-			new IULigneCommande(sLC, getScanner()).creer();
-			
-			List<LigneCommande> lLC = new ArrayList<LigneCommande>();
-			for(Entite e:sLC.getEntites()){
-				lLC.add((LigneCommande)e);
-			}
-			commande.setLignesCommande(lLC);
-		} catch (ObjetInexistantException e1) {
-			System.out.println(e1.getMessage());
+		if(((ServiceEntiteBase) getService()).getServiceType()==BASETYPE.JDBC){
+			int id = ((ServiceEntiteBase) getService()).getCompteur();
+			commande.setId(id);
 		}
+		
+		//appel au service lignecommande pour remplir la commande
+		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
+		new IULigneCommande(sLC, getScanner()).creer();
+		
+		List<LigneCommande> lLC = new ArrayList<LigneCommande>();
+		for(Entite e:sLC.getEntites()){
+			lLC.add((LigneCommande)e);
+		}
+		commande.setLignesCommande(lLC);
 	}
 
 	/**

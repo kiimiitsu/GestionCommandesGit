@@ -89,7 +89,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	 */
 	@Override
 	public void creer(Entite entite) throws IOException{
-		LigneCommande ligneCommande = new LigneCommande((LigneCommande) entite);
+		LigneCommande ligneCommande = (LigneCommande) entite;
 		ligneCommande.setCommande(commande);
 		super.creer(ligneCommande);
 	}
@@ -102,12 +102,17 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		
 		LigneCommande lc = (LigneCommande)entite;
 		
-		System.out.println("Commande n° "+lc.getCommande().getId()
-				+": Id = "+lc.getId()
-				+" article : "+lc.getArticle().getId()
-				+". "+lc.getArticle().getLibelle()
-				+" quantite : "+lc.getQte()
-		);
+		try {
+			System.out.println("Commande n° "+lc.getCommande().getId()
+					+": Id = "+lc.getId()
+					+" Article : "+lc.getArticle().getId()
+					+"."+lc.getArticle().getLibelle()
+					+" Quantite : "+lc.getQte()
+					+" Sous-total : "+sousTotal(lc.getId())
+			);
+		} catch (ObjetInexistantException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
@@ -118,10 +123,11 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		Entite aVoir = this.rechercherParId(id);
 
 		System.out.println("Commande n° "+((LigneCommande) aVoir).getCommande().getId()
-				+ "Id = "+aVoir.getId()
-				+" article : "+((LigneCommande) aVoir).getArticle().getId()
-				+". "+((LigneCommande) aVoir).getArticle().getLibelle()
-				+" quantite : "+((LigneCommande) aVoir).getQte()
+				+ " Id = "+aVoir.getId()
+				+" Article : "+((LigneCommande) aVoir).getArticle().getId()
+				+"."+((LigneCommande) aVoir).getArticle().getLibelle()
+				+" Quantite : "+((LigneCommande) aVoir).getQte()
+				+" Sous-total : "+sousTotal(aVoir.getId())                                
 		);
 	}
 
@@ -207,7 +213,16 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 			break;
 
 		case JPA:
-	
+			LigneCommande ligneCom = (LigneCommande) source;
+			idCommande = ligneCom.getCommande().getId();
+			
+			if(commande.getId()==idCommande){
+				id = ligneCom.getId();
+				article = ligneCom.getArticle();
+				quantite = ligneCom.getQte();
+			}else{
+				return null;
+			}
 			break;
 
 		default:

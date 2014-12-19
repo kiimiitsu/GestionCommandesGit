@@ -21,14 +21,14 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	/**
-	 * contrcuteur par défaut
+	 * contrcuteur par dï¿½faut
 	 */
 	public ServiceEntiteBase(){
 		
 	}
 	
 	/**
-	 * constructeur avec paramètres
+	 * constructeur avec paramï¿½tres
 	 * @param entiteParent
 	 */
 	public ServiceEntiteBase(Entite entiteParent){
@@ -115,11 +115,11 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	
 	/*-------------------------- METHODES COMMUNES -----------------*/
 	/**
-	 * retourne la visualisation de toutes les entités
+	 * retourne la visualisation de toutes les entitï¿½s
 	 */
 	public final void visualiser(){ 
 		if(this.getEntites().isEmpty()){
-			System.out.println("Il n'y a aucun élément a afficher!");
+			System.out.println("Il n'y a aucun Ã©lÃ©ment a afficher!");
 		}else{
 			for(Entite entite : this.getEntites()){
 				this.visualiser(entite);

@@ -100,7 +100,7 @@ public class ServiceEntiteJPA implements ServiceEntite{
 	}
 	
 	/**
-	 * ajoute une entité à la liste
+	 * ajoute une entitï¿½ ï¿½ la liste
 	 * @param entite
 	 * @throws IOException 
 	 */
@@ -141,7 +141,7 @@ public class ServiceEntiteJPA implements ServiceEntite{
 	 * @param id
 	 */
 	@Override
-	public void supprimer(int id) throws ObjetInexistantException {
+	public void supprimer(int id) throws ObjetInexistantException, PersistenceException {
 		EntityManager em = emf.createEntityManager();
 		
 		EntityTransaction et = em.getTransaction();
@@ -150,17 +150,12 @@ public class ServiceEntiteJPA implements ServiceEntite{
 		Entite entite = serviceDemandeur.rechercherParId(id);
 		
 		Entite remove = em.find(entite.getClass(), id);
-		try{
-			em.remove(remove);
-			em.flush();
-			et.commit();
-		}catch(PersistenceException e){
-			et.rollback();
-			System.out.println("Vous ne pouvez pas supprimer cet objet, il est référencé ailleurs");
-		}
-		finally{
-			em.close();
-		}
+
+		em.remove(remove);   // lÃ¨ve une exception si est rÃ©fÃ©rencÃ© ailleurs
+		
+		em.flush();
+		et.commit();
+		em.close();
 	}
 
 	/**
@@ -180,7 +175,7 @@ public class ServiceEntiteJPA implements ServiceEntite{
 			}
 		}
 		if(match.isEmpty()){
-			throw new ObjetInexistantException("L'objet auquel vous tentez d'accéder est inexistant !");
+			throw new ObjetInexistantException("L'objet auquel vous tentez d'accÃ©der est inexistant !");
 		}
 		return match;
 	}
@@ -197,14 +192,9 @@ public class ServiceEntiteJPA implements ServiceEntite{
 													}
 												});
 		Entite entite = resultats.get(0);
-		return entite; //id unique, retourne l'unique élément de la recherche.
+		return entite; //id unique, retourne l'unique Ã©lÃ©ment de la recherche.
 	}
 	
-/*	
-	public static void deleteTables(){
-		
-	}
-	*/
 	@Override
 	public void finaliser(boolean first){
 		

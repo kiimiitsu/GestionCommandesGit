@@ -2,7 +2,7 @@ package com.afpa59.gc.appli;
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.afpa59.gc.iu.console.IUGenerale;
+import com.afpa59.gc.iu.swing.IUGenerale;
 import com.afpa59.gc.outils.BASETYPE;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceClient;
@@ -13,7 +13,7 @@ public class GestionCommandes {
 	
 	public static void main(String[] args){
 
-		Scanner scanner = new Scanner(System.in);
+		//Scanner scanner = new Scanner(System.in);
 		ServiceArticle sa = ServiceArticle.getInstance();
 		ServiceClient sc = ServiceClient.getInstance();
 		ServiceCommande sCom = ServiceCommande.getInstance();
@@ -21,9 +21,9 @@ public class GestionCommandes {
 		//new IUGenerale("Application de gestion des commandes", 1200, 800);
 		
 		try {
-			IUGenerale mainMenu = new IUGenerale(sa, sc, sCom, scanner);
+			/*IUGenerale mainMenu = new IUGenerale(sa, sc, sCom, scanner);
 			mainMenu.afficheMenu();
-			scanner.close();
+			scanner.close();*/
 
 			sa.finaliser(true);
 			sc.finaliser(false);

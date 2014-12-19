@@ -3,6 +3,8 @@ package com.afpa59.gc.iu.console;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.persistence.PersistenceException;
+
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
 
@@ -13,14 +15,14 @@ public abstract class IUEntiteBase implements IUEntite {
 	
 	/************************************* CONTRUCTEURS ***********************************/
 	/**
-	 * contructeur par défaut
+	 * contructeur par dï¿½faut
 	 */
 	public IUEntiteBase(){
 		
 	}
 	
 	/**
-	 * constructeur avec paramètres
+	 * constructeur avec paramï¿½tres
 	 * @param se
 	 * @param scanner
 	 */
@@ -93,10 +95,10 @@ public abstract class IUEntiteBase implements IUEntite {
 					supprimer();
 					break;
 				case 0:
-					System.out.println("Retour menu précédent");
+					System.out.println("Retour menu prï¿½cï¿½dent");
 					break;
 				default:
-					System.out.println("Je n'ai pas compris votre choix, veuillez réessayer.");
+					System.out.println("Je n'ai pas compris votre choix, veuillez rï¿½essayer.");
 					break;
 			}
 		}while(choix!=0);
@@ -107,7 +109,7 @@ public abstract class IUEntiteBase implements IUEntite {
 	 */
 	@Override
 	public void afficheHeader() {
-		System.out.println("1 - Créer"
+		System.out.println("1 - CrÃ©er"
 				+ "\n2 - Visualiser"
 				+ "\n3 - Visualiser tout"
 				+ "\n4 - Modifier"
@@ -142,7 +144,7 @@ public abstract class IUEntiteBase implements IUEntite {
 		int id = scanner.nextInt();
 		try {
 			service.supprimer(id);
-		} catch (ObjetInexistantException e) {
+		} catch (ObjetInexistantException | PersistenceException e) {
 			System.out.println(e.getMessage());
 		}
 	}

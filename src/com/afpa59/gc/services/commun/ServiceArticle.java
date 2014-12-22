@@ -35,7 +35,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	
 	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
-	 * définit le nom de la table/du fichier
+	 * dï¿½finit le nom de la table/du fichier
 	 */
 	public void setTableName(){
 		setTableName("Article");
@@ -93,13 +93,13 @@ public class ServiceArticle extends ServiceEntiteBase{
 	public List<Entite> rechercherParLibelle(String libelle) throws ObjetInexistantException{
 		return chercherEntite(new Critere(){
 			public boolean critere(Entite e){
-				return (((Article) e).getLibelle().equals(libelle)) ;
+				return (((Article) e).getLibelle().equalsIgnoreCase(libelle)) ;
 			}
 		});
 	}
 	
 	/**
-	 * retourne la chaine correspondant à l'entité
+	 * retourne la chaine correspondant ï¿½ l'entitï¿½
 	 * @param entite
 	 * @return fields
 	 */
@@ -116,7 +116,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	}
 	
 	/**
-	 * retourne l'entité correspondante à la source
+	 * retourne l'entitï¿½ correspondante ï¿½ la source
 	 * @param source
 	 * @return article
 	 */

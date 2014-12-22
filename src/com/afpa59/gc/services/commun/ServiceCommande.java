@@ -18,7 +18,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 
 	/*------------------------------------------ CONTRUCTEURS ------------------------------------------*/
 	/**
-	 * contructeur par défaut
+	 * contructeur par dï¿½faut
 	 */
 	private ServiceCommande(){
 		super(null);
@@ -45,7 +45,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 	
 	/**
-	 * paramètre le nom de la base / fichier
+	 * paramï¿½tre le nom de la base / fichier
 	 */
 	@Override
 	public void setTableName() {
@@ -88,16 +88,17 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 	
 	/**
-	 * affiche la commande en paramètre
+	 * affiche la commande en paramÃ¨tre
 	 * @param entite
 	 */
 	@Override
 	public void visualiser(Entite entite) {
 		Commande commande = (Commande)entite;
 		try {
-			System.out.println("Commande n° "+commande.getId()
+			System.out.println("Commande nÂ° "+commande.getId()
 					+" | Client : "+commande.getClient().getNom()
 					+" "+commande.getClient().getPrenom()
+					+" | Nombre d'articles : "+nbArticle(commande.getId())
 					+" | Montant : "+total(commande.getId()));
 		} catch (ObjetInexistantException e1) {
 			System.out.println(e1.getMessage());
@@ -125,7 +126,26 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne les champs correspondant à l'entité
+	 * retourne le nombre d'articles dans la commande
+	 * @param id
+	 * @return
+	 * @throws ObjetInexistantException
+	 */
+	public int nbArticle(int id) throws ObjetInexistantException{
+		int nb = 0;
+		
+		Commande commande = (Commande) this.rechercherParId(id);
+		List<LigneCommande> lignes = commande.getLignesCommande();
+
+		for(LigneCommande lc: lignes){
+			nb+=(lc.getQte());
+		}
+		
+		return nb;
+	}
+	
+	/**
+	 * retourne les champs correspondant Ã  l'entitÃ©
 	 * @param entite
 	 * @return fields
 	 */
@@ -149,7 +169,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne l'entité correspondante au StringTokenizer
+	 * retourne l'entitï¿½ correspondante au StringTokenizer
 	 * @param source
 	 * @return commande
 	 */
@@ -196,7 +216,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 		commande.setId(id);
 		commande.setClient(client);
 		
-		//On récupère les lignes de commandes
+		//On rÃ©cupÃ©re les lignes de commandes
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 		
 		for(Entite ligne:sLC.getEntites()){

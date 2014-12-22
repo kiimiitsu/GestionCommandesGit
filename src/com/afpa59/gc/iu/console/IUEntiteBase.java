@@ -95,10 +95,10 @@ public abstract class IUEntiteBase implements IUEntite {
 					supprimer();
 					break;
 				case 0:
-					System.out.println("Retour menu pr�c�dent");
+					System.out.println("Retour menu précédent");
 					break;
 				default:
-					System.out.println("Je n'ai pas compris votre choix, veuillez r�essayer.");
+					System.out.println("Je n'ai pas compris votre choix, veuillez réessayer.");
 					break;
 			}
 		}while(choix!=0);

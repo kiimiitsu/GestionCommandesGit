@@ -23,14 +23,14 @@ public class IUCommande extends IUEntiteBase{
 	
 	/**************************************** CONTRUCTEURS *********************************************/
 	/**
-	 * constructeur par défaut
+	 * constructeur par dï¿½faut
 	 */
 	public IUCommande() {
 		
 	}
 	
 	/**
-	 * constructeur avec paramètres
+	 * constructeur avec paramï¿½tres
 	 * @param se
 	 * @param scanner
 	 * @param sc
@@ -58,12 +58,12 @@ public class IUCommande extends IUEntiteBase{
 	}
 	
 	/**
-	 * création d'une commande
+	 * crï¿½ation d'une commande
 	 * @throws IOException 
 	 */
 	@Override
 	public void creer() throws IOException {
-		System.out.println(" - Créer une commande -");
+		System.out.println(" - CrÃ©er une commande -");
 		System.out.println("Entrez les informations client :");
 		Client client=null;
 		
@@ -77,7 +77,7 @@ public class IUCommande extends IUEntiteBase{
 				String nom = getScanner().nextLine();
 				
 				try {
-					//récupère la liste des clients correspondant et l'affiche
+					//rï¿½cupï¿½re la liste des clients correspondant et l'affiche
 					List<Entite> listeClient = getServiceClient().rechercherParNom(nom);
 					
 					for(Entite c:listeClient){
@@ -94,17 +94,17 @@ public class IUCommande extends IUEntiteBase{
 				}
 					
 			}else if(exist.equalsIgnoreCase("n")){
-				//création d'un nouveau client
+				//crï¿½ation d'un nouveau client
 				new IUClient(getServiceClient(), getScanner()).creer();
 				client = (Client) getServiceClient().getEntites().get(getServiceClient().getEntites().size()-1);
 				
 			} else{
-				System.out.println("Je n'ai pas compris votre choix. Veuillez réessayer.");
+				System.out.println("Je n'ai pas compris votre choix. Veuillez rï¿½essayer.");
 			}
 			
 		}while(client==null);
 		
-		//création de la commande
+		//crï¿½ation de la commande
 		Commande commande = new Commande();
 		commande.setClient(client);
 		

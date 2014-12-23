@@ -14,14 +14,14 @@ public class IULigneCommande extends IUEntiteBase{
 
 	/**************************************** CONTRUCTEURS *********************************************/
 	/**
-	 * constructeur par défaut
+	 * constructeur par dï¿½faut
 	 */
 	public IULigneCommande() {
 		
 	}
 	
 	/**
-	 * constructeur avec paramètres
+	 * constructeur avec paramï¿½tres
 	 * @param se
 	 * @param scanner
 	 * @param sa
@@ -45,25 +45,25 @@ public class IULigneCommande extends IUEntiteBase{
 	}
 	
 	/**
-	 * menu de création ligne de commande
+	 * menu de crï¿½ation ligne de commande
 	 * @throws IOException 
 	 */
 	@Override
 	public void creer() throws IOException {
 		String choix = null;
 		do{
-			System.out.println("***************Insérer une ligne de commande***************");
+			System.out.println("***************Insï¿½rer une ligne de commande***************");
 			System.out.println("Code produit : ");
 			int code = getScanner().nextInt();
 			
 			try {
 				Article article = (Article) getServiceArticle().rechercherParId(code); // lance une exception si l'article n'existe pas
-				System.out.println("Quantité : ");
+				System.out.println("Quantitï¿½ : ");
 				int qte = getScanner().nextInt();
 				
 				LigneCommande lc = new LigneCommande();
 				lc.setArticle(article);
-				lc.setQte(qte);
+				lc.setQuantite(qte);
 				getService().creer(lc);
 			} catch (ObjetInexistantException e) {
 				System.out.println(e.getMessage());
@@ -91,15 +91,15 @@ public class IULigneCommande extends IUEntiteBase{
 			
 			System.out.println("Indiquez le nouveau code : ");
 			int code = getScanner().nextInt();
-			Article article = (Article) getServiceArticle().rechercherParId(code); //lance une exception si l'article entré n'existe pas
+			Article article = (Article) getServiceArticle().rechercherParId(code); //lance une exception si l'article entrï¿½ n'existe pas
 
-			System.out.println("Indiquez la nouvelle quantité : ");
+			System.out.println("Indiquez la nouvelle quantitï¿½ : ");
 			int qte = getScanner().nextInt();
 			
 			getScanner().nextLine();//vidage
 			
 			lc.setArticle(article);
-			lc.setQte(qte);
+			lc.setQuantite(qte);
 			getService().modifier(id, lc);
 		} catch (ObjetInexistantException e) {
 			System.out.println(e.getMessage());

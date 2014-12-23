@@ -104,7 +104,7 @@ public class IUCommande extends IUEntiteBase{
 			
 		}while(client==null);
 		
-		//cr�ation de la commande
+		//création de la commande
 		Commande commande = new Commande();
 		commande.setClient(client);
 		

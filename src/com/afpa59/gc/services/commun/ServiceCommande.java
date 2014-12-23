@@ -119,7 +119,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 		List<LigneCommande> lignes =commande.getLignesCommande();
 
 		for(LigneCommande lc: lignes){
-			total+=(lc.getArticle().getPrix()*lc.getQte());
+			total+=(lc.getArticle().getPrix()*lc.getQuantite());
 		}
 		
 		return total;
@@ -138,7 +138,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 		List<LigneCommande> lignes = commande.getLignesCommande();
 
 		for(LigneCommande lc: lignes){
-			nb+=(lc.getQte());
+			nb+=(lc.getQuantite());
 		}
 		
 		return nb;

@@ -8,7 +8,7 @@ public class LigneCommande extends Entite{
 	@ManyToOne
 	private Commande commande;
 	private Article article;
-	private int qte;
+	private int quantite;
 	
 	/*------------------------------------------* CONSTRUCTEURS ------------------------------------------*/
 	/**
@@ -17,14 +17,14 @@ public class LigneCommande extends Entite{
 	public LigneCommande(){}
 	
 	/**
-	 * constructeur  avec paramètres
+	 * constructeur  avec paramÃ¨tres
 	 * @param article
-	 * @param qte
+	 * @param quantite
 	 */
-	public LigneCommande(int id, Article article, int qte){
+	public LigneCommande(int id, Article article, int quantite){
 		super(id);
 		this.article = article;
-		this.qte = qte;
+		this.quantite = quantite;
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class LigneCommande extends Entite{
 		super(lc);
 		this.commande = lc.commande;
 		this.article = lc.article;
-		this.qte = lc.qte;
+		this.quantite = lc.quantite;
 	}
 	
 	/*------------------------------------------ GETTER ------------------------------------------*/
@@ -49,12 +49,12 @@ public class LigneCommande extends Entite{
 	/**
 	 * @return qte
 	 */
-	public int getQte() {
-		return qte;
+	public int getQuantite() {
+		return quantite;
 	}
 	
 	/**
-	 * @return la commande atachée à la ligne
+	 * @return la commande atachï¿½e ï¿½ la ligne
 	 */
 	public Commande getCommande(){
 		return commande;
@@ -68,10 +68,10 @@ public class LigneCommande extends Entite{
 	}
 	
 	/**
-	 * @param qte
+	 * @param quantite
 	 */
-	public void setQte(int qte) {
-		this.qte = qte;
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
 	}
 	
 	/**

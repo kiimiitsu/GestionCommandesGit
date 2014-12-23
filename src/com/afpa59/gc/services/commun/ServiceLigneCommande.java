@@ -21,27 +21,27 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	
 	/*------------------------------------------ CONSTRUCTEUR ------------------------------------------*/
 	/**
-	 * constructeur par défaut
+	 * constructeur par dï¿½faut
 	 */
 	public ServiceLigneCommande() {
 		
 	}
 	
 	/**
-	 * constructeur avec paramètres
+	 * constructeur avec paramï¿½tres
 	 * @param commande
 	 */
 	public ServiceLigneCommande(Commande commande){
 		super(commande);
 		this.commande = commande;
 		
-		// Chargement des entités du service avec les lignes de la commande
+		// Chargement des entitï¿½s du service avec les lignes de la commande
 		
 		if(!commande.getLignesCommande().isEmpty()) {
 
 			List<Entite> liste = new ArrayList<Entite>();
 
-			liste.addAll(commande.getLignesCommande()); // nécessaire pour la conversion ligne de commande -> entité
+			liste.addAll(commande.getLignesCommande()); // nï¿½cessaire pour la conversion ligne de commande -> entitï¿½
 			
 			this.setEntites(liste);
 			
@@ -51,9 +51,25 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		
 	}
 	
+	
+	/**
+	 * @param commande
+	 */
+	public void setCommande(Commande commande) {
+		this.commande = commande;
+	}
+	
+	/**
+	 * @return commande
+	 */
+	public Commande getCommande() {
+		return commande;
+	}
+
+	
 	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
-	 * redéfinie pour indiquer la commande
+	 * redï¿½finie pour indiquer la commande
 	 * @param entiteParent
 	 */
 	@Override 
@@ -62,7 +78,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	}
 	
 	/**
-	 * paramètre le nom de la table / fichier
+	 * paramï¿½tre le nom de la table / fichier
 	 */
 	@Override
 	public void setTableName() {
@@ -103,11 +119,11 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		LigneCommande lc = (LigneCommande)entite;
 		
 		try {
-			System.out.println("Commande n° "+lc.getCommande().getId()
+			System.out.println("Commande nï¿½ "+lc.getCommande().getId()
 					+": Id = "+lc.getId()
 					+" Article : "+lc.getArticle().getId()
 					+"."+lc.getArticle().getLibelle()
-					+" Quantite : "+lc.getQte()
+					+" Quantite : "+lc.getQuantite()
 					+" Sous-total : "+sousTotal(lc.getId())
 			);
 		} catch (ObjetInexistantException e) {
@@ -122,11 +138,11 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	public void visualiser(int id) throws ObjetInexistantException {
 		Entite aVoir = this.rechercherParId(id);
 
-		System.out.println("Commande n° "+((LigneCommande) aVoir).getCommande().getId()
+		System.out.println("Commande nÂ° "+((LigneCommande) aVoir).getCommande().getId()
 				+ " Id = "+aVoir.getId()
 				+" Article : "+((LigneCommande) aVoir).getArticle().getId()
 				+"."+((LigneCommande) aVoir).getArticle().getLibelle()
-				+" Quantite : "+((LigneCommande) aVoir).getQte()
+				+" Quantite : "+((LigneCommande) aVoir).getQuantite()
 				+" Sous-total : "+sousTotal(aVoir.getId())                                
 		);
 	}
@@ -142,7 +158,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne la chaine correspondant à l'entité
+	 * retourne la chaine correspondant ï¿½ l'entitï¿½
 	 * @param entite
 	 */
 	@Override
@@ -153,7 +169,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		fields.put("commande_id", lc.getCommande().getId()+"");
 		fields.put("id", lc.getId()+"");
 		fields.put("article_id", lc.getArticle().getId()+"");
-		fields.put("quantite", lc.getQte()+"");
+		fields.put("quantite", lc.getQuantite()+"");
 		
 		return fields;
 	}
@@ -219,7 +235,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 			if(commande.getId()==idCommande){
 				id = ligneCom.getId();
 				article = ligneCom.getArticle();
-				quantite = ligneCom.getQte();
+				quantite = ligneCom.getQuantite();
 			}else{
 				return null;
 			}
@@ -231,13 +247,13 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		ligne.setCommande(commande);
 		ligne.setId(id);
 		ligne.setArticle(article);
-		ligne.setQte(quantite);
+		ligne.setQuantite(quantite);
 		
 		return ligne;
 	}
 	
 	/**
-	 * retourne le total de la ligne de commande concernée
+	 * retourne le total de la ligne de commande concernï¿½e
 	 * @param id
 	 * @return
 	 * @throws ObjetInexistantException
@@ -246,7 +262,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		float tot = 0;
 		LigneCommande ligne = (LigneCommande) this.rechercherParId(id);
 		Article article = (Article) ServiceArticle.getInstance().rechercherParId(ligne.getArticle().getId());
-		tot = (article.getPrix()*ligne.getQte());
+		tot = (article.getPrix()*ligne.getQuantite());
 		
 		return tot;
 	}
@@ -258,5 +274,21 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 			}
 		});
 	}*/
+	
+	/**
+	 * fonction de recherche par article
+	 * @param nomArticle
+	 * @return
+	 * @throws ObjetInexistantException
+	 */
+	public List<Entite> rechercherParArticle(String nomArticle) throws ObjetInexistantException{
+		return chercherEntite(new Critere(){
+			public boolean critere(Entite e){
+				return ((LigneCommande)e).getArticle().getLibelle().equalsIgnoreCase(nomArticle);
+			}
+		});
+	}
+	
+	
 	
 }

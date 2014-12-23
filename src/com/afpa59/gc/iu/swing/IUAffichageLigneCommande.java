@@ -65,7 +65,7 @@ public class IUAffichageLigneCommande extends JFrame{
 		JLabel titre = new JLabel();
 		switch (mode) {
 			case CREATION:
-				titre.setText(" Création d'une ligne de commande ");
+				titre.setText(" Crï¿½ation d'une ligne de commande ");
 				break;
 			case MODIFICATION:
 				titre.setText(" Modification d'une ligne de commande ");
@@ -95,7 +95,7 @@ public class IUAffichageLigneCommande extends JFrame{
 		
 		labelId = new JLabel("Id : ");
 		labelCodeArticle = new JLabel("Code : ");
-		labelQuantite = new JLabel("Quantité : ");
+		labelQuantite = new JLabel("Quantitï¿½ : ");
 		
 		switch(mode){
 		
@@ -113,7 +113,7 @@ public class IUAffichageLigneCommande extends JFrame{
 					txtId = new JTextField(ligne.getId()+"");
 					txtId.setEditable(false);
 					txtCodeArticle = new JTextField(ligne.getArticle().getId());
-					txtQuantite = new JTextField(ligne.getQte());
+					txtQuantite = new JTextField(ligne.getQuantite());
 					
 					butOk = new JButton("Modifier la ligne");
 				}
@@ -123,7 +123,7 @@ public class IUAffichageLigneCommande extends JFrame{
 				txtId.setEditable(false);
 				txtCodeArticle = new JTextField(ligne.getArticle().getId()+"");
 				txtCodeArticle.setEditable(false);
-				txtQuantite = new JTextField(ligne.getQte()+"");
+				txtQuantite = new JTextField(ligne.getQuantite()+"");
 				txtQuantite.setEditable(false);
 				
 				butOk = new JButton("Fermer");
@@ -133,7 +133,7 @@ public class IUAffichageLigneCommande extends JFrame{
 		}
 		
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-		//mise en place des éléments
+		//mise en place des ï¿½lï¿½ments
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0.5;
@@ -183,10 +183,10 @@ public class IUAffichageLigneCommande extends JFrame{
 		try {
 			article = (Article) ServiceArticle.getInstance().rechercherParId(Integer.parseInt(txtCodeArticle.getText()));
 			ligne.setArticle(article);
-			ligne.setQte(Integer.parseInt(txtQuantite.getText()));
+			ligne.setQuantite(Integer.parseInt(txtQuantite.getText()));
 			
 			service.creer(ligne);
-			JOptionPane.showMessageDialog(IUAffichageLigneCommande.this, "La ligne a bien été créé.");
+			JOptionPane.showMessageDialog(IUAffichageLigneCommande.this, "La ligne a bien ï¿½tï¿½ crï¿½ï¿½.");
 		} catch (ObjetInexistantException | IOException e) {
 			System.out.println(e.getMessage());
 			JOptionPane.showMessageDialog(this, "L'objet n'existe pas");
@@ -207,7 +207,7 @@ public class IUAffichageLigneCommande extends JFrame{
 		} catch (ObjetInexistantException e1) {
 			System.out.println(e1.getMessage());
 		}
-		JOptionPane.showMessageDialog(IUAffichageClient.this, "Le client a bien été modifié.");
+		JOptionPane.showMessageDialog(IUAffichageClient.this, "Le client a bien ï¿½tï¿½ modifiï¿½.");
 		this.dispose();
 		new IUAffichageClient("Visualisation", 500, 400, Mode.VISUALISATION, client);
 		*/

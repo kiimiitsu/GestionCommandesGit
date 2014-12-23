@@ -28,7 +28,7 @@ public class ListeLigneCommandeModel extends ListeEntiteModel {
 	
 	/*-------------------------- METHODES ---------------------------------*/
 	/**
-	 * retourne la valeur à la ligne row et dans la colonne col
+	 * retourne la valeur ï¿½ la ligne row et dans la colonne col
 	 */
 	@Override
 	public Object getValueAt(int row, int col) {
@@ -41,7 +41,7 @@ public class ListeLigneCommandeModel extends ListeEntiteModel {
 	        case 2:
 	            return ((LigneCommande)getEntites().get(row)).getArticle().getLibelle();
 	        case 3:
-				return ((LigneCommande)getEntites().get(row)).getQte();
+				return ((LigneCommande)getEntites().get(row)).getQuantite();
 	        case 4:
 			try {
 				return service.sousTotal(id)+"";

@@ -10,9 +10,11 @@ import com.afpa59.gc.donnees.Commande;
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.donnees.LigneCommande;
 import com.afpa59.gc.outils.BASETYPE;
+import com.afpa59.gc.outils.Clavier;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceClient;
+import com.afpa59.gc.services.commun.ServiceCommande;
 import com.afpa59.gc.services.commun.ServiceEntite;
 import com.afpa59.gc.services.commun.ServiceEntiteBase;
 import com.afpa59.gc.services.commun.ServiceLigneCommande;
@@ -26,18 +28,7 @@ public class IUCommande extends IUEntiteBase{
 	 * constructeur par d�faut
 	 */
 	public IUCommande() {
-		
-	}
-	
-	/**
-	 * constructeur avec param�tres
-	 * @param se
-	 * @param scanner
-	 * @param sc
-	 * @param sa
-	 */
-	public IUCommande(ServiceEntite se, Scanner scanner){
-		super(se,scanner);
+		setService(ServiceCommande.getInstance());
 	}
 	
 	/*********************************** METHODES ******************************************/
@@ -69,23 +60,20 @@ public class IUCommande extends IUEntiteBase{
 		
 		do{
 			//Informations client
-			System.out.println("Le client existe-t-il? O/N");
-			String exist = getScanner().nextLine();
+			String exist = Clavier.readString("Le client existe-t-il? O/N");
 			
 			if(exist.equalsIgnoreCase("o")){
-				System.out.println("Saisissez son nom : ");
-				String nom = getScanner().nextLine();
+				String nom = Clavier.readString("Saisissez son nom : ");
 				
 				try {
-					//r�cup�re la liste des clients correspondant et l'affiche
+					//récupère la liste des clients correspondant et l'affiche
 					List<Entite> listeClient = getServiceClient().rechercherParNom(nom);
 					
 					for(Entite c:listeClient){
 						getServiceClient().visualiser(c.getId());					
 					}
 					//choisir le bon client
-					System.out.println("Quel est son id?");
-					int idClient = getScanner().nextInt();
+					int idClient = Clavier.readInt("Quel est son id?");
 					//et l'affecter
 					client = (Client) getServiceClient().rechercherParId(idClient);
 					
@@ -94,8 +82,8 @@ public class IUCommande extends IUEntiteBase{
 				}
 					
 			}else if(exist.equalsIgnoreCase("n")){
-				//cr�ation d'un nouveau client
-				new IUClient(getServiceClient(), getScanner()).creer();
+				//création d'un nouveau client
+				new IUClient().creer();
 				client = (Client) getServiceClient().getEntites().get(getServiceClient().getEntites().size()-1);
 				
 			} else{
@@ -118,7 +106,7 @@ public class IUCommande extends IUEntiteBase{
 		
 		//appel au service lignecommande pour remplir la commande
 		ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
-		new IULigneCommande(sLC, getScanner()).creer();
+		new IULigneCommande(sLC).creer();
 		
 		List<LigneCommande> lLC = new ArrayList<LigneCommande>();
 		for(Entite e:sLC.getEntites()){
@@ -135,16 +123,15 @@ public class IUCommande extends IUEntiteBase{
 		System.out.println(" - Modifier une commande -");
 		
 		getService().visualiser();
-		System.out.println("Quel commande souhaitez-vous modifier?");
 		
-		int id = getScanner().nextInt();
+		int id = Clavier.readInt("Quel commande souhaitez-vous modifier?");
 		
 		try { 
 			Commande commande = (Commande) getService().rechercherParId(id);
 			
 			ServiceLigneCommande sLC = new ServiceLigneCommande(commande);
 			
-			new IULigneCommande(sLC, getScanner()).afficheMenu();
+			new IULigneCommande(sLC).afficheMenu();
 			
 			List<LigneCommande> lLC = new ArrayList<LigneCommande>();
 			

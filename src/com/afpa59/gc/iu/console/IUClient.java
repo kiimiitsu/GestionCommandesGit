@@ -1,12 +1,11 @@
 package com.afpa59.gc.iu.console;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import com.afpa59.gc.donnees.Client;
+import com.afpa59.gc.outils.Clavier;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
-import com.afpa59.gc.services.commun.ServiceEntite;
-import com.afpa59.gc.services.commun.ServiceEntiteBase;
+import com.afpa59.gc.services.commun.ServiceClient;
 
 public class IUClient extends IUEntiteBase {
 	
@@ -15,16 +14,7 @@ public class IUClient extends IUEntiteBase {
 	 * constructeur par defaut
 	 */
 	public IUClient(){
-		
-	}
-	
-	/**
-	 * constructeur avec parrametres
-	 * @param se
-	 * @param scanner
-	 */
-	public IUClient(ServiceEntite se, Scanner scanner){
-		super(se,scanner);
+		setService(ServiceClient.getInstance());
 	}
 	
 	/*********************************** METHODES ******************************************/
@@ -43,13 +33,10 @@ public class IUClient extends IUEntiteBase {
 	 */
 	@Override
 	public void creer() throws IOException{
-		System.out.println(" - Créer un client -");
-		System.out.println("Entrez le nom :");
-		String nom = getScanner().nextLine();
-		System.out.println("Entrez le prénom : ");
-		String prenom = getScanner().nextLine();
-		System.out.println("Entrez l'adresse : ");
-		String adresse = getScanner().nextLine();
+		System.out.println(" - CrÃ©er un client -");
+		String nom = Clavier.readString("Entrez le nom :");
+		String prenom = Clavier.readString("Entrez le prÃ©nom : ");
+		String adresse = Clavier.readString("Entrez l'adresse : ");
 
 		Client client = new Client();
 		client.setNom(nom);
@@ -66,16 +53,15 @@ public class IUClient extends IUEntiteBase {
 		System.out.println(" - Modifier un client -");
 		getService().visualiser();
 		System.out.println("Quel client souhaitez-vous modifier?");
-		int id = getScanner().nextInt();
+		int id = Clavier.readInt("Quel client souhaitez-vous modifier?");
 		try {
 			Client client = new Client((Client) getService().rechercherParId(id));
-			System.out.println("Indiquez le nouveau nom : ");
-			getScanner().nextLine();//vidage de la ligne
-			String nom = getScanner().nextLine();
-			System.out.println("Indiquez le nouveau prénom : ");
-			String prenom = getScanner().nextLine();
-			System.out.println("Indiquez la nouvelle adresse : ");
-			String adresse = getScanner().nextLine();
+			String nom = Clavier.readString("Indiquez le nouveau nom : ");
+			
+			String prenom = Clavier.readString("Indiquez le nouveau prÃ©nom : ");
+			
+			String adresse = Clavier.readString("Indiquez la nouvelle adresse : ");
+			
 			client.setNom(nom);
 			client.setPrenom(prenom);
 			client.setAdresse(adresse);

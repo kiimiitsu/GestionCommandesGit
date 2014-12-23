@@ -17,7 +17,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BASETYPE serviceType = BASETYPE.JPA;
+	private BASETYPE serviceType = BASETYPE.FICHIER;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	/**

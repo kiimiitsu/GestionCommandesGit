@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import com.afpa59.gc.donnees.Article;
+import com.afpa59.gc.outils.Clavier;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
+import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceEntite;
 import com.afpa59.gc.services.commun.ServiceEntiteBase;
 
@@ -15,17 +17,9 @@ public class IUArticle extends IUEntiteBase{
 	 * contructeur par defaut
 	 */
 	public IUArticle(){
-		
+		setService(ServiceArticle.getInstance());
 	}
-	
-	/**
-	 * constructeur avec parametres
-	 * @param se
-	 * @param scanner
-	 */
-	public IUArticle(ServiceEntite se, Scanner scanner){
-		super(se, scanner);
-	}
+
 
 	/*********************************** METHODES ******************************************/
 	/**
@@ -43,11 +37,10 @@ public class IUArticle extends IUEntiteBase{
 	 */
 	@Override
 	public void creer() throws IOException{
-		System.out.println(" - Créer un article -");
-		System.out.println("Entrez le libelle de l'article :");
-		String libelle = getScanner().nextLine();
-		System.out.println("Entrez le prix de l'article : ");
-		float prix = getScanner().nextFloat();
+		System.out.println(" - CrÃ©er un article -");
+		String libelle = Clavier.readString("Entrez le libelle de l'article :");
+		
+		float prix = Clavier.readFloat("Entrez le prix de l'article : ");
 		
 		Article article = new Article();
 		article.setLibelle(libelle);
@@ -62,17 +55,13 @@ public class IUArticle extends IUEntiteBase{
 	public void modifier(){
 		System.out.println(" - Modifier un article -");
 		getService().visualiser();
-		System.out.println("Quel article souhaitez-vous modifier?");
-		int id = getScanner().nextInt();
+		int id = Clavier.readInt("Quel article souhaitez-vous modifier?");
 		try{
 			Article article = new Article((Article) getService().rechercherParId(id));
 			
-			System.out.println("Indiquez le nouveau libelle : ");
-			this.getScanner().nextLine(); //vidage
-			String libelle = getScanner().nextLine();
+			String libelle = Clavier.readString("Indiquez le nouveau libelle : ");
 			
-			System.out.println("Indiquez le nouveau prix : ");
-			float prix = getScanner().nextFloat();
+			float prix = Clavier.readFloat("Indiquez le nouveau prix : ");
 			
 			article.setLibelle(libelle);
 			article.setPrix(prix);

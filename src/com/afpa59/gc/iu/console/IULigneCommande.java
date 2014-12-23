@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.afpa59.gc.donnees.Article;
 import com.afpa59.gc.donnees.LigneCommande;
+import com.afpa59.gc.outils.Clavier;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceEntite;
@@ -14,7 +15,7 @@ public class IULigneCommande extends IUEntiteBase{
 
 	/**************************************** CONTRUCTEURS *********************************************/
 	/**
-	 * constructeur par d�faut
+	 * constructeur par défaut
 	 */
 	public IULigneCommande() {
 		
@@ -26,8 +27,8 @@ public class IULigneCommande extends IUEntiteBase{
 	 * @param scanner
 	 * @param sa
 	 */
-	public IULigneCommande(ServiceEntite se, Scanner scanner){
-		super(se, scanner);
+	public IULigneCommande(ServiceEntite se){
+		setService(se);
 	}
 	
 	/*********************************** METHODES ******************************************/
@@ -52,14 +53,12 @@ public class IULigneCommande extends IUEntiteBase{
 	public void creer() throws IOException {
 		String choix = null;
 		do{
-			System.out.println("***************Ins�rer une ligne de commande***************");
-			System.out.println("Code produit : ");
-			int code = getScanner().nextInt();
+			System.out.println("***************Insérer une ligne de commande***************");
+			int code = Clavier.readInt("Code produit : ");
 			
 			try {
 				Article article = (Article) getServiceArticle().rechercherParId(code); // lance une exception si l'article n'existe pas
-				System.out.println("Quantit� : ");
-				int qte = getScanner().nextInt();
+				int qte = Clavier.readInt("Quantité : ");
 				
 				LigneCommande lc = new LigneCommande();
 				lc.setArticle(article);
@@ -69,9 +68,7 @@ public class IULigneCommande extends IUEntiteBase{
 				System.out.println(e.getMessage());
 			}
 			
-			getScanner().nextLine(); //vidage
-			System.out.println("Continuer? O/N");
-			choix = getScanner().nextLine();
+			choix = Clavier.readString("Continuer? O/N");
 		}while(choix.equalsIgnoreCase("o"));
 	}
 
@@ -83,20 +80,15 @@ public class IULigneCommande extends IUEntiteBase{
 		System.out.println(" - Modifier une ligne de commande -");
 		getService().visualiser();
 		
-		System.out.println("Quel ligne souhaitez-vous modifier?");
-		int id = getScanner().nextInt();
+		int id = Clavier.readInt("Quel ligne souhaitez-vous modifier?");
 		
 		try {
 			LigneCommande lc =(LigneCommande) getService().rechercherParId(id); //lance une exception si ligne inexistante
 			
-			System.out.println("Indiquez le nouveau code : ");
-			int code = getScanner().nextInt();
+			int code = Clavier.readInt("Indiquez le nouveau code : ");
 			Article article = (Article) getServiceArticle().rechercherParId(code); //lance une exception si l'article entr� n'existe pas
 
-			System.out.println("Indiquez la nouvelle quantit� : ");
-			int qte = getScanner().nextInt();
-			
-			getScanner().nextLine();//vidage
+			int qte = Clavier.readInt("Indiquez la nouvelle quantité : ");
 			
 			lc.setArticle(article);
 			lc.setQuantite(qte);

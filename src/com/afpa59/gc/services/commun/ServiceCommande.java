@@ -29,7 +29,7 @@ public class ServiceCommande extends ServiceEntiteBase{
 	/**
 	 * @return l'instance de la classe
 	 */
-	public static ServiceCommande getInstance(){
+	public synchronized static ServiceCommande getInstance(){
 		if(serviceCommande==null)
 			new ServiceCommande();
 		return serviceCommande;

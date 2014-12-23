@@ -18,7 +18,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	
 	/*------------------------------------------ CONTRUCTEURS ------------------------------------------*/
 	/**
-	 * contructeur par défaut
+	 * contructeur par dï¿½faut
 	 */
 	private ServiceClient(){
 		super(null);
@@ -29,7 +29,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	/**
 	 * @return l'instance de la classe
 	 */
-	public static ServiceClient getInstance(){
+	public synchronized static ServiceClient getInstance(){
 		if(serviceClient==null){
 			new ServiceClient();
 		}
@@ -38,7 +38,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	
 	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
-	 * paramètre le nom de la table / fichier
+	 * paramï¿½tre le nom de la table / fichier
 	 */
 	@Override
 	public void setTableName() {
@@ -64,14 +64,14 @@ public class ServiceClient extends ServiceEntiteBase{
 
 		System.out.println("Id = "+aVoir.getId()
 				+" \nNom = "+((Client)aVoir).getNom()
-				+" \nPrénom = "+((Client) aVoir).getPrenom()
+				+" \nPrï¿½nom = "+((Client) aVoir).getPrenom()
 				+" \nAdresse = "+((Client) aVoir).getAdresse()
 		);
 		
 	}
 
 	/**
-	 * affiche le client en paramètre
+	 * affiche le client en paramï¿½tre
 	 * @param entite
 	 */
 	@Override
@@ -79,7 +79,7 @@ public class ServiceClient extends ServiceEntiteBase{
 		Client client = (Client) entite;
 		System.out.println("Id = "+client.getId()
 				+" Nom = "+client.getNom()
-				+" Prénom = "+client.getPrenom()
+				+" PrÃ©nom = "+client.getPrenom()
 				+" Adresse = "+client.getAdresse()
 		);
 	}
@@ -123,7 +123,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne les champs correspondant à l'entité
+	 * retourne les champs correspondant ï¿½ l'entitï¿½
 	 * @param entite
 	 * @return fields
 	 */
@@ -141,7 +141,7 @@ public class ServiceClient extends ServiceEntiteBase{
 	}
 
 	/**
-	 * retourne l'entité correspondante au StringTokenizer
+	 * retourne l'entitï¿½ correspondante au StringTokenizer
 	 * @param source
 	 * @return client
 	 */

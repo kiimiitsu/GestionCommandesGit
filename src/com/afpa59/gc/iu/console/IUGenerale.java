@@ -3,6 +3,7 @@ package com.afpa59.gc.iu.console;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.afpa59.gc.outils.Clavier;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceClient;
 import com.afpa59.gc.services.commun.ServiceCommande;
@@ -12,25 +13,23 @@ public class IUGenerale {
 	private ServiceArticle sa;
 	private ServiceClient sc;
 	private ServiceCommande sCom;
-	private Scanner scanner;
 	
 	/****************************************** CONSTRUCTEURS ************************************/
 	/**
-	 * contructeur par défaut
+	 * contructeur par dÃ©faut
 	 */
 	public IUGenerale(){
 		
 	}
 	
 	/**
-	 * constructeur avec paramètres
+	 * constructeur avec paramï¿½tres
 	 * @param scanner
 	 */
-	public IUGenerale(ServiceArticle sa, ServiceClient sc, ServiceCommande sCom, Scanner scanner){
+	public IUGenerale(ServiceArticle sa, ServiceClient sc, ServiceCommande sCom){
 		this.sa = sa;
 		this.sc = sc;
 		this.sCom = sCom;
-		this.scanner = scanner;
 	}
 	
 	/***************************************** METHODES *************************************/
@@ -47,27 +46,26 @@ public class IUGenerale {
 					+ "\n3 - Gestion des commandes"
 					+ "\n0 - Sortie");
 			
-			choix = scanner.nextInt();
+			choix = Clavier.readInt("");
 			
 			switch (choix) {
 			case 1:
-				IUArticle menuArticle = new IUArticle(sa, scanner);
+				IUArticle menuArticle = new IUArticle();
 				menuArticle.afficheMenu();
 				break;
 			case 2:
-				IUClient menuClient = new IUClient(sc, scanner);
+				IUClient menuClient = new IUClient();
 				menuClient.afficheMenu();
 				break;
 			case 3:
-				IUCommande menuCommande = new IUCommande(sCom, scanner);
+				IUCommande menuCommande = new IUCommande();
 				menuCommande.afficheMenu();
 				break;	
 			case 0:
 				System.out.println("****************** FERMETURE APPLICATION ************************");
-				this.scanner.close();
 				break;
 			default:
-				System.out.println("Je n'ai pas compris votre choix, veuillez réessayer.");
+				System.out.println("Je n'ai pas compris votre choix, veuillez rï¿½essayer.");
 				break;
 			}
 	

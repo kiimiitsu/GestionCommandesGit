@@ -26,7 +26,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	private List<Entite> entites;
 	private int compteur;
 	private File file;
-	private boolean firstRecord = true; // indique si le fichier doit ou non être effacé avant d'être modifié
+	private boolean firstRecord = true; // indique si le fichier doit ou non ï¿½tre effacï¿½ avant d'ï¿½tre modifiï¿½
 	
 	/*------------------------------------------ CONSTRUCTEUR ------------------------------------------*/
 	/**
@@ -111,7 +111,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 	}
 	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
-	 * ajoute une entité à la liste
+	 * ajoute une entitÃ© Ã  la liste
 	 * @param entite
 	 * @throws IOException 
 	 */
@@ -159,7 +159,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 			}
 		}
 		if(match.isEmpty()){
-			throw new ObjetInexistantException("L'objet auquel vous tentez d'accéder est inexistant !");
+			throw new ObjetInexistantException("L'objet auquel vous tentez d'accÃ©der est inexistant !");
 		}
 		return match;
 	}
@@ -176,7 +176,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 													}
 												});
 		Entite entite = resultats.get(0);
-		return entite; //id unique, retourne l'unique élément de la recherche.
+		return entite; //id unique, retourne l'unique Ã©lÃ©ment de la recherche.
 		
 	}
 	
@@ -232,7 +232,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 				br = null;
 			}
 
-			if(!entites.isEmpty()){ //on vérifie qu'on ne rentre pas dans une liste vide
+			if(!entites.isEmpty()){ //on vï¿½rifie qu'on ne rentre pas dans une liste vide
 				this.compteur = this.entites.get(this.entites.size()-1).getId()+1;
 			}
 		}

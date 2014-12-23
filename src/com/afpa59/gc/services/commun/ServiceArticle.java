@@ -27,7 +27,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	/**
 	 * @return l'instance de la classe
 	 */
-	public static ServiceArticle getInstance(){
+	public synchronized static ServiceArticle getInstance(){
 		if(serviceArticle==null)
 			new ServiceArticle();
 		return serviceArticle;
@@ -35,7 +35,7 @@ public class ServiceArticle extends ServiceEntiteBase{
 	
 	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
-	 * d�finit le nom de la table/du fichier
+	 * définit le nom de la table/du fichier
 	 */
 	public void setTableName(){
 		setTableName("Article");

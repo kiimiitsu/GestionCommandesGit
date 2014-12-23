@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 import javax.persistence.PersistenceException;
 
+import com.afpa59.gc.outils.Clavier;
 import com.afpa59.gc.services.commun.ObjetInexistantException;
 import com.afpa59.gc.services.commun.ServiceEntite;
 
 public abstract class IUEntiteBase implements IUEntite {
 	
 	private ServiceEntite service;
-	private Scanner scanner;
 	
 	/************************************* CONTRUCTEURS ***********************************/
 	/**
@@ -19,16 +19,6 @@ public abstract class IUEntiteBase implements IUEntite {
 	 */
 	public IUEntiteBase(){
 		
-	}
-	
-	/**
-	 * constructeur avec param�tres
-	 * @param se
-	 * @param scanner
-	 */
-	public IUEntiteBase(ServiceEntite se, Scanner scanner){
-		this.service = se;
-		this.scanner = scanner;
 	}
 	
 	/************************************* GETTER *****************************************/
@@ -39,15 +29,7 @@ public abstract class IUEntiteBase implements IUEntite {
 	public ServiceEntite getService() {
 		return service;
 	}
-	
-	/**
-	 * recupere le scanner
-	 * @return
-	 */
-	public Scanner getScanner() {
-			return scanner;
-	}
-	
+
 	/************************************* SETTER *****************************************/
 	/**
 	 * definit le ServiceEntite
@@ -55,14 +37,6 @@ public abstract class IUEntiteBase implements IUEntite {
 	 */
 	public void setService(ServiceEntite se) {
 		this.service = se;
-	}
-
-	/**
-	 * definit le scanner
-	 * @param scanner
-	 */
-	public void setScanner(Scanner scanner) {
-		this.scanner = scanner;
 	}
 	
 	/*********************************** METHODES ******************************************/
@@ -76,8 +50,7 @@ public abstract class IUEntiteBase implements IUEntite {
 		do{
 			afficheHeader();
 			
-			choix = this.scanner.nextInt();
-			scanner.nextLine();//vidage
+			choix = Clavier.readInt("");
 			switch (choix) {
 				case 1:
 					creer();
@@ -124,8 +97,7 @@ public abstract class IUEntiteBase implements IUEntite {
 	@Override
 	public void visualiser(){
 		System.out.println(" - Visualisation -");
-		System.out.println("Quel objet souhaitez-vous visualiser?");
-		int id = scanner.nextInt();
+		int id = Clavier.readInt("Quel objet souhaitez-vous visualiser?");
 		try {
 			service.visualiser(id);
 		} catch (ObjetInexistantException e) {
@@ -140,8 +112,7 @@ public abstract class IUEntiteBase implements IUEntite {
 	public void supprimer(){
 		System.out.println(" - Supprimer -");
 		service.visualiser();
-		System.out.println("Quel objet souhaitez-vous supprimer?");
-		int id = scanner.nextInt();
+		int id = Clavier.readInt("Quel objet souhaitez-vous supprimer?");
 		try {
 			service.supprimer(id);
 		} catch (ObjetInexistantException | PersistenceException e) {

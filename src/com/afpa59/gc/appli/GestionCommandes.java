@@ -13,7 +13,6 @@ public class GestionCommandes {
 	
 	public static void main(String[] args){
 
-		Scanner scanner = new Scanner(System.in);
 		ServiceArticle sa = ServiceArticle.getInstance();
 		ServiceClient sc = ServiceClient.getInstance();
 		ServiceCommande sCom = ServiceCommande.getInstance();
@@ -21,9 +20,8 @@ public class GestionCommandes {
 		//new IUGenerale("Application de gestion des commandes", 1200, 800);
 		
 		try {
-			IUGenerale mainMenu = new IUGenerale(sa, sc, sCom, scanner);
+			IUGenerale mainMenu = new IUGenerale(sa, sc, sCom);
 			mainMenu.afficheMenu();
-			scanner.close();
 
 			sa.finaliser(true);
 			sc.finaliser(false);

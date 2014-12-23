@@ -35,13 +35,13 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 		super(commande);
 		this.commande = commande;
 		
-		// Chargement des entit�s du service avec les lignes de la commande
+		// Chargement des entités du service avec les lignes de la commande
 		
 		if(!commande.getLignesCommande().isEmpty()) {
 
 			List<Entite> liste = new ArrayList<Entite>();
 
-			liste.addAll(commande.getLignesCommande()); // n�cessaire pour la conversion ligne de commande -> entit�
+			liste.addAll(commande.getLignesCommande()); // nécessaire pour la conversion commande-> entité
 			
 			this.setEntites(liste);
 			
@@ -69,7 +69,7 @@ public class ServiceLigneCommande extends ServiceEntiteBase{
 	
 	/*------------------------------------------ METHODES ------------------------------------------*/
 	/**
-	 * red�finie pour indiquer la commande
+	 * redéfinie pour indiquer la commande
 	 * @param entiteParent
 	 */
 	@Override 

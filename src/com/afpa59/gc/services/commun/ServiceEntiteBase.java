@@ -1,6 +1,7 @@
 package com.afpa59.gc.services.commun;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BASETYPE serviceType = BASETYPE.FICHIER;
+	private BASETYPE serviceType = BASETYPE.JPA;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	/**
@@ -176,7 +177,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 		service.sauvegardeEntites(bSUite);
 	}
 	@Override
-	public void finaliser(boolean first) throws IOException {
+	public void finaliser(boolean first) throws IOException, SQLException {
 		service.finaliser(first);
 	}
 	

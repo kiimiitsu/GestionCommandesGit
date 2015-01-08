@@ -1,13 +1,11 @@
 package com.afpa59.gc.appli;
 import java.io.IOException;
-import java.util.Scanner;
+import java.sql.SQLException;
 
 import com.afpa59.gc.iu.console.IUGenerale;
-import com.afpa59.gc.outils.BASETYPE;
 import com.afpa59.gc.services.commun.ServiceArticle;
 import com.afpa59.gc.services.commun.ServiceClient;
 import com.afpa59.gc.services.commun.ServiceCommande;
-import com.afpa59.gc.services.jdbcBase.ServiceEntiteJDBCBase;
 
 public class GestionCommandes {
 	
@@ -26,7 +24,7 @@ public class GestionCommandes {
 			sa.finaliser(true);
 			sc.finaliser(false);
 			sCom.finaliser(false);
-		}catch(IOException e){
+		}catch(IOException | SQLException e){
 			System.out.println(e.getMessage());
 		}
 	}

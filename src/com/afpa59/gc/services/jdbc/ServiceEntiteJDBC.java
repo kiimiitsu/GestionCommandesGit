@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map.Entry;
 
-import org.omg.CORBA.portable.ValueBase;
-
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.outils.MyDataBase;
 import com.afpa59.gc.services.commun.Critere;
@@ -104,7 +102,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	}
 	
 	/**
-	 * ajoute une entité à la liste
+	 * ajoute une entitï¿½ ï¿½ la liste
 	 * @param entite
 	 * @throws IOException 
 	 */
@@ -228,7 +226,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 			}
 		}
 		if(match.isEmpty()){
-			throw new ObjetInexistantException("L'objet auquel vous tentez d'accéder est inexistant !");
+			throw new ObjetInexistantException("L'objet auquel vous tentez d'accï¿½der est inexistant !");
 		}
 		return match;
 	}
@@ -245,7 +243,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 													}
 												});
 		Entite entite = resultats.get(0);
-		return entite; //id unique, retourne l'unique élément de la recherche.
+		return entite; //id unique, retourne l'unique ï¿½lï¿½ment de la recherche.
 	}
 	/*
 	public static void deleteTables(){
@@ -261,8 +259,8 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	}*/
 	
 	@Override
-	public void finaliser(boolean first){
-		
+	public void finaliser(boolean first) throws SQLException{
+		MyDataBase.closeServer();
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/

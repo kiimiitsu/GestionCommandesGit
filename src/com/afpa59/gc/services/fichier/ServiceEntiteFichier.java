@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -244,7 +243,7 @@ public class ServiceEntiteFichier implements ServiceEntite{
 		String fileName = serviceDemandeur.getTableName()+".txt";
 		fileName = fileName.toLowerCase();
 		
-		this.setFile(new File("C:/commandes.SAV/"+fileName));
+		this.setFile(new File("datas/"+fileName));
 	}
 	
 	@Override

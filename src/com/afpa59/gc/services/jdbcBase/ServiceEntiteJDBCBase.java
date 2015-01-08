@@ -88,7 +88,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	/*----------------------------------- METHODES -----------------------------------*/
 	
 	/**
-	 * paramètre le nom de la table / fichier
+	 * paramï¿½tre le nom de la table / fichier
 	 */
 	public void configTable(){
 		serviceDemandeur.setTableName();
@@ -96,7 +96,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	}
 	
 	/**
-	 * ajoute une entité à la liste
+	 * ajoute une entitï¿½ ï¿½ la liste
 	 * @param entite
 	 * @throws IOException 
 	 */
@@ -144,7 +144,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 			}
 		}
 		if(match.isEmpty()){
-			throw new ObjetInexistantException("L'objet auquel vous tentez d'accéder est inexistant !");
+			throw new ObjetInexistantException("L'objet auquel vous tentez d'accï¿½der est inexistant !");
 		}
 		return match;
 	}
@@ -161,7 +161,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 													}
 												});
 		Entite entite = resultats.get(0);
-		return entite; //id unique, retourne l'unique élément de la recherche.
+		return entite; //id unique, retourne l'unique ï¿½lï¿½ment de la recherche.
 	}
 	
 	
@@ -214,7 +214,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 			System.out.println(e.getMessage());
 		}
 		
-		if(!entites.isEmpty()){ //on vérifie qu'on ne rentre pas dans une liste vide
+		if(!entites.isEmpty()){ //on vï¿½rifie qu'on ne rentre pas dans une liste vide
 			this.compteur = this.entites.get(this.entites.size()-1).getId()+1;
 		}
 		
@@ -233,11 +233,12 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 	}
 
 	@Override
-	public void finaliser(boolean first) throws IOException{
+	public void finaliser(boolean first) throws IOException, SQLException{
 		if (first){
 			deleteTables();
 		}
 		sauvegardeEntites(false);
+		MyDataBase.closeServer();
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/

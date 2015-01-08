@@ -11,7 +11,8 @@
         <class>com.afpa59.gc.donnees.LigneCommande</class>   
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/gestionCommandesJpa"/>
+            <!-- <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/gestionCommandesJpa"/>-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:datas/gestionCommandesJpa"/>
             <property name="javax.persistence.jdbc.user" value="SA"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />

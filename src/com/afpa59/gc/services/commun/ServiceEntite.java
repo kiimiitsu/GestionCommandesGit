@@ -1,5 +1,6 @@
 package com.afpa59.gc.services.commun;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import com.afpa59.gc.donnees.Entite;
 
 
 public interface ServiceEntite {
-	//CRUD des entités
+	//CRUD des entitï¿½s
 	public void creer(Entite entite) throws IOException; 
 	public void visualiser();
 	public void visualiser(Entite entite);
@@ -25,14 +26,14 @@ public interface ServiceEntite {
 	public LinkedHashMap<String, String> getFields(Entite entite);
 	public void charger();
 	
-	public void finaliser(boolean first) throws IOException;
+	public void finaliser(boolean first) throws IOException, SQLException;
 	
-	//Autres actions sur les entités
+	//Autres actions sur les entitï¿½s
 	public List<Entite> chercherEntite(Critere c) throws ObjetInexistantException ;
 	public Entite rechercherParId(int id) throws ObjetInexistantException;
 	
 	
-	//Actions de sauvegarde et chargement des entités en fichier
+	//Actions de sauvegarde et chargement des entitï¿½s en fichier
 		
 	public boolean isFirstRecord();
 	public void setFirstRecord(boolean firstRecord);

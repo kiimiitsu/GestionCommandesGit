@@ -238,7 +238,7 @@ public class ServiceEntiteJDBCBase implements ServiceEntite{
 			deleteTables();
 		}
 		sauvegardeEntites(false);
-		MyDataBase.closeServer();
+//		MyDataBase.closeServer();
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/

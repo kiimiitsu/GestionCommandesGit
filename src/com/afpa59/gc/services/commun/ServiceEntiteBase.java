@@ -1,9 +1,12 @@
 package com.afpa59.gc.services.commun;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Properties;
 
 import com.afpa59.gc.donnees.Entite;
 import com.afpa59.gc.outils.BASETYPE;
@@ -18,7 +21,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	private String tableName;
 	private Entite entiteParent;
 	
-	private BASETYPE serviceType = BASETYPE.JPA;
+	private BASETYPE serviceType;// = BASETYPE.JPA;
 	
 	/*----------------------------- CONSTRUCTEUR -----------------------------------------*/
 	/**
@@ -33,6 +36,7 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 	 * @param entiteParent
 	 */
 	public ServiceEntiteBase(Entite entiteParent){
+		configServiceType();
 		this.setParent(entiteParent); //a overrider si la fille a un parent
 		this.service = getInstance(this);
 	}
@@ -111,6 +115,34 @@ public abstract class ServiceEntiteBase implements ServiceEntite{
 				return new ServiceEntiteJPA(serviceDemandeur);
 			default:
 				return null;
+		}
+	}
+	
+	
+	public void configServiceType(){
+		Properties prop = new Properties();
+		InputStream input = null;
+				
+		try {
+			input = new FileInputStream("datas/config.properties");
+	 
+			// load a properties file
+			prop.load(input);
+	 
+			serviceType = BASETYPE.valueOf(prop.getProperty("basetype"));
+	 
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} 
+		
+		finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	

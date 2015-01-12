@@ -260,7 +260,7 @@ public class ServiceEntiteJDBC implements ServiceEntite{
 	
 	@Override
 	public void finaliser(boolean first) throws SQLException{
-		MyDataBase.closeServer();
+//		MyDataBase.closeServer();
 	}
 	
 	/*------------------------------------------NON IMPLEMENTE ----------------------------------------------*/

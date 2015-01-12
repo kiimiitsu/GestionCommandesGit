@@ -1,4 +1,5 @@
 package com.afpa59.gc.appli;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -10,7 +11,8 @@ import com.afpa59.gc.services.commun.ServiceCommande;
 public class GestionCommandes {
 	
 	public static void main(String[] args){
-
+		File file = new File(".");
+		System.out.println(file.getAbsolutePath());
 		ServiceArticle sa = ServiceArticle.getInstance();
 		ServiceClient sc = ServiceClient.getInstance();
 		ServiceCommande sCom = ServiceCommande.getInstance();
